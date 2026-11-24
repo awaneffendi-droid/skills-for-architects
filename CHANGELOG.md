@@ -4,6 +4,14 @@ All notable changes to **Arch Studio** (`AlpacaLabsLLC/skills-for-architects`) a
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Arch Studio uses a sequential `major.minor.patch` release scheme, marks breaking migrations explicitly, and reserves patch releases for compatible corrections. A fourth segment (`major.minor.patch.n`) is reserved for content-only patches that change skill text without changing code or packaging.
 
+
+## Unreleased (fork: standar Indonesia)
+
+- Removed the seven NYC due-diligence skills and the NYC zoning agent; replaced `zoning-analysis-nyc` with `zoning-analysis-id` (RDTR, KDB/KLB/KDH/KTB/GSB) and the agent with `indonesia-zoning-expert`.
+- Replaced US sources with Indonesian ones (JDIH, BSN, GISTARU, OSS, SIMBG, BMKG, BNPB, BIG, BPS, Kemenhub, cagar budaya, AMDALNET, IAI, LKPP, GBCI) and the US jurisdictions with Indonesia.
+- Occupancy, spec, practice-knowledge and site-research skills now point to Indonesian regulations and SNI; metric and IDR are the defaults.
+- See [docs/indonesia-adaptation.md](docs/indonesia-adaptation.md) for the verification status of every cited regulation.
+
 ## [Unreleased]
 
 ## [1.5.3] - 2026-11-11

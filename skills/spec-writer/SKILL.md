@@ -1,6 +1,6 @@
 ---
 name: spec-writer
-description: "Draft Project Manual specification sections from accepted project requirements using CSI MasterFormat identities, three-part sections and review flags. Use for design requirements; use product-cut-sheet for source-faithful product entries and epd-to-spec for EPD requirements."
+description: "Draft specification sections (RKS, Rencana Kerja dan Syarat-syarat teknis) from accepted project requirements with SNI material references, three-part sections and review flags; CSI MasterFormat numbering only when the client template requires it. Use for design requirements; use product-cut-sheet for source-faithful product entries and epd-to-spec for EPD requirements."
 allowed-tools:
   - Read
   - Write
@@ -49,10 +49,10 @@ Keep every source/formatting/disclaimer requirement below, including the exact a
 
 Find relevant original links in [the source catalog](../../corpus/sources/catalog.json), filtered by geography and topic. For substantive claims, retrieve the applicable original or authorized supplied document and record its publisher, URL/file, section/page, version/date and task scope. A linked or reachable source is not proof of applicability. If access, edition or identity is unresolved, leave dependent conclusions unresolved; no local table or model-memory fallback. Keep task evidence in the authorized workspace, outside the plugin.
 
-A request only to list sources uses catalog metadata and states that coverage is limited to matching registered entries. It needs no source-content retrieval, setup or approval. Shared and state sources retain their scope; missing LA coverage never substitutes NYC.
+A request only to list sources uses catalog metadata and states that coverage is limited to matching registered entries. It needs no source-content retrieval, setup or approval. National and provincial sources retain their scope; a missing kabupaten/kota source is a gap and never substitutes another region’s data.
 ## Draft the requested specification
 
-Read the materials brief, accepted project requirements and any supplied template. Resolve ambiguous material/function choices only where they change the specification. Obtain selected division/section identities from the actual authorized publisher edition or supplied verified task inputs, using the CSI routes in the source catalog. There is no bundled MasterFormat mapping or compatibility edition. Keep an unresolved section identity open for review instead of inventing a best-fit number.
+Read the materials brief, accepted project requirements and any supplied template. Resolve ambiguous material/function choices only where they change the specification. Default to the Indonesian RKS teknis structure (pekerjaan persiapan, struktur, arsitektur, MEP, lansekap and so on, or the client's own division list) and cite material and test requirements to the applicable SNI (identifier and year, retrieved from BSN) and to PUPR or ministry regulations where they apply; mark any standard you could not open as perlu verifikasi. Use CSI MasterFormat section identities only when the client's accepted template requires them, and then obtain them from the client-supplied edition; there is no bundled MasterFormat mapping. Do not cite US standards (ASTM, ANSI, UL, NFPA) as requirements unless the client explicitly accepts them as an alternative to SNI.
 
 Use [Arch Studio specification formatting](../../rules/csi-formatting.md). Cover the actual requested materials and applications; consolidate duplicates only when the accepted scope supports it. Preserve client template, units and terminology. Draft required submittals, accepted products/performance and execution/verification expectations from sourced project evidence. Distinguish proposed design requirements from adopted requirements and manufacturer claims. Cite exact standards/editions only after original verification.
 

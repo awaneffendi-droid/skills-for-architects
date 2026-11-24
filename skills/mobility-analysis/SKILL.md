@@ -60,7 +60,7 @@ remains separately authorized.
 
 Before routing, read the [shared applicability contract](../../docs/geographic-applicability.md) and this component's [declaration](../../corpus/geographic-applicability.json). One-off requests do not require a project.
 
-The research method is portable; transit and accessibility data coverage are not. Resolve the selected site's jurisdiction, reuse relevant supplied/project context, and clarify conflicts. Use locally applicable sources outside NYC/US; do not substitute NYC data. Ask for analysis date, use, or work scope only when material, and retain unavailable or unverified findings.
+The research method is portable; transit and accessibility data coverage are not. Resolve the selected site's jurisdiction, reuse relevant supplied/project context, and clarify conflicts. Indonesian national sources (for example BMKG, BNPB, BPS, BIG) are registered in the catalog; for a site outside Indonesia use that country’s sources and never substitute Indonesian data. Ask for analysis date, use, or work scope only when material, and retain unavailable or unverified findings.
 
 ## Project context
 
@@ -90,12 +90,12 @@ Run 2–4 targeted web searches, fetch the most relevant results, and extract th
 ### Transit & Access
 
 Search for transportation data near the site:
-- **Public transit**: Nearest bus stops, metro/subway stations, commuter rail, ferry — with walking distance and travel time
-- **Major roads**: Highways, arterials, key intersections
-- **Walk Score / Bike Score / Transit Score**: From walkscore.com if available
+- **Public transit**: Nearest bus/BRT stops (e.g. Transjakarta, Trans Metro), KRL Commuter Line, MRT/LRT stations, angkot routes, ferry — with walking distance and travel time
+- **Major roads**: Jalan tol and exits, jalan arteri/kolektor, key intersections; road status (nasional/provinsi/kabupaten) affects GSB and access permits
+- **Andalalin**: Whether the development likely needs an Analisis Dampak Lalu Lintas under the Kemenhub regulation in force (perlu verifikasi), and ambulance/emergency access routes for hospitals
 - **Airport**: Nearest commercial airport(s) and approximate drive time
 - **Pedestrian infrastructure**: Sidewalks, bike lanes, protected paths, trails nearby
-- **Bike share**: Nearest docking stations (Citi Bike, etc.)
+- **Ride-hailing and drop-off**: Ojek/taxi drop-off demand and pick-up bays, which matter for hospitals and clinics
 - **Parking**: Public parking availability, street parking character
 
 ## Output Format
@@ -111,7 +111,7 @@ Write the analysis to a markdown file at `./mobility-analysis-[location-slug].md
 
 | Metric | Score |
 |--------|-------|
-| Walk Score | [score] / 100 |
+| Andalalin category | [category or unresolved] |
 | Transit Score | [score] / 100 |
 | Bike Score | [score] / 100 |
 
@@ -153,21 +153,21 @@ Write the analysis to a markdown file at `./mobility-analysis-[location-slug].md
 ## Gaps & Caveats
 
 - [List anything that could not be verified or found]
-- [Note where Walk Score data is approximate]
+- [Note where transit or traffic data is approximate]
 ```
 
 ## Sources and evidence
 
 Find relevant original links in [the source catalog](../../corpus/sources/catalog.json), filtered by geography and topic. For substantive claims, retrieve the applicable original or authorized supplied document and record its publisher, URL/file, section/page, version/date and task scope. A linked or reachable source is not proof of applicability. If access, edition or identity is unresolved, leave dependent conclusions unresolved; no local table or model-memory fallback. Keep task evidence in the authorized workspace, outside the plugin.
 
-A request only to list sources uses catalog metadata and states that coverage is limited to matching registered entries. It needs no source-content retrieval, setup or approval. Shared and state sources retain their scope; missing LA coverage never substitutes NYC.
+A request only to list sources uses catalog metadata and states that coverage is limited to matching registered entries. It needs no source-content retrieval, setup or approval. National and provincial sources retain their scope; a missing kabupaten/kota source is a gap and never substitutes another region’s data.
 
 ## Guidelines
 
 - **Be factual.** Every claim should come from a search result. If you cannot find data, say "Not found in public sources" rather than guessing.
 - **Cite sources.** Include URLs in the Sources section for every page you pulled data from.
-- **Only use governmental, transit authority, or non-profit sources.** Do not cite commercial mapping or real estate platforms. Walk Score is the single sanctioned exception, for its Walk/Transit/Bike scores only (see Preferred Sources).
+- **Only use governmental, transit authority, or non-profit sources.** Do not cite commercial mapping or real estate platforms. Map services may be used only to measure distances, never as the source of a regulatory or transit-service claim.
 - **Be concise.** Use tables for quantitative data, bullet points for lists. No filler.
-- **Include distances.** Always state walking distance in miles/km and estimated walk time for transit stops.
-- **Use local units.** Imperial for US sites, metric for international sites. Include conversions in parentheses when useful.
+- **Include distances.** Always state walking distance in metres/km and estimated walk time for transit stops.
+- **Use metric units.** Metres, square metres, °C, mm rainfall and IDR for Indonesian sites. Convert supplied imperial values explicitly.
 - **Ask once, then work.** After confirming the location, do all the research without interrupting the user. Present the finished brief.

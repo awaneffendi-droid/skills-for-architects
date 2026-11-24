@@ -388,14 +388,7 @@ fi
 #    grow it when a new regulatory skill ships.
 echo "→ disclaimer marker in regulatory skills"
 REGULATORY_SKILLS="
-nyc-landmarks
-nyc-dob-permits
-nyc-dob-violations
-nyc-acris
-nyc-hpd
-nyc-bsa
-nyc-property-report
-zoning-analysis-nyc
+zoning-analysis-id
 zoning-envelope
 occupancy-calculator
 epd-to-spec

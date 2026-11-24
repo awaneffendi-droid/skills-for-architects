@@ -14,7 +14,7 @@
   "dependencies": [],
   "coverage": {
     "jurisdictions": [],
-    "limitations": "Existing HTML presentation, palette and image procedures are available. Rendering and image operations require host capabilities. Zoning-envelope use inherits NYC zoning context. No cluster-wide execution or rendered-workflow validation is claimed.",
+    "limitations": "Existing HTML presentation, palette and image procedures are available. Rendering and image operations require host capabilities. Zoning-envelope use inherits the Indonesian zoning analysis context. No cluster-wide execution or rendered-workflow validation is claimed.",
     "sources_indexed": false,
     "procedures_available": true,
     "execution_implemented": false,

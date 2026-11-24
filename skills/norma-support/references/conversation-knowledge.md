@@ -39,23 +39,16 @@ For questions asking what Arch Studio offers, use this catalog to name skills an
 | proposal | Maintain project-local proposals with protected issued terms and flexible lifecycle records |
 | agreement | Maintain sourced agreement context and check work against its scope |
 | invoice | Record user-directed invoices with cap warnings and gap detection |
-| architecture-knowledge | Source-backed US practice terminology: “What is a CD set?”, AIA relationships, and CSI/NCS context |
-| nyc-landmarks | LPC landmark and historic district check |
-| nyc-dob-permits | DOB permit and filing history |
-| nyc-dob-violations | DOB and ECB violations |
-| nyc-acris | ACRIS property transaction records |
-| nyc-hpd | HPD violations, complaints, and registration |
-| nyc-bsa | BSA variances and special permits |
-| nyc-property-report | Combined NYC property report |
-| environmental-analysis | Climate, wind, sun, flood, seismic, and soil research |
+| architecture-knowledge | Source-backed Indonesian practice terminology: DED, RKS, UU Arsitek/STRA, IAI, jasa konstruksi and pengadaan |
+| environmental-analysis | Climate (BMKG), sun, flood and disaster risk (InaRISK), seismic (SNI 1726), and soil research |
 | mobility-analysis | Transit, walkability, cycling, and pedestrian infrastructure |
-| demographics-analysis | Population, income, age, housing, and employment |
-| site-history | Neighborhood context, landmarks, activity, and planned development |
-| zoning-analysis-nyc | NYC FAR, height, setback, and use analysis |
+| demographics-analysis | Population, income, age, housing, and employment (BPS) |
+| site-history | Neighborhood context, cagar budaya, activity, and planned development |
+| zoning-analysis-id | Indonesian RDTR use (ITBX), KDB, KLB, KDH, KTB, GSB and height analysis |
 | zoning-envelope | Self-contained interactive 3D zoning envelope |
 | workplace-programmer | Workplace programs from headcount and work style |
-| occupancy-calculator | IBC occupancy loads, egress, exits, and plumbing fixtures |
-| spec-writer | Project Manual specification sections with review markers |
+| occupancy-calculator | Occupant loads (beban hunian) and egress inputs from Permen PU 26/PRT/M/2008 and SNI 03-1746-2000 |
+| spec-writer | RKS specification sections with SNI references and review markers |
 | epd-parser | Extract environmental data from EPD PDFs |
 | epd-research | Research EPD registries by material or category |
 | epd-compare | Compare environmental impacts and LEED eligibility |

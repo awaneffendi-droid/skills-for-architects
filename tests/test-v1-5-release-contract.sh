@@ -18,10 +18,10 @@ assert plugin['description'].startswith('Arch Studio —')
 assert marketplace['plugins'][0]['description'].startswith('Arch Studio —')
 components = json.loads(Path('corpus/components.json').read_text())['components']
 skills = {item['id'] for item in components if item['category'] == 'skills'}
-assert len(skills) == 61
+assert len(skills) == 54
 assert 'skill:ffe-spec-book' in skills and 'skill:spec-book' not in skills
 assert not Path('skills/spec-book').exists()
-assert '61 skills' in Path('rules/terminology.md').read_text()
+assert '54 skills' in Path('rules/terminology.md').read_text()
 PY
 
 grep -q '^## \[Unreleased\]$' CHANGELOG.md

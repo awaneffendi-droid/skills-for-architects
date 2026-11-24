@@ -1,7 +1,7 @@
 {
   "name": "as",
   "version": "1.5.3",
-  "description": "Arch Studio — governed AEC skills and portable studio workflows for Codex and Claude Code: initialize a studio workspace, create registered projects, maintain linked project records, or route work across NYC due diligence, site planning, zoning, programming, specifications, sustainability, FF&E, materials research, and presentations.",
+  "description": "Arch Studio — governed AEC skills and portable studio workflows for Codex and Claude Code: initialize a studio workspace, create registered projects, maintain linked project records, or route work across site planning, zoning, programming, specifications, sustainability, FF&E, materials research, and presentations.",
   "author": {
     "name": "ALPA",
     "url": "https://alpa.llc"
@@ -9,7 +9,7 @@
   "keywords": [
     "architecture",
     "AEC",
-    "nyc",
+    "indonesia",
     "due-diligence",
     "zoning",
     "site-planning",

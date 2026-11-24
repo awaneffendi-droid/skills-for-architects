@@ -25,7 +25,7 @@ Use [project context](../project/references/context-resolution.md) only when the
 
 Find relevant original links in [the source catalog](../../corpus/sources/catalog.json), filtered by geography and topic. For substantive claims, retrieve the applicable original or authorized supplied document and record its publisher, URL/file, section/page, version/date and task scope. A linked or reachable source is not proof of applicability. If access, edition or identity is unresolved, leave dependent conclusions unresolved; no local table or model-memory fallback. Keep task evidence in the authorized workspace, outside the plugin.
 
-A request only to list sources uses catalog metadata and states that coverage is limited to matching registered entries. It needs no source-content retrieval, setup or approval. Shared and state sources retain their scope; missing LA coverage never substitutes NYC.
+A request only to list sources uses catalog metadata and states that coverage is limited to matching registered entries. It needs no source-content retrieval, setup or approval. National and provincial sources retain their scope; a missing kabupaten/kota source is a gap and never substitutes another region’s data.
 ## Develop the program
 
 Use the supplied headcount, anticipated attendance, work activities, available area, accessibility needs and budget constraints. Ask only for consequential missing inputs and keep independent authorized work moving. Read an explicitly supplied program.json as task state; its prior assumptions are not research evidence.

@@ -14,7 +14,11 @@ geo = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(geo)
 
 
-def location(jurisdiction='jurisdiction:us-ny-nyc', origin='request', status='resolved'):
+KABKOTA = 'jurisdiction:id-bt-kota-tangerang'
+FULL = {'as_of': '2026-09-07', 'use': 'hospital', 'work_scope': 'new building'}
+
+
+def location(jurisdiction=KABKOTA, origin='request', status='resolved'):
     return {'jurisdiction': jurisdiction, 'target': 'selected-site', 'origin': origin,
             'status': status, 'evidence': 'Synthetic supplied location; not geocoded'}
 
@@ -23,8 +27,10 @@ class GeographicApplicability(unittest.TestCase):
     def setUp(self):
         self.catalog = geo.load(ROOT)
 
-    def request(self, component='skill:nyc-acris', **fields):
-        return {'schema_version': 1, 'component': component, 'locations': [location()], **fields}
+    def request(self, component='skill:zoning-analysis-id', **fields):
+        base = dict(FULL) if component == 'skill:zoning-analysis-id' else {}
+        base.update(fields)
+        return {'schema_version': 1, 'component': component, 'locations': [location()], **base}
 
     def assess(self, request):
         result = geo.assess(self.catalog, request, ROOT)
@@ -41,16 +47,16 @@ class GeographicApplicability(unittest.TestCase):
 
     def test_catalog_is_closed_and_rejects_missing_unknown_or_unsafe_declarations(self):
         for mutate in [lambda d: d.update(grants_execution=True),
-                       lambda d: d['components'].pop('skill:nyc-acris'),
+                       lambda d: d['components'].pop('skill:zoning-analysis-id'),
                        lambda d: d['components'].update({'skill:invented': 'portable'}),
-                       lambda d: d['components'].update({'skill:nyc-acris': 'worldwide'}),
+                       lambda d: d['components'].update({'skill:zoning-analysis-id': 'worldwide'}),
                        lambda d: d['references'][0].update(path='../outside')]:
             document = copy.deepcopy(self.catalog)
             mutate(document)
             with self.assertRaises(ValueError):
                 geo.validate(document, ROOT)
 
-    def test_one_off_nyc_requires_no_project_or_persistence(self):
+    def test_one_off_indonesian_site_requires_no_project_or_persistence(self):
         with tempfile.TemporaryDirectory() as directory:
             before = list(Path(directory).iterdir())
             result = subprocess.run([sys.executable, str(ROOT / 'tools/validators/geographic_applicability.py'),
@@ -60,18 +66,18 @@ class GeographicApplicability(unittest.TestCase):
             self.assertEqual(json.loads(result.stdout)['status'], 'procedure-supported')
             self.assertEqual(list(Path(directory).iterdir()), before)
 
-    def test_explicit_non_nyc_never_uses_nyc_procedure_even_with_identifier(self):
-        for jurisdiction in ['jurisdiction:us-ma-boston', 'jurisdiction:uy-montevideo']:
+    def test_explicit_non_indonesian_site_never_uses_indonesian_procedure_even_with_identifier(self):
+        for jurisdiction in ['jurisdiction:my-kuala-lumpur', 'jurisdiction:uy-montevideo']:
             result = self.assess(self.request(locations=[location(jurisdiction)], identifier='1000770001'))
             self.assertEqual(result['status'], 'unsupported')
 
     def test_missing_ambiguous_and_studio_only_locations_require_context(self):
         for locations in [[], [location(status='ambiguous')], [location(origin='studio-default')],
-                          [location('jurisdiction:us-ny')]]:
+                          [location('jurisdiction:id')], [location('jurisdiction:id-bt')]]:
             self.assertEqual(self.assess(self.request(locations=locations))['status'], 'context-required')
 
     def test_conflicting_project_and_request_targets_require_resolution(self):
-        locations = [location(), location('jurisdiction:us-ma-boston', origin='project')]
+        locations = [location(), location('jurisdiction:id-bt-kabupaten-tangerang', origin='project')]
         self.assertEqual(self.assess(self.request(locations=locations))['status'], 'context-required')
         second = location(origin='project')
         second['target'] = 'different-site'
@@ -81,7 +87,7 @@ class GeographicApplicability(unittest.TestCase):
         locations = [location(origin='studio-default'), location('jurisdiction:uy-montevideo')]
         self.assertEqual(self.assess(self.request(locations=locations))['status'], 'unsupported')
 
-    def test_portable_methods_and_general_research_do_not_inherit_nyc_cluster_scope(self):
+    def test_portable_methods_and_general_research_do_not_inherit_indonesian_cluster_scope(self):
         self.assertEqual(self.assess(self.request('skill:workplace-programmer', locations=[]))['status'], 'procedure-supported')
         for component in ['environmental-analysis', 'mobility-analysis', 'demographics-analysis', 'site-history']:
             result = self.assess(self.request('skill:' + component, locations=[location('jurisdiction:uy-montevideo')]))
@@ -89,7 +95,7 @@ class GeographicApplicability(unittest.TestCase):
             self.assertEqual(result['source_verification'], 'required')
 
     def test_regulatory_route_requires_material_date_use_and_work_scope(self):
-        complete = self.request('skill:zoning-analysis-nyc', as_of='2026-09-07', use='office', work_scope='new building')
+        complete = self.request('skill:zoning-analysis-id')
         for field in ['as_of', 'use', 'work_scope']:
             request = dict(complete)
             request.pop(field)
@@ -97,10 +103,13 @@ class GeographicApplicability(unittest.TestCase):
         self.assertEqual(self.assess(complete)['status'], 'procedure-supported')
         self.assertEqual(self.assess(complete)['source_verification'], 'required')
 
-    def test_non_us_occupancy_requires_supplied_local_table(self):
+    def test_occupancy_requires_retrieved_local_table_everywhere(self):
+        for jurisdiction in [KABKOTA, 'jurisdiction:uy-montevideo']:
+            request = self.request('skill:occupancy-calculator', locations=[location(jurisdiction)],
+                                   as_of='2026-09-07', use='rawat inap', work_scope='occupant load')
+            self.assertEqual(self.assess(request)['status'], 'context-required')
         request = self.request('skill:occupancy-calculator', locations=[location('jurisdiction:uy-montevideo')],
                                as_of='2026-09-07', use='office', work_scope='occupant load')
-        self.assertEqual(self.assess(request)['status'], 'context-required')
         request['local_rule_reference'] = 'Supplied local table, exact section retained by host'
         self.assertEqual(self.assess(request)['status'], 'procedure-supported')
         self.assertEqual(self.assess(request)['source_verification'], 'required')
@@ -146,22 +155,20 @@ class GeographicApplicability(unittest.TestCase):
 
     def test_unknown_date_location_or_execution_claims_do_not_sneak_through(self):
         for patch in [{'as_of': '2023-02-29'}, {'as_of': 'now'}, {'legal_applicability': 'verified'},
-                      {'locations': [{'jurisdiction': 'New York'}]}, {'component': 'skill:invented'}]:
+                      {'locations': [{'jurisdiction': 'Tangerang'}]}, {'component': 'skill:invented'}]:
             with self.assertRaises(ValueError):
                 self.assess(self.request(**patch))
 
-    def test_source_health_and_us_explanations_never_claim_applicability(self):
+    def test_source_health_and_practice_explanations_never_claim_applicability(self):
         for component in ['tool:source-health', 'skill:architecture-knowledge']:
             result = self.assess(self.request(component, locations=[]))
             self.assertEqual(result['status'], 'procedure-supported')
             self.assertIn('limitation', result)
 
     def test_selected_docs_link_shared_gate_and_keep_flat_names(self):
-        for name in ['zoning-analysis-nyc', 'occupancy-calculator', 'environmental-analysis',
+        for name in ['zoning-analysis-id', 'occupancy-calculator', 'environmental-analysis',
                      'mobility-analysis', 'demographics-analysis', 'site-history', 'zoning-envelope']:
             self.assertIn('../../docs/geographic-applicability.md', (ROOT / 'skills' / name / 'SKILL.md').read_text())
-        shared = (ROOT / 'skills/nyc-property-report/pluto-resolution.md').read_text()
-        self.assertIn('../../docs/geographic-applicability.md', shared)
 
 
 if __name__ == '__main__':

@@ -60,7 +60,7 @@ remains separately authorized.
 
 Before routing, read the [shared applicability contract](../../docs/geographic-applicability.md) and this component's [declaration](../../corpus/geographic-applicability.json). One-off requests do not require a project.
 
-The research method is portable; census geographies and dataset coverage are not. Resolve the selected site's jurisdiction, reuse relevant supplied/project context, and clarify conflicts. Use locally applicable sources outside NYC/US; do not substitute NYC data. Ask for analysis date, use, or work scope only when material, and retain unavailable or unverified findings.
+The research method is portable; census geographies and dataset coverage are not. Resolve the selected site's jurisdiction, reuse relevant supplied/project context, and clarify conflicts. Indonesian national sources (for example BMKG, BNPB, BPS, BIG) are registered in the catalog; for a site outside Indonesia use that country’s sources and never substitute Indonesian data. Ask for analysis date, use, or work scope only when material, and retain unavailable or unverified findings.
 
 ## Project context
 
@@ -89,12 +89,12 @@ Run 2–4 targeted web searches, fetch the most relevant results, and extract th
 
 ### Demographics & Market
 
-Search for demographic data for the census tract, ZIP code, or municipality:
-- **Population**: Current population and density (per sq mi or sq km)
+Search for demographic data for the kelurahan/desa, kecamatan or kabupaten/kota (BPS "Kecamatan Dalam Angka" / "Kabupaten/Kota Dalam Angka" and Sensus Penduduk 2020):
+- **Population**: Current population and density (jiwa per km²)
 - **Growth**: Population trend over last 10 years, projected growth
-- **Median household income**: And comparison to metro/national median
+- **Income and spending**: Per-capita expenditure, PDRB per kapita or UMK (upah minimum kabupaten/kota), compared with the province and national figures; amounts in IDR
 - **Age distribution**: Median age, notable cohort concentrations
-- **Racial/ethnic composition**: If publicly available from census data
+- **Health context** (for healthcare projects): Faskes counts, hospital beds per 1,000 population, and BPJS Kesehatan coverage where published by Dinas Kesehatan or BPS
 - **Housing**: Median home price, rental rates, housing stock character
 - **Employment**: Major employers nearby, unemployment rate, dominant industries
 - **Education**: Attainment levels if available
@@ -123,7 +123,7 @@ Write the analysis to a markdown file at `./demographics-analysis-[location-slug
 ## Population
 
 ### Current Population
-[Population, density, geographic scope (ZIP, census tract, neighborhood)]
+[Population, density, geographic scope (kelurahan/desa, kecamatan, kabupaten/kota)]
 
 ### Growth Trends
 [10-year trend, projected growth]
@@ -142,7 +142,7 @@ Write the analysis to a markdown file at `./demographics-analysis-[location-slug
 [Median age, cohort breakdown]
 
 ### Racial/Ethnic Composition
-[Census data if available]
+[BPS / Sensus Penduduk data if available]
 
 ## Housing Market
 
@@ -161,7 +161,7 @@ Write the analysis to a markdown file at `./demographics-analysis-[location-slug
 ## Gaps & Caveats
 
 - [List anything that could not be verified or found]
-- [Flag data vintage (ACS year, Census year)]
+- [Flag data vintage (BPS publication year, Sensus Penduduk 2020, SUSENAS year)]
 - [Note geographic boundary differences between sources]
 ```
 
@@ -169,7 +169,7 @@ Write the analysis to a markdown file at `./demographics-analysis-[location-slug
 
 Find relevant original links in [the source catalog](../../corpus/sources/catalog.json), filtered by geography and topic. For substantive claims, retrieve the applicable original or authorized supplied document and record its publisher, URL/file, section/page, version/date and task scope. A linked or reachable source is not proof of applicability. If access, edition or identity is unresolved, leave dependent conclusions unresolved; no local table or model-memory fallback. Keep task evidence in the authorized workspace, outside the plugin.
 
-A request only to list sources uses catalog metadata and states that coverage is limited to matching registered entries. It needs no source-content retrieval, setup or approval. Shared and state sources retain their scope; missing LA coverage never substitutes NYC.
+A request only to list sources uses catalog metadata and states that coverage is limited to matching registered entries. It needs no source-content retrieval, setup or approval. National and provincial sources retain their scope; a missing kabupaten/kota source is a gap and never substitutes another region’s data.
 
 ## Guidelines
 
@@ -177,7 +177,7 @@ A request only to list sources uses catalog metadata and states that coverage is
 - **Cite sources.** Include URLs in the Sources section for every page you pulled data from.
 - **Only use governmental, university, or non-profit sources.** Do not cite commercial real estate platforms, ad-supported aggregators, or crowd-sourced neighborhood sites.
 - **Be concise.** Use tables for quantitative data, bullet points for lists. No filler.
-- **Note data vintage.** Always state the year/source of demographic data (e.g., "2020 Census" or "ACS 2019-2023").
+- **Note data vintage.** Always state the year/source of demographic data (e.g., "Sensus Penduduk 2020" or "BPS, Kecamatan X Dalam Angka 2025").
 - **Compare to benchmarks.** Always compare income, prices, and growth to metro and national figures.
-- **Use local units.** Imperial for US sites, metric for international sites. Include conversions in parentheses when useful.
+- **Use metric units.** Metres, square metres, °C, mm rainfall and IDR for Indonesian sites. Convert supplied imperial values explicitly.
 - **Ask once, then work.** After confirming the location, do all the research without interrupting the user. Present the finished brief.

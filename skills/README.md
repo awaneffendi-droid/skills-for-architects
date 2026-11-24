@@ -39,31 +39,19 @@ Project records form a linked graph of plain files. `/as:project` is the setup a
 
 | Skill | Description |
 |-------|-------------|
-| [`/as:architecture-knowledge`](./architecture-knowledge) | Source-backed US practice terminology: “What is a CD set?”, AIA relationships, and CSI/NCS context |
+| [`/as:architecture-knowledge`](./architecture-knowledge) | Source-backed Indonesian practice terminology: DED, RKS, UU Arsitek/STRA, IAI, jasa konstruksi and pengadaan |
 
 ## Practice and design
-
-### Due diligence
-
-| Skill | Description |
-|-------|-------------|
-| [`/as:nyc-landmarks`](./nyc-landmarks) | LPC landmark and historic district check |
-| [`/as:nyc-dob-permits`](./nyc-dob-permits) | DOB permit and filing history |
-| [`/as:nyc-dob-violations`](./nyc-dob-violations) | DOB and ECB violations |
-| [`/as:nyc-acris`](./nyc-acris) | ACRIS property transaction records |
-| [`/as:nyc-hpd`](./nyc-hpd) | HPD violations, complaints, and registration |
-| [`/as:nyc-bsa`](./nyc-bsa) | BSA variances and special permits |
-| [`/as:nyc-property-report`](./nyc-property-report) | Combined NYC property report |
 
 ### Site and zoning
 
 | Skill | Description |
 |-------|-------------|
-| [`/as:environmental-analysis`](./environmental-analysis) | Climate, wind, sun, flood, seismic, and soil research |
+| [`/as:environmental-analysis`](./environmental-analysis) | Climate (BMKG), sun, flood and disaster risk (InaRISK), seismic (SNI 1726), and soil research |
 | [`/as:mobility-analysis`](./mobility-analysis) | Transit, walkability, cycling, and pedestrian infrastructure |
-| [`/as:demographics-analysis`](./demographics-analysis) | Population, income, age, housing, and employment |
-| [`/as:site-history`](./site-history) | Neighborhood context, landmarks, activity, and planned development |
-| [`/as:zoning-analysis-nyc`](./zoning-analysis-nyc) | NYC FAR, height, setback, and use analysis |
+| [`/as:demographics-analysis`](./demographics-analysis) | Population, income, age, housing, and employment (BPS) |
+| [`/as:site-history`](./site-history) | Neighborhood context, cagar budaya, activity, and planned development |
+| [`/as:zoning-analysis-id`](./zoning-analysis-id) | Indonesian RDTR use (ITBX), KDB, KLB, KDH, KTB, GSB and height analysis |
 | [`/as:zoning-envelope`](./zoning-envelope) | Self-contained interactive 3D zoning envelope |
 
 ### Programming and specifications
@@ -71,8 +59,8 @@ Project records form a linked graph of plain files. `/as:project` is the setup a
 | Skill | Description |
 |-------|-------------|
 | [`/as:workplace-programmer`](./workplace-programmer) | Workplace programs from headcount and work style |
-| [`/as:occupancy-calculator`](./occupancy-calculator) | IBC occupancy loads, egress, exits, and plumbing fixtures |
-| [`/as:spec-writer`](./spec-writer) | Project Manual specification sections with review markers |
+| [`/as:occupancy-calculator`](./occupancy-calculator) | Occupant loads (beban hunian) and egress inputs from Permen PU 26/PRT/M/2008 and SNI 03-1746-2000 |
+| [`/as:spec-writer`](./spec-writer) | RKS specification sections with SNI references and review markers |
 
 ### Sustainability
 

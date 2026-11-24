@@ -3,9 +3,9 @@
   "id": "cluster:site-zoning",
   "name": "Site & Zoning",
   "maintainer": "Arch Studio maintainers",
-  "scope": "Existing NYC zoning and general site investigation procedures.",
+  "scope": "Indonesian RDTR/zoning analysis and general site investigation procedures.",
   "members": [
-    "skill:zoning-analysis-nyc",
+    "skill:zoning-analysis-id",
     "skill:zoning-envelope",
     "skill:environmental-analysis",
     "skill:mobility-analysis",
@@ -19,9 +19,9 @@
   "dependencies": [],
   "coverage": {
     "jurisdictions": [
-      "jurisdiction:us-ny-nyc"
+      "jurisdiction:id"
     ],
-    "limitations": "Indexed NYC Zoning Resolution, PLUTO and selected site sources support navigation for existing procedures; original retrieval is required for current applicable provisions. General site research requires location-specific sources. Source reachability checks use available authorized host facilities and do not establish legal applicability. Retained source-health tools are maintainer/historical inventory; no cluster-wide workflow validation is claimed.",
+    "limitations": "Indexed national spatial portals (GISTARU, Tanah Air Indonesia), JDIH databases and selected hazard, climate and statistics sources support navigation for existing procedures; the controlling kabupaten/kota RDTR or RTRW text and KRK must be retrieved for current applicable provisions. General site research requires location-specific sources. Source reachability checks use available authorized host facilities and do not establish legal applicability. Retained source-health tools are maintainer/historical inventory; no cluster-wide workflow validation is claimed.",
     "sources_indexed": true,
     "procedures_available": true,
     "execution_implemented": false,

@@ -60,7 +60,7 @@ remains separately authorized.
 
 Before routing, read the [shared applicability contract](../../docs/geographic-applicability.md) and this component's [declaration](../../corpus/geographic-applicability.json). One-off requests do not require a project.
 
-The research method is portable; archival and planning-source coverage are not. Resolve the selected site's jurisdiction, reuse relevant supplied/project context, and clarify conflicts. Use locally applicable sources outside NYC/US; do not substitute NYC data. Ask for analysis date, use, or work scope only when material, and retain unavailable or unverified findings.
+The research method is portable; archival and planning-source coverage are not. Resolve the selected site's jurisdiction, reuse relevant supplied/project context, and clarify conflicts. Indonesian national sources (for example BMKG, BNPB, BPS, BIG) are registered in the catalog; for a site outside Indonesia use that country’s sources and never substitute Indonesian data. Ask for analysis date, use, or work scope only when material, and retain unavailable or unverified findings.
 
 ## Project context
 
@@ -92,12 +92,12 @@ Run 3–5 targeted web searches, fetch the most relevant results, and extract th
 Search for information about the immediate surroundings:
 - **Adjacent land uses**: What's north, south, east, west of the site
 - **Neighborhood character**: Architectural style, building ages, density pattern, streetscape
-- **Historic districts**: Landmark designations, historic district boundaries, contributing building status
+- **Cagar budaya**: Registered cultural heritage objects, sites and kawasan under UU 11/2010 tentang Cagar Budaya (Registrasi Nasional Cagar Budaya and the kabupaten/kota list); state registration status and date
 - **Neighborhood history**: How the area developed, key periods of construction, demographic shifts
 - **Landmarks**: Notable buildings, parks, institutions within ~1 km
 - **Commercial activity**: Retail corridors, restaurants, services, nightlife nearby
 - **Planned development**: Major projects approved or under construction in the area
-- **Community**: Neighborhood associations, community boards, local governance
+- **Community**: RT/RW, kelurahan and kecamatan offices, local community organizations
 - **Safety**: General crime context if publicly available
 
 ## Output Format
@@ -174,7 +174,7 @@ Write the analysis to a markdown file at `./site-history-[location-slug].md`.
 
 Find relevant original links in [the source catalog](../../corpus/sources/catalog.json), filtered by geography and topic. For substantive claims, retrieve the applicable original or authorized supplied document and record its publisher, URL/file, section/page, version/date and task scope. A linked or reachable source is not proof of applicability. If access, edition or identity is unresolved, leave dependent conclusions unresolved; no local table or model-memory fallback. Keep task evidence in the authorized workspace, outside the plugin.
 
-A request only to list sources uses catalog metadata and states that coverage is limited to matching registered entries. It needs no source-content retrieval, setup or approval. Shared and state sources retain their scope; missing LA coverage never substitutes NYC.
+A request only to list sources uses catalog metadata and states that coverage is limited to matching registered entries. It needs no source-content retrieval, setup or approval. National and provincial sources retain their scope; a missing kabupaten/kota source is a gap and never substitutes another region’s data.
 
 ## Guidelines
 
@@ -182,7 +182,7 @@ A request only to list sources uses catalog metadata and states that coverage is
 - **Cite sources.** Include URLs in the Sources section for every page you pulled data from.
 - **Only use governmental, university, museum, or non-profit sources.** Do not cite commercial real estate sites, neighborhood blogs, or ad-supported aggregators.
 - **Be concise.** Use tables for quantitative data, bullet points for lists, short paragraphs for narrative. No filler.
-- **Be specific about distance.** State distances to landmarks, transit, and commercial corridors in miles/km.
+- **Be specific about distance.** State distances to landmarks, transit, and commercial corridors in metres/km.
 - **Name architectural styles.** Use correct terminology (Italianate, Neo-Grec, Federal, Art Deco, etc.) when describing building stock.
-- **Use local units.** Imperial for US sites, metric for international sites. Include conversions in parentheses when useful.
+- **Use metric units.** Metres, square metres, °C, mm rainfall and IDR for Indonesian sites. Convert supplied imperial values explicitly.
 - **Ask once, then work.** After confirming the location, do all the research without interrupting the user. Present the finished brief.
