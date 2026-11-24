@@ -2,27 +2,27 @@
   "schema_version": 1,
   "jurisdictions": [
     {
-      "id": "jurisdiction:us",
-      "name": "United States",
+      "id": "jurisdiction:id",
+      "name": "Indonesia",
       "parent": null,
-      "coverage": "routing-only"
-    },
-    {
-      "id": "jurisdiction:us-ny",
-      "name": "New York State",
-      "parent": "jurisdiction:us",
-      "coverage": "routing-only"
-    },
-    {
-      "id": "jurisdiction:us-ny-nyc",
-      "name": "New York City",
-      "parent": "jurisdiction:us-ny",
       "coverage": "selected-existing-procedures"
     },
     {
-      "id": "jurisdiction:us-nj",
-      "name": "New Jersey",
-      "parent": "jurisdiction:us",
+      "id": "jurisdiction:id-jk",
+      "name": "Daerah Khusus Jakarta",
+      "parent": "jurisdiction:id",
+      "coverage": "routing-only"
+    },
+    {
+      "id": "jurisdiction:id-jb",
+      "name": "Jawa Barat",
+      "parent": "jurisdiction:id",
+      "coverage": "routing-only"
+    },
+    {
+      "id": "jurisdiction:id-bt",
+      "name": "Banten",
+      "parent": "jurisdiction:id",
       "coverage": "routing-only"
     }
   ]

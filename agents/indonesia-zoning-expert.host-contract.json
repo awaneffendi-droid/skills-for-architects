@@ -1,6 +1,6 @@
 {
-  "path": "agents/nyc-zoning-expert.md",
-  "responsibility": "Coordinate NYC property research, zoning analysis and requested envelope visualization using applicable original agency sources.",
+  "path": "agents/indonesia-zoning-expert.md",
+  "responsibility": "Coordinate Indonesian site research, RDTR/zoning analysis and requested envelope visualization using applicable original government sources.",
   "inputs": "Original task, selected sources, exact targets, permissions and result evidence; delegates inherit these constraints.",
   "owned_records": [],
   "non_owned_records": [

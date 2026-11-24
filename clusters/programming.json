@@ -14,9 +14,9 @@
   "dependencies": [],
   "coverage": {
     "jurisdictions": [
-      "jurisdiction:us-ny-nyc"
+      "jurisdiction:id"
     ],
-    "limitations": "The NYC Construction Codes index is linked for jurisdiction-checked occupancy work; it is not a selected edition, occupant-load table or general geographic coverage guarantee. Workplace programming remains a general procedure. No cluster-wide executable calculation or validated workflow is claimed.",
+    "limitations": "JDIH and BSN routes are linked for jurisdiction-checked occupancy work (Permen PU 26/PRT/M/2008, SNI 03-1746-2000); they are not a selected edition, occupant-load table or general geographic coverage guarantee. Workplace programming remains a general procedure. No cluster-wide executable calculation or validated workflow is claimed.",
     "sources_indexed": true,
     "procedures_available": true,
     "execution_implemented": false,

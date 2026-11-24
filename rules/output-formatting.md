@@ -18,10 +18,10 @@ These conventions govern how skill outputs are structured and presented.
 ## Source Attribution
 
 - Cite the source for every data point that comes from an external database or API:
-  - Census data: "Source: U.S. Census Bureau, ACS 2020 5-Year Estimates"
-  - NYC data: "Source: NYC Open Data, [dataset name]"
-  - Environmental: "Source: NOAA Climate Normals 1991–2020"
-  - Zoning: "Source: NYC DCP PLUTO 24v1"
+  - Statistics: "Sumber: BPS, Kecamatan [nama] Dalam Angka [tahun]"
+  - Hazard data: "Sumber: BNPB, InaRISK, diakses [tanggal]"
+  - Climate: "Sumber: BMKG, Stasiun [nama], data [periode]"
+  - Zoning: "Sumber: Perda/Perkada [kabupaten/kota] Nomor [x] Tahun [y] tentang RDTR [kawasan], Lampiran [n]"
 - Place sources at the end of each section or in a footnote — not inline in every sentence
 
 ## File Output

@@ -60,7 +60,7 @@ remains separately authorized.
 
 Before routing, read the [shared applicability contract](../../docs/geographic-applicability.md) and this component's [declaration](../../corpus/geographic-applicability.json). One-off requests do not require a project.
 
-The research method is portable; dataset and hazard coverage are not. Resolve the selected site's jurisdiction, reuse relevant supplied/project context, and clarify conflicts. Use locally applicable sources outside NYC/US; do not substitute NYC data. Ask for analysis date, use, or work scope only when material, and retain unavailable or unverified findings.
+The research method is portable; dataset and hazard coverage are not. Resolve the selected site's jurisdiction, reuse relevant supplied/project context, and clarify conflicts. Indonesian national sources (for example BMKG, BNPB, BPS, BIG) are registered in the catalog; for a site outside Indonesia use that country’s sources and never substitute Indonesian data. Ask for analysis date, use, or work scope only when material, and retain unavailable or unverified findings.
 
 ## Project context
 
@@ -91,22 +91,22 @@ Cover the environmental topics material to the requested scope using applicable 
 
 Search for climate data for the city/region:
 - **Temperature**: Average highs/lows by month or season, record extremes
-- **Precipitation**: Annual rainfall/snowfall, wet/dry seasons
+- **Precipitation**: Annual rainfall (mm), musim hujan/kemarau pattern, extreme-rainfall events (BMKG station or regional data)
 - **Prevailing winds**: Direction and average speed by season
 - **Sun angles**: Solar altitude at summer solstice, winter solstice, and equinoxes. Solar azimuth at sunrise/sunset for key dates
 - **Humidity**: Average relative humidity by season
-- **Design temperatures**: When requested, select the statistical design basis and applicable standard/version from original sources; report the source and method used.
+- **Design temperatures** (°C): When requested, select the statistical design basis and applicable standard/version from original sources; report the source and method used.
 
 ### 2. Natural Features & Hazards
 
 Search for environmental and topographic data:
 - **Topography**: Elevation, slope, general terrain description
-- **Flood zones**: FEMA flood zone designation (US) or equivalent
-- **Seismic risk**: Seismic zone or fault proximity
+- **Flood and other hazards**: BNPB InaRISK hazard indices (banjir, banjir bandang, tanah longsor, gempa, tsunami, cuaca ekstrem) and the RTRW kawasan rawan bencana map; state the hazard class and source map date
+- **Seismic risk**: Site class and spectral values from SNI 1726:2019 (Tata cara perencanaan ketahanan gempa) via the PUPR spectral design tool or the Peta Sumber dan Bahaya Gempa Indonesia; distance to known active faults (perlu verifikasi of the current SNI edition)
 - **Soil**: General soil type or geotechnical conditions if available
 - **Vegetation**: Existing tree cover, protected species or habitats
 - **Water bodies**: Rivers, lakes, wetlands, coastline proximity
-- **Environmental contamination**: Brownfield status, Superfund proximity
+- **Environmental contamination and permits**: Known contaminated land, nearby industrial estates, and whether the project likely needs AMDAL, UKL-UPL or SPPL under PP 22/2021 (perlu verifikasi); hospitals also need limbah B3 handling
 
 ## Output Format
 
@@ -124,7 +124,7 @@ Write the analysis to a markdown file at `./environmental-analysis-[location-slu
 | Design temperatures | [values, units and sourced statistical basis, or unresolved] |
 | Flood zone | [zone] |
 | Seismic risk | [level] |
-| Elevation | [ft/m] |
+| Elevation | [m dpl (di atas permukaan laut)] |
 
 ---
 
@@ -151,7 +151,7 @@ Write the analysis to a markdown file at `./environmental-analysis-[location-slu
 [Elevation, slope, terrain]
 
 ### Flood Zones
-[FEMA designation, context]
+[InaRISK / RTRW hazard class, map date, context]
 
 ### Seismic Risk
 [Zone, design category, nearby faults]
@@ -189,7 +189,7 @@ Write the analysis to a markdown file at `./environmental-analysis-[location-slu
 
 Find relevant original links in [the source catalog](../../corpus/sources/catalog.json), filtered by geography and topic. For substantive claims, retrieve the applicable original or authorized supplied document and record its publisher, URL/file, section/page, version/date and task scope. A linked or reachable source is not proof of applicability. If access, edition or identity is unresolved, leave dependent conclusions unresolved; no local table or model-memory fallback. Keep task evidence in the authorized workspace, outside the plugin.
 
-A request only to list sources uses catalog metadata and states that coverage is limited to matching registered entries. It needs no source-content retrieval, setup or approval. Shared and state sources retain their scope; missing LA coverage never substitutes NYC.
+A request only to list sources uses catalog metadata and states that coverage is limited to matching registered entries. It needs no source-content retrieval, setup or approval. National and provincial sources retain their scope; a missing kabupaten/kota source is a gap and never substitutes another region’s data.
 
 ## Guidelines
 
@@ -198,7 +198,7 @@ A request only to list sources uses catalog metadata and states that coverage is
 - **Only use governmental, university, or non-profit sources.** Do not cite commercial weather sites, real estate platforms, or ad-supported data aggregators.
 - **Be concise.** Use tables for quantitative data, bullet points for lists, short paragraphs for context. No filler.
 - **Flag gaps.** The Gaps & Caveats section is mandatory. Always note what a desk study cannot replace (site visit, survey, geotech).
-- **Use local units.** Imperial for US sites, metric for international sites. Include conversions in parentheses when useful.
+- **Use metric units.** Metres, square metres, °C, mm rainfall and IDR for Indonesian sites. Convert supplied imperial values explicitly.
 - **Ask once, then work.** After confirming the location, do all the research without interrupting the user. Present the finished brief.
 
 ## Final Step: Disclaimer + Marker (required)

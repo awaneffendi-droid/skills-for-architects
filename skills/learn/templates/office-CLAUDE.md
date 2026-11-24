@@ -17,9 +17,9 @@
 
 ## Units & measurements
 
-- Default to US customary (imperial) units ← or metric — pick one
-- Architectural notation: feet-inches with dash (`12'-6"`), never decimal feet
-- Always specify area type: GSF / USF / RSF / NSF — never a bare number
+- Default to metric (SI) units; dimensions in mm, areas in m² ← edit if your office differs
+- Currency: Rupiah (IDR) ← edit
+- Always specify area type (luas lantai, luas dasar bangunan, luas lahan, gross/net) — never a bare number
 - Never mix unit systems within one table, calculation, or paragraph
 
 ## Terminology & abbreviations

@@ -15,7 +15,7 @@
 [![Release](https://img.shields.io/github/v/release/AlpacaLabsLLC/skills-for-architects)](https://github.com/AlpacaLabsLLC/skills-for-architects/releases)
 [![Claude Code: plugin](https://img.shields.io/badge/Claude_Code-plugin-blue)](https://code.claude.com/docs)
 [![Codex: plugin](https://img.shields.io/badge/Codex-plugin-blue)](https://developers.openai.com/codex/)
-[![skills: 61](https://img.shields.io/badge/skills-61-blue)](./skills/README.md)
+[![skills: 61](https://img.shields.io/badge/skills-54-blue)](./skills/README.md)
 [![website: architecturestudio.ai](https://img.shields.io/badge/website-architecturestudio.ai-blue)](https://architecturestudio.ai)
 [![Last commit](https://img.shields.io/github/last-commit/AlpacaLabsLLC/skills-for-architects)](https://github.com/AlpacaLabsLLC/skills-for-architects/commits/main)
 
@@ -48,7 +48,7 @@ Before a studio can trust AI with real work, it has to make a few decisions. Arc
 - **Governance: who approves what.** Adopt your own AI-use policy or start from the default one. The assistant works within it. It shows a work plan before larger jobs, offers findings to your records instead of writing them on its own, and marks building-code, zoning and specification output for professional review. The architect still signs off.
 - **Practice areas: where AI helps.** Skills are grouped by [practice area](docs/practice-clusters.md), from due diligence and programming to specifications and FF&E. Use the areas that fit your practice and ignore the rest.
 - **Memory: what the studio remembers.** Studio settings, project facts, decisions, documents, tasks and time live in plain files in folders you own, so the next session can pick up where the last one ended.
-- **Tooling: what the assistant can use.** Start with the 61 bundled skills as working references. Then write your own with `/as:skill-maker`. Your skills live in your studio or project folder, and plugin updates never overwrite them.
+- **Tooling: what the assistant can use.** Start with the 54 bundled skills as working references. Then write your own with `/as:skill-maker`. Your skills live in your studio or project folder, and plugin updates never overwrite them.
 
 Run `/as:studio` to set up the governance and memory side: your AI-use policy, naming and filing rules, units, jurisdiction and project phases. It shows exactly what it will create and writes nothing until you approve. Then register projects. From there, Norma, the coordinator, sends each request to the right skills within the rules you set. You can also skip setup and try a skill on a single task first.
 
@@ -99,7 +99,7 @@ For teams, Arch Studio MCP is connected rather than installed; see [Two editions
 
 1. **studio** — Run `/as:studio` to record your studio's policy, conventions and projects, or skip setup and go straight to a task. Skills work either way.
 2. **norma** — Describe what you need in plain words. Norma picks the skills, handles quick lookups directly, and for larger jobs uses **workplan** to show you a work plan (steps, skills, and outputs) before starting.
-3. **Research skills** — Site, zoning, property, product, and EPD skills fetch original sources and cite them. For example, **nyc-property-report** gathers landmarks, permits, violations, ownership, housing, and BSA records into one report.
+3. **Research skills** — Site, zoning, property, product, and EPD skills fetch original sources and cite them. For example, **zoning-analysis-id** reads the kabupaten/kota RDTR and reports KDB, KLB, KDH and GSB with their sources.
 4. **Specification and presentation skills** — **spec-writer**, **epd-to-spec**, **product-cut-sheet**, **slide-deck-generator** and others prepare documents from the research. Anything regulatory is marked for professional review.
 5. **Record skills** — **project**, **receive**, **meeting-minutes**, **tasklist** and **timetracker** keep facts, documents, decisions, tasks, and time in your project folder. They offer what to save rather than writing silently, and time is logged only in amounts you confirm.
 6. **skill-maker** — When your firm repeats a procedure, run `/as:skill-maker` to turn it into a studio or project skill.
@@ -110,7 +110,7 @@ Not sure what is available? `/as:tool-catalog` lists every skill and agent on yo
 
 ## What's inside
 
-61 skills, 8 agents, 8 rules, and 4 hooks. Everything installs together. The full catalog, with inputs and outputs, is in [skills/README.md](./skills/README.md).
+54 skills, 8 agents, 8 rules, and 4 hooks. Everything installs together. The full catalog, with inputs and outputs, is in [skills/README.md](./skills/README.md).
 
 ### Skills
 
@@ -138,16 +138,7 @@ Not sure what is available? `/as:tool-catalog` lists every skill and agent on yo
 - **invoice** — Append-only invoice ledger from billing facts you supply
 
 **Professional practice**
-- **architecture-knowledge** — Plain explanations of US practice terms: phases, CD sets, AIA contracts, CSI/NCS
-
-**NYC due diligence**
-- **nyc-landmarks** — Landmark and historic-district check (LPC)
-- **nyc-dob-permits** — DOB permits and job filings
-- **nyc-dob-violations** — DOB and ECB violations
-- **nyc-acris** — Deeds, mortgages, liens, and sales (ACRIS)
-- **nyc-hpd** — HPD violations, complaints, and registration
-- **nyc-bsa** — BSA variances and special permits
-- **nyc-property-report** — All of the above in one report
+- **architecture-knowledge** — Plain explanations of Indonesian practice terms: DED, RKS, UU Arsitek/STRA, IAI, jasa konstruksi
 
 **Site planning**
 - **environmental-analysis** — Climate, sun, flood, seismic, soil, and topography
@@ -156,12 +147,12 @@ Not sure what is available? `/as:tool-catalog` lists every skill and agent on yo
 - **site-history** — Neighborhood context, landmarks, and planned development
 
 **Zoning**
-- **zoning-analysis-nyc** — NYC FAR, height, setbacks, and uses for a lot
+- **zoning-analysis-id** — Indonesian RDTR: permitted use, KDB, KLB, KDH, GSB and height for a plot
 - **zoning-envelope** — Interactive 3D view of the buildable envelope
 
 **Programming**
 - **workplace-programmer** — Office programs from headcount and work style
-- **occupancy-calculator** — Building-code occupant loads, egress, and plumbing fixtures
+- **occupancy-calculator** — Occupant loads (beban hunian) and egress inputs from Indonesian fire-safety rules
 
 **Specifications**
 - **spec-writer** — Project Manual sections, with review markers
@@ -208,7 +199,7 @@ Eight agents: seven specialists and an optional Norma worker. Each one combines 
 | Agent | What it does |
 |-------|--------------|
 | [site-planner](./agents/site-planner.md) | Runs environmental, mobility, demographic, and history research, then combines them |
-| [nyc-zoning-expert](./agents/nyc-zoning-expert.md) | NYC property research, zoning analysis, and envelope visualization |
+| [indonesia-zoning-expert](./agents/indonesia-zoning-expert.md) | Indonesian site research, RDTR/zoning analysis, and envelope visualization |
 | [workplace-strategist](./agents/workplace-strategist.md) | Turns headcount and work style into programs and room schedules |
 | [product-and-materials-researcher](./agents/product-and-materials-researcher.md) | Finds products, extracts specs, and suggests alternatives |
 | [ffe-designer](./agents/ffe-designer.md) | Builds schedules and room packages, checks them, and prepares dealer files |

@@ -3,15 +3,8 @@
   "id": "cluster:due-diligence",
   "name": "Due Diligence",
   "maintainer": "Arch Studio maintainers",
-  "scope": "Existing NYC property records and sourced site context.",
+  "scope": "Sourced site context and history for Indonesian sites.",
   "members": [
-    "skill:nyc-property-report",
-    "skill:nyc-acris",
-    "skill:nyc-bsa",
-    "skill:nyc-dob-permits",
-    "skill:nyc-dob-violations",
-    "skill:nyc-hpd",
-    "skill:nyc-landmarks",
     "skill:site-history",
     "studio:workspace-contract",
     "knowledge:sources",
@@ -20,9 +13,9 @@
   "dependencies": [],
   "coverage": {
     "jurisdictions": [
-      "jurisdiction:us-ny-nyc"
+      "jurisdiction:id"
     ],
-    "limitations": "Selected NYC agency routes are indexed as original-source metadata. Procedures cover NYC property records; no complete due-diligence coverage, current factual determination or validated cluster workflow is claimed.",
+    "limitations": "Indonesian national sources (cagar budaya registry, spatial portals, JDIH) are indexed as original-source metadata. Kabupaten/kota property and permit records are not integrated; no complete due-diligence coverage, current factual determination or validated cluster workflow is claimed.",
     "sources_indexed": true,
     "procedures_available": true,
     "execution_implemented": false,

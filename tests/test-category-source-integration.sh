@@ -18,7 +18,7 @@ assert components['tool:source-health']['execution']=='local-node'
 for key in ['site-zoning','programming']:
     c=clusters[key]
     assert 'knowledge:sources' in c['members']
-    assert c['coverage']['sources_indexed'] and c['coverage']['jurisdictions']==['jurisdiction:us-ny-nyc']
+    assert c['coverage']['sources_indexed'] and c['coverage']['jurisdictions']==['jurisdiction:id']
 assert clusters['due-diligence']['coverage']['sources_indexed']
 assert 'knowledge:sources' in clusters['due-diligence']['members']
 assert 'tool:source-health' in clusters['site-zoning']['members']

@@ -1,8 +1,8 @@
 case	request	state	expected
 quick	Correct this heading	approved small edit	Execute directly without extra plan gate
-source-directory	List all NYC code sources	no workspace	Matching manifest links and coverage; no content fetch or setup
-la-gap	List LA code sources	no registered LA sources	Explicit catalog gap; no NYC substitution
-substantive-source	Explain this NYC requirement	applicable original unavailable	Dependent conclusion unresolved
+source-directory	List all Indonesian code sources	no workspace	Matching manifest links and coverage; no content fetch or setup
+kabkota-gap	List Kabupaten Karawang RDTR sources	no registered kabupaten/kota sources	Explicit catalog gap; no substitution from another region
+substantive-source	Explain this Indonesian requirement	applicable original unavailable	Dependent conclusion unresolved
 substantial	Produce the selected package	no execution approval	Concrete plan/checks and useful team; wait for approval
 approved	Go	approved plan and team	Actual agent creation identities and integrated outputs
 revise	Use two workers instead	pending plan	Revise plan; dependent execution pending

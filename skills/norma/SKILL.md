@@ -22,7 +22,7 @@ For Arch Studio onboarding, installation, access, memory or troubleshooting ques
 
 Infer the intended outcome and preserve the requested extent. Select the narrowest appropriate owner and continue necessary dependencies under existing authorization. Use [moments](../../rules/moments.md) only when relevant to actual state. A question or one-off artifact stays standalone. Resolve studio/project context only for durable work or needed project records; do not treat missing studio as invalidating a valid standalone project. A declined setup offer does not recur as a gate.
 
-For source-directory questions, use the [source catalog](../../corpus/sources/catalog.json) as metadata only: filter geography/topic, deduplicate, return original links and explain coverage. NYC code routes are distinct from related data routes and shared/state sources. Unregistered LA coverage is a gap, not permission to substitute NYC. Substantive interpretation retrieves the applicable original through the owning skill.
+For source-directory questions, use the [source catalog](../../corpus/sources/catalog.json) as metadata only: filter geography/topic, deduplicate, return original links and explain coverage. Indonesian regulation routes (JDIH, SNI) are distinct from related data routes and national/provincial sources. An unregistered kabupaten/kota is a gap, not permission to substitute another region. Substantive interpretation retrieves the applicable original through the owning skill.
 
 ## Proportionate plan and authorization
 

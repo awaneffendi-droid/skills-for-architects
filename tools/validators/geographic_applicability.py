@@ -8,15 +8,14 @@ import re
 import sys
 
 ROOT = Path(__file__).resolve().parents[2]
-NYC = 'jurisdiction:us-ny-nyc'
+INDONESIA = 'jurisdiction:id'
 LIMITATIONS = {
     'portable': 'The method has no built-in geographic selection. Its sources, market facts, standards and regulatory assertions still need task-specific checks; this is not worldwide substantive coverage.',
     'site-research': 'Location-specific source research only. No complete geographic dataset, hazard coverage or validated site conclusion is established.',
-    'nyc-records': 'Existing NYC procedure only. Verify exact property, issuing agency, dataset coverage and observation period; absence of records is not clearance.',
-    'nyc-zoning': 'Existing NYC zoning procedure only. Every controlling provision, edition, amendment, date and site condition remains to be verified.',
-    'jurisdiction-calculation': 'Jurisdiction-dependent occupant-load method. Bundled IBC factors are comparison data, never proof of adoption or a substitute for local rules.',
+    'id-zoning': 'Indonesian RDTR/zoning procedure only. The controlling kabupaten/kota perda or perkada, KRK, edition, amendment, date and site condition all remain to be verified.',
+    'jurisdiction-calculation': 'Jurisdiction-dependent occupant-load method. No factors are bundled; the Indonesian table (Permen PU 26/PRT/M/2008, SNI 03-1746-2000) or the local rule must be retrieved and verified as in force.',
     'input-report': 'Render supplied report evidence and limitations without recalculating or certifying zoning applicability.',
-    'us-explanation': 'US professional-practice orientation only. No workspace is required; no local legal or worldwide practice claim is established.',
+    'id-explanation': 'Indonesian professional-practice orientation only. No workspace is required; no local legal or worldwide practice claim is established.',
     'source-health': 'Registered source reachability and identity only. Reachable or indexed sources do not establish geographic, legal or execution applicability.',
 }
 
@@ -103,7 +102,7 @@ def assess(document, request, root=ROOT):
     profile = document['components'][component]
     result = {'schema_version': 1, 'component': component, 'profile': profile,
               'status': 'procedure-supported', 'reasons': [], 'legal_applicability': 'unverified',
-              'source_verification': 'not-assessed' if profile in ('portable', 'us-explanation') else 'required',
+              'source_verification': 'not-assessed' if profile in ('portable', 'id-explanation') else 'required',
               'execution_verified': False, 'evidence_authenticated': False, 'limitation': LIMITATIONS[profile]}
 
     def missing(reason):
@@ -111,13 +110,13 @@ def assess(document, request, root=ROOT):
         result['reasons'].append(reason)
 
     required = set(request.get('material_fields', []))
-    if profile in ('nyc-zoning', 'jurisdiction-calculation'):
+    if profile in ('id-zoning', 'jurisdiction-calculation'):
         required.update(('as_of', 'use', 'work_scope'))
     for field in sorted(required):
         if not request.get(field):
             missing('Material context missing: ' + field)
 
-    if profile in ('portable', 'us-explanation', 'source-health'):
+    if profile in ('portable', 'id-explanation', 'source-health'):
         return result
     # Studio defaults never resolve a site. The caller must supply normalized,
     # sourced context; this checker does not interpret place names or geocode IDs.
@@ -130,16 +129,20 @@ def assess(document, request, root=ROOT):
         return result
     result['location'] = locations[0]
     jurisdiction = locations[0]['jurisdiction']
-    if profile in ('nyc-records', 'nyc-zoning') and jurisdiction != NYC:
-        if jurisdiction in ('jurisdiction:us', 'jurisdiction:us-ny'):
-            missing('Resolve whether the site is in New York City; country/state alone does not establish NYC applicability.')
-        else:
+    in_indonesia = jurisdiction == INDONESIA or jurisdiction.startswith(INDONESIA + '-')
+    if profile == 'id-zoning':
+        if not in_indonesia:
             result['status'] = 'unsupported'
-            result['reasons'].append('This procedure is NYC-only; do not substitute NYC datasets or rules for another location.')
-        return result
-    if profile == 'jurisdiction-calculation' and jurisdiction != 'jurisdiction:us' and not jurisdiction.startswith('jurisdiction:us-'):
-        if not request.get('local_rule_reference'):
-            missing('Outside the US, obtain the local occupancy table/reference; do not load or use bundled IBC factors.')
+            result['reasons'].append('This procedure is Indonesia-only; do not substitute Indonesian RDTR rules for another country.')
+            return result
+        if jurisdiction.count('-') < 2:
+            missing('Resolve the kabupaten/kota; country or province alone does not identify the applicable RDTR or RTRW.')
+            return result
+    if profile == 'jurisdiction-calculation' and not request.get('local_rule_reference'):
+        if in_indonesia:
+            missing('Retrieve the in-force Indonesian occupant-load table (Permen PU 26/PRT/M/2008 / SNI 03-1746-2000 or successor) and cite it; no factors are bundled.')
+        else:
+            missing('Outside Indonesia, obtain the local occupancy table/reference; no factors are bundled.')
     if profile == 'input-report':
         if 'input_report' not in request:
             missing('Provide the selected input report, its date or explicit unknown, and its limitations; rendering does not establish applicability.')

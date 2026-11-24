@@ -2,199 +2,24 @@
   "schema_version": 2,
   "authorities": [
     {
-      "id": "authority:nyc-dob",
-      "name": "NYC Department of Buildings",
-      "jurisdiction": "jurisdiction:us-ny-nyc"
-    },
-    {
-      "id": "authority:nyc-dcp",
-      "name": "NYC Department of City Planning",
-      "jurisdiction": "jurisdiction:us-ny-nyc"
-    },
-    {
-      "id": "authority:the-american-institute-of-architects",
-      "name": "The American Institute of Architects",
-      "jurisdiction": "jurisdiction:us"
-    },
-    {
-      "id": "authority:aia-contract-documents",
-      "name": "AIA Contract Documents",
-      "jurisdiction": "jurisdiction:us"
-    },
-    {
-      "id": "authority:the-american-institute-of-architects-and-associated-general-contractors-of-america",
-      "name": "The American Institute of Architects and Associated General Contractors of America",
-      "jurisdiction": "jurisdiction:us"
-    },
-    {
-      "id": "authority:construction-specifications-institute",
-      "name": "Construction Specifications Institute",
-      "jurisdiction": "jurisdiction:us"
-    },
-    {
-      "id": "authority:national-institute-of-building-sciences",
-      "name": "National Institute of Building Sciences",
-      "jurisdiction": "jurisdiction:us"
-    },
-    {
-      "id": "authority:nyc-department-of-city-planning",
-      "name": "NYC Department of City Planning",
-      "jurisdiction": "jurisdiction:us-ny-nyc"
-    },
-    {
-      "id": "authority:nyc-council",
-      "name": "NYC Council",
-      "jurisdiction": "jurisdiction:us-ny-nyc"
-    },
-    {
-      "id": "authority:nyc-open-data",
-      "name": "NYC Open Data",
-      "jurisdiction": "jurisdiction:us-ny-nyc"
-    },
-    {
-      "id": "authority:socrata",
-      "name": "Socrata",
-      "jurisdiction": null
-    },
-    {
-      "id": "authority:nyu-furman-center",
-      "name": "NYU Furman Center",
-      "jurisdiction": "jurisdiction:us-ny-nyc"
-    },
-    {
-      "id": "authority:national-center-for-education-statistics",
-      "name": "National Center for Education Statistics",
-      "jurisdiction": "jurisdiction:us"
-    },
-    {
-      "id": "authority:nj-transit",
-      "name": "NJ Transit",
-      "jurisdiction": "jurisdiction:us-nj"
-    },
-    {
-      "id": "authority:walk-score",
-      "name": "Walk Score",
-      "jurisdiction": null
-    },
-    {
-      "id": "authority:national-park-service",
-      "name": "National Park Service",
-      "jurisdiction": "jurisdiction:us"
-    },
-    {
       "id": "authority:scs-global-services",
       "name": "SCS Global Services",
       "jurisdiction": null
     },
     {
-      "id": "authority:astm-international",
-      "name": "ASTM International",
-      "jurisdiction": null
-    },
-    {
       "id": "authority:noaa",
       "name": "NOAA",
-      "jurisdiction": "jurisdiction:us"
-    },
-    {
-      "id": "authority:national-weather-service",
-      "name": "National Weather Service",
-      "jurisdiction": "jurisdiction:us"
-    },
-    {
-      "id": "authority:u-s-department-of-energy",
-      "name": "U.S. Department of Energy",
-      "jurisdiction": "jurisdiction:us"
-    },
-    {
-      "id": "authority:nrel",
-      "name": "NREL",
       "jurisdiction": null
-    },
-    {
-      "id": "authority:fema",
-      "name": "FEMA",
-      "jurisdiction": "jurisdiction:us"
     },
     {
       "id": "authority:usgs",
       "name": "USGS",
-      "jurisdiction": "jurisdiction:us"
-    },
-    {
-      "id": "authority:usda-nrcs",
-      "name": "USDA NRCS",
-      "jurisdiction": "jurisdiction:us"
-    },
-    {
-      "id": "authority:u-s-environmental-protection-agency",
-      "name": "U.S. Environmental Protection Agency",
-      "jurisdiction": "jurisdiction:us"
-    },
-    {
-      "id": "authority:u-s-fish-and-wildlife-service",
-      "name": "U.S. Fish and Wildlife Service",
-      "jurisdiction": "jurisdiction:us"
+      "jurisdiction": null
     },
     {
       "id": "authority:world-meteorological-organization",
       "name": "World Meteorological Organization",
       "jurisdiction": null
-    },
-    {
-      "id": "authority:u-s-census-bureau",
-      "name": "U.S. Census Bureau",
-      "jurisdiction": "jurisdiction:us"
-    },
-    {
-      "id": "authority:u-s-bureau-of-labor-statistics",
-      "name": "U.S. Bureau of Labor Statistics",
-      "jurisdiction": "jurisdiction:us"
-    },
-    {
-      "id": "authority:u-s-department-of-housing-and-urban-development",
-      "name": "U.S. Department of Housing and Urban Development",
-      "jurisdiction": "jurisdiction:us"
-    },
-    {
-      "id": "authority:federal-reserve-bank-of-st-louis",
-      "name": "Federal Reserve Bank of St. Louis",
-      "jurisdiction": "jurisdiction:us"
-    },
-    {
-      "id": "authority:centers-for-disease-control-and-prevention",
-      "name": "Centers for Disease Control and Prevention",
-      "jurisdiction": "jurisdiction:us"
-    },
-    {
-      "id": "authority:metropolitan-transportation-authority",
-      "name": "Metropolitan Transportation Authority",
-      "jurisdiction": "jurisdiction:us-ny"
-    },
-    {
-      "id": "authority:city-of-new-york",
-      "name": "City of New York",
-      "jurisdiction": "jurisdiction:us-ny-nyc"
-    },
-    {
-      "id": "authority:federal-aviation-administration",
-      "name": "Federal Aviation Administration",
-      "jurisdiction": "jurisdiction:us"
-    },
-    {
-      "id": "authority:bureau-of-transportation-statistics",
-      "name": "Bureau of Transportation Statistics",
-      "jurisdiction": "jurisdiction:us"
-    },
-    {
-      "id": "authority:nyc-landmarks-preservation-commission",
-      "name": "NYC Landmarks Preservation Commission",
-      "jurisdiction": "jurisdiction:us-ny-nyc"
-    },
-    {
-      "id": "authority:library-of-congress",
-      "name": "Library of Congress",
-      "jurisdiction": "jurisdiction:us"
     },
     {
       "id": "authority:unesco",
@@ -230,1335 +55,99 @@
       "id": "authority:w3c",
       "name": "World Wide Web Consortium",
       "jurisdiction": null
+    },
+    {
+      "id": "authority:bpk-ri",
+      "name": "Badan Pemeriksa Keuangan RI (JDIH BPK)",
+      "jurisdiction": "jurisdiction:id"
+    },
+    {
+      "id": "authority:kemenkes",
+      "name": "Kementerian Kesehatan RI",
+      "jurisdiction": "jurisdiction:id"
+    },
+    {
+      "id": "authority:kementerian-pu",
+      "name": "Kementerian Pekerjaan Umum (d/h Kementerian PUPR)",
+      "jurisdiction": "jurisdiction:id"
+    },
+    {
+      "id": "authority:sekretariat-negara",
+      "name": "Kementerian Hukum / Sekretariat Negara (peraturan.go.id)",
+      "jurisdiction": "jurisdiction:id"
+    },
+    {
+      "id": "authority:bsn",
+      "name": "Badan Standardisasi Nasional",
+      "jurisdiction": "jurisdiction:id"
+    },
+    {
+      "id": "authority:atr-bpn",
+      "name": "Kementerian Agraria dan Tata Ruang/Badan Pertanahan Nasional",
+      "jurisdiction": "jurisdiction:id"
+    },
+    {
+      "id": "authority:oss",
+      "name": "Kementerian Investasi dan Hilirisasi/BKPM (OSS RBA)",
+      "jurisdiction": "jurisdiction:id"
+    },
+    {
+      "id": "authority:bmkg",
+      "name": "Badan Meteorologi, Klimatologi, dan Geofisika",
+      "jurisdiction": "jurisdiction:id"
+    },
+    {
+      "id": "authority:bnpb",
+      "name": "Badan Nasional Penanggulangan Bencana",
+      "jurisdiction": "jurisdiction:id"
+    },
+    {
+      "id": "authority:big",
+      "name": "Badan Informasi Geospasial",
+      "jurisdiction": "jurisdiction:id"
+    },
+    {
+      "id": "authority:bps",
+      "name": "Badan Pusat Statistik",
+      "jurisdiction": "jurisdiction:id"
+    },
+    {
+      "id": "authority:satu-data-indonesia",
+      "name": "Satu Data Indonesia",
+      "jurisdiction": "jurisdiction:id"
+    },
+    {
+      "id": "authority:kemenhub",
+      "name": "Kementerian Perhubungan",
+      "jurisdiction": "jurisdiction:id"
+    },
+    {
+      "id": "authority:kebudayaan",
+      "name": "Kementerian Kebudayaan (Registrasi Nasional Cagar Budaya)",
+      "jurisdiction": "jurisdiction:id"
+    },
+    {
+      "id": "authority:klh",
+      "name": "Kementerian Lingkungan Hidup",
+      "jurisdiction": "jurisdiction:id"
+    },
+    {
+      "id": "authority:iai",
+      "name": "Ikatan Arsitek Indonesia",
+      "jurisdiction": "jurisdiction:id"
+    },
+    {
+      "id": "authority:lkpp",
+      "name": "Lembaga Kebijakan Pengadaan Barang/Jasa Pemerintah",
+      "jurisdiction": "jurisdiction:id"
+    },
+    {
+      "id": "authority:gbci",
+      "name": "Green Building Council Indonesia",
+      "jurisdiction": "jurisdiction:id"
     }
   ],
   "sources": [
-    {
-      "id": "source:nyc-construction-codes",
-      "title": "NYC Construction Codes",
-      "url": "https://www.nyc.gov/site/buildings/codes/codes.page",
-      "document_kind": "code-index",
-      "authority": "authority:nyc-dob",
-      "jurisdiction": "jurisdiction:us-ny-nyc",
-      "edition": null,
-      "effective_date": null,
-      "checked_at": null,
-      "rights": "verify-reuse-conditions-at-source",
-      "access": "public",
-      "adapter": "integration:public-source-health",
-      "identity": {
-        "contains_all": [
-          "construction codes"
-        ],
-        "allowed_content_types": [
-          "text/html"
-        ],
-        "max_bytes": 262144
-      },
-      "existing_skills": [
-        "occupancy-calculator"
-      ],
-      "topics": [
-        "nyc",
-        "code"
-      ],
-      "locators": []
-    },
-    {
-      "id": "source:nyc-zoning-resolution",
-      "title": "NYC Zoning Resolution",
-      "url": "https://zr.planning.nyc.gov/",
-      "document_kind": "legal-publication",
-      "authority": "authority:nyc-dcp",
-      "jurisdiction": "jurisdiction:us-ny-nyc",
-      "edition": null,
-      "effective_date": null,
-      "checked_at": null,
-      "rights": "verify-reuse-conditions-at-source",
-      "access": "public",
-      "adapter": "integration:public-source-health",
-      "identity": {
-        "contains_all": [
-          "zoning resolution"
-        ],
-        "allowed_content_types": [
-          "text/html"
-        ],
-        "max_bytes": 262144
-      },
-      "existing_skills": [
-        "zoning-analysis-nyc"
-      ],
-      "topics": [
-        "code",
-        "nyc",
-        "zoning"
-      ],
-      "locators": []
-    },
-    {
-      "id": "source:nyc-pluto",
-      "title": "NYC PLUTO dataset",
-      "url": "https://data.cityofnewyork.us/resource/64uk-42ks.json?$limit=1",
-      "document_kind": "dataset",
-      "authority": "authority:nyc-dcp",
-      "jurisdiction": "jurisdiction:us-ny-nyc",
-      "edition": null,
-      "effective_date": null,
-      "checked_at": null,
-      "rights": "verify-reuse-conditions-at-source",
-      "access": "public",
-      "adapter": "integration:public-source-health",
-      "identity": {
-        "contains_all": [
-          "bbl"
-        ],
-        "allowed_content_types": [
-          "application/json"
-        ],
-        "max_bytes": 262144
-      },
-      "existing_skills": [
-        "nyc-acris",
-        "nyc-bsa",
-        "nyc-dob-permits",
-        "nyc-dob-violations",
-        "nyc-hpd",
-        "nyc-landmarks",
-        "zoning-analysis-nyc"
-      ],
-      "topics": [
-        "code",
-        "dataset",
-        "nyc",
-        "property",
-        "zoning"
-      ],
-      "locators": [
-        {
-          "title": "Publisher dataset metadata",
-          "url": "https://data.cityofnewyork.us/api/views/64uk-42ks.json"
-        },
-        {
-          "title": "Publisher column metadata",
-          "url": "https://data.cityofnewyork.us/api/views/64uk-42ks/columns.json"
-        },
-        {
-          "title": "NYC Open Data dataset 64uk-42ks",
-          "url": "https://data.cityofnewyork.us/City-Government/Primary-Land-Use-Tax-Lot-Output-PLUTO-/64uk-42ks"
-        },
-        {
-          "title": "Socrata resource",
-          "url": "https://data.cityofnewyork.us/resource/64uk-42ks.json"
-        }
-      ]
-    },
-    {
-      "id": "source:src-aia-basic-services",
-      "title": "Defining the architect's basic services",
-      "url": "https://www.aia.org/resource-center/defining-the-architects-basic-services",
-      "document_kind": "guidance",
-      "authority": "authority:the-american-institute-of-architects",
-      "jurisdiction": "jurisdiction:us",
-      "edition": "Public resource-center article",
-      "effective_date": null,
-      "checked_at": null,
-      "rights": "navigation-only; verify access and reuse at original source",
-      "access": "unknown",
-      "adapter": null,
-      "identity": null,
-      "existing_skills": [
-        "architecture-knowledge"
-      ],
-      "topics": [
-        "professional-practice",
-        "architecture-knowledge"
-      ],
-      "locators": [
-        {
-          "title": "Publisher terms or access",
-          "url": "https://www.aia.org/terms-use"
-        }
-      ]
-    },
-    {
-      "id": "source:src-aia-b101-2017",
-      "title": "Summary: B101™–2017, Standard Form of Agreement Between Owner and Architect",
-      "url": "https://help.aiacontracts.com/hc/en-us/articles/1500010280541-summary-b101-2017-standard-form-of-agreement-between-owner-and-architect",
-      "document_kind": "guidance",
-      "authority": "authority:aia-contract-documents",
-      "jurisdiction": "jurisdiction:us",
-      "edition": "B101–2017",
-      "effective_date": null,
-      "checked_at": null,
-      "rights": "navigation-only; verify access and reuse at original source",
-      "access": "unknown",
-      "adapter": null,
-      "identity": null,
-      "existing_skills": [
-        "architecture-knowledge"
-      ],
-      "topics": [
-        "professional-practice",
-        "architecture-knowledge"
-      ],
-      "locators": [
-        {
-          "title": "Publisher terms or access",
-          "url": "https://www.aia.org/terms-use"
-        }
-      ]
-    },
-    {
-      "id": "source:src-aia-a201-2017",
-      "title": "Summary: A201®–2017, General Conditions of the Contract for Construction",
-      "url": "https://help.aiacontracts.com/hc/en-us/articles/1500010259162-Summary-A201-2017-General-Conditions-of-the-Contract-for-Construction",
-      "document_kind": "guidance",
-      "authority": "authority:aia-contract-documents",
-      "jurisdiction": "jurisdiction:us",
-      "edition": "A201–2017",
-      "effective_date": null,
-      "checked_at": null,
-      "rights": "navigation-only; verify access and reuse at original source",
-      "access": "unknown",
-      "adapter": null,
-      "identity": null,
-      "existing_skills": [
-        "architecture-knowledge"
-      ],
-      "topics": [
-        "professional-practice",
-        "architecture-knowledge"
-      ],
-      "locators": [
-        {
-          "title": "Publisher terms or access",
-          "url": "https://www.aia.org/terms-use"
-        }
-      ]
-    },
-    {
-      "id": "source:src-aia-document-synopses",
-      "title": "Document synopses by family",
-      "url": "https://help.aiacontracts.com/list-document-synopses-by-family",
-      "document_kind": "guidance",
-      "authority": "authority:aia-contract-documents",
-      "jurisdiction": "jurisdiction:us",
-      "edition": "Public document-family synopses",
-      "effective_date": null,
-      "checked_at": null,
-      "rights": "navigation-only; verify access and reuse at original source",
-      "access": "unknown",
-      "adapter": null,
-      "identity": null,
-      "existing_skills": [
-        "architecture-knowledge"
-      ],
-      "topics": [
-        "professional-practice",
-        "architecture-knowledge"
-      ],
-      "locators": [
-        {
-          "title": "Publisher terms or access",
-          "url": "https://www.aia.org/terms-use"
-        }
-      ]
-    },
-    {
-      "id": "source:src-aia-agc-delivery",
-      "title": "A primer on project delivery terms",
-      "url": "https://www.aia.org/resource-center/primer-project-delivery-terms",
-      "document_kind": "guidance",
-      "authority": "authority:the-american-institute-of-architects-and-associated-general-contractors-of-america",
-      "jurisdiction": "jurisdiction:us",
-      "edition": "Public resource-center article",
-      "effective_date": null,
-      "checked_at": null,
-      "rights": "navigation-only; verify access and reuse at original source",
-      "access": "unknown",
-      "adapter": null,
-      "identity": null,
-      "existing_skills": [
-        "architecture-knowledge"
-      ],
-      "topics": [
-        "professional-practice",
-        "architecture-knowledge"
-      ],
-      "locators": [
-        {
-          "title": "Publisher terms or access",
-          "url": "https://www.aia.org/terms-use"
-        }
-      ]
-    },
-    {
-      "id": "source:src-aia-terms",
-      "title": "Terms of Use",
-      "url": "https://www.aia.org/terms-use",
-      "document_kind": "guidance",
-      "authority": "authority:the-american-institute-of-architects",
-      "jurisdiction": "jurisdiction:us",
-      "edition": "Website terms",
-      "effective_date": null,
-      "checked_at": null,
-      "rights": "navigation-only; verify access and reuse at original source",
-      "access": "unknown",
-      "adapter": null,
-      "identity": null,
-      "existing_skills": [
-        "architecture-knowledge"
-      ],
-      "topics": [
-        "professional-practice",
-        "architecture-knowledge"
-      ],
-      "locators": [
-        {
-          "title": "Publisher terms or access",
-          "url": "https://www.aia.org/terms-use"
-        }
-      ]
-    },
-    {
-      "id": "source:src-csi-standards-overview",
-      "title": "CSI Standards Overview",
-      "url": "https://www.csiresources.org/standards/overview",
-      "document_kind": "guidance",
-      "authority": "authority:construction-specifications-institute",
-      "jurisdiction": "jurisdiction:us",
-      "edition": "MasterFormat® 2026 overview",
-      "effective_date": null,
-      "checked_at": null,
-      "rights": "navigation-only; verify access and reuse at original source",
-      "access": "unknown",
-      "adapter": null,
-      "identity": null,
-      "existing_skills": [
-        "architecture-knowledge"
-      ],
-      "topics": [
-        "professional-practice",
-        "architecture-knowledge"
-      ],
-      "locators": [
-        {
-          "title": "Publisher terms or access",
-          "url": "https://www.csiresources.org/standards/masterformat/mf-faqs"
-        }
-      ]
-    },
-    {
-      "id": "source:src-csi-masterformat-faq",
-      "title": "MasterFormat FAQ",
-      "url": "https://www.csiresources.org/standards/masterformat/mf-faqs",
-      "document_kind": "guidance",
-      "authority": "authority:construction-specifications-institute",
-      "jurisdiction": "jurisdiction:us",
-      "edition": "Public FAQ",
-      "effective_date": null,
-      "checked_at": null,
-      "rights": "navigation-only; verify access and reuse at original source",
-      "access": "unknown",
-      "adapter": null,
-      "identity": null,
-      "existing_skills": [
-        "architecture-knowledge"
-      ],
-      "topics": [
-        "professional-practice",
-        "architecture-knowledge"
-      ],
-      "locators": [
-        {
-          "title": "Publisher terms or access",
-          "url": "https://www.csiresources.org/standards/masterformat/mf-faqs"
-        }
-      ]
-    },
-    {
-      "id": "source:src-nibs-ncs-v7",
-      "title": "United States National CAD Standard (NCS)",
-      "url": "https://nibs.org/projects/united-states-national-cad-standard-ncs",
-      "document_kind": "guidance",
-      "authority": "authority:national-institute-of-building-sciences",
-      "jurisdiction": "jurisdiction:us",
-      "edition": "NCS Version 7",
-      "effective_date": null,
-      "checked_at": null,
-      "rights": "navigation-only; verify access and reuse at original source",
-      "access": "unknown",
-      "adapter": null,
-      "identity": null,
-      "existing_skills": [
-        "architecture-knowledge"
-      ],
-      "topics": [
-        "professional-practice",
-        "architecture-knowledge"
-      ],
-      "locators": [
-        {
-          "title": "Publisher terms or access",
-          "url": "https://nibs.org/projects/united-states-national-cad-standard-ncs/"
-        }
-      ]
-    },
-    {
-      "id": "source:recently-adopted-text",
-      "title": "Recently adopted text",
-      "url": "https://zr.planning.nyc.gov/recently-adopted",
-      "document_kind": "guidance",
-      "authority": "authority:nyc-department-of-city-planning",
-      "jurisdiction": "jurisdiction:us-ny-nyc",
-      "edition": null,
-      "effective_date": null,
-      "checked_at": null,
-      "rights": "navigation-only; verify access and reuse at original source",
-      "access": "unknown",
-      "adapter": null,
-      "identity": null,
-      "existing_skills": [
-        "zoning-analysis-nyc"
-      ],
-      "topics": [
-        "nyc",
-        "zoning",
-        "code"
-      ],
-      "locators": []
-    },
-    {
-      "id": "source:zr-downloads",
-      "title": "ZR downloads",
-      "url": "https://zr.planning.nyc.gov/zr-downloads",
-      "document_kind": "guidance",
-      "authority": "authority:nyc-department-of-city-planning",
-      "jurisdiction": "jurisdiction:us-ny-nyc",
-      "edition": null,
-      "effective_date": null,
-      "checked_at": null,
-      "rights": "navigation-only; verify access and reuse at original source",
-      "access": "unknown",
-      "adapter": null,
-      "identity": null,
-      "existing_skills": [
-        "zoning-analysis-nyc"
-      ],
-      "topics": [
-        "nyc",
-        "zoning",
-        "code"
-      ],
-      "locators": []
-    },
-    {
-      "id": "source:zola",
-      "title": "ZoLa",
-      "url": "https://zola.planning.nyc.gov",
-      "document_kind": "guidance",
-      "authority": "authority:nyc-dcp",
-      "jurisdiction": "jurisdiction:us-ny-nyc",
-      "edition": null,
-      "effective_date": null,
-      "checked_at": null,
-      "rights": "navigation-only; verify access and reuse at original source",
-      "access": "unknown",
-      "adapter": null,
-      "identity": null,
-      "existing_skills": [
-        "site-history",
-        "zoning-analysis-nyc"
-      ],
-      "topics": [
-        "code",
-        "nyc",
-        "site-history",
-        "zoning"
-      ],
-      "locators": []
-    },
-    {
-      "id": "source:dcp-dataset-page",
-      "title": "DCP dataset page",
-      "url": "https://www.nyc.gov/content/planning/pages/resources/datasets/mappluto-pluto-change",
-      "document_kind": "guidance",
-      "authority": "authority:nyc-department-of-city-planning",
-      "jurisdiction": "jurisdiction:us-ny-nyc",
-      "edition": null,
-      "effective_date": null,
-      "checked_at": null,
-      "rights": "navigation-only; verify access and reuse at original source",
-      "access": "unknown",
-      "adapter": null,
-      "identity": null,
-      "existing_skills": [
-        "zoning-analysis-nyc"
-      ],
-      "topics": [
-        "nyc",
-        "zoning",
-        "code"
-      ],
-      "locators": []
-    },
-    {
-      "id": "source:nyc-arcgis-mappluto-service",
-      "title": "NYC ArcGIS MapPLUTO service",
-      "url": "https://a841-dotweb01.nyc.gov/arcgis/rest/services/GAZETTEER/MapPLUTO/MapServer/0",
-      "document_kind": "guidance",
-      "authority": "authority:nyc-department-of-city-planning",
-      "jurisdiction": "jurisdiction:us-ny-nyc",
-      "edition": null,
-      "effective_date": null,
-      "checked_at": null,
-      "rights": "navigation-only; verify access and reuse at original source",
-      "access": "unknown",
-      "adapter": null,
-      "identity": null,
-      "existing_skills": [
-        "zoning-analysis-nyc"
-      ],
-      "topics": [
-        "nyc",
-        "zoning",
-        "code"
-      ],
-      "locators": []
-    },
-    {
-      "id": "source:nyc-council-land-use-record",
-      "title": "NYC Council land-use record",
-      "url": "https://council.nyc.gov/land-use/plans/city-of-yes-for-housing-opportunity",
-      "document_kind": "guidance",
-      "authority": "authority:nyc-council",
-      "jurisdiction": "jurisdiction:us-ny-nyc",
-      "edition": null,
-      "effective_date": null,
-      "checked_at": null,
-      "rights": "navigation-only; verify access and reuse at original source",
-      "access": "unknown",
-      "adapter": null,
-      "identity": null,
-      "existing_skills": [
-        "zoning-analysis-nyc"
-      ],
-      "topics": [
-        "nyc",
-        "zoning",
-        "code"
-      ],
-      "locators": []
-    },
-    {
-      "id": "source:nyc-building-footprints",
-      "title": "BUILDING (footprints)",
-      "url": "https://data.cityofnewyork.us/resource/5zhs-2jue.json",
-      "document_kind": "dataset",
-      "authority": "authority:nyc-open-data",
-      "jurisdiction": "jurisdiction:us-ny-nyc",
-      "edition": null,
-      "effective_date": null,
-      "checked_at": null,
-      "rights": "navigation-only; verify access and reuse at original source",
-      "access": "unknown",
-      "adapter": null,
-      "identity": null,
-      "existing_skills": [
-        "nyc-acris",
-        "nyc-bsa",
-        "nyc-dob-permits",
-        "nyc-dob-violations",
-        "nyc-hpd",
-        "nyc-landmarks",
-        "nyc-property-report"
-      ],
-      "topics": [
-        "nyc",
-        "property",
-        "building-footprints"
-      ],
-      "locators": [
-        {
-          "title": "Publisher dataset metadata",
-          "url": "https://data.cityofnewyork.us/api/views/5zhs-2jue.json"
-        },
-        {
-          "title": "Publisher column metadata",
-          "url": "https://data.cityofnewyork.us/api/views/5zhs-2jue/columns.json"
-        }
-      ]
-    },
-    {
-      "id": "source:nyc-lpc-landmarks",
-      "title": "Individual Landmarks",
-      "url": "https://data.cityofnewyork.us/resource/buis-pvji.json",
-      "document_kind": "dataset",
-      "authority": "authority:nyc-open-data",
-      "jurisdiction": "jurisdiction:us-ny-nyc",
-      "edition": null,
-      "effective_date": null,
-      "checked_at": null,
-      "rights": "navigation-only; verify access and reuse at original source",
-      "access": "unknown",
-      "adapter": null,
-      "identity": null,
-      "existing_skills": [
-        "nyc-acris",
-        "nyc-bsa",
-        "nyc-dob-permits",
-        "nyc-dob-violations",
-        "nyc-hpd",
-        "nyc-landmarks",
-        "nyc-property-report"
-      ],
-      "topics": [
-        "nyc",
-        "property",
-        "lpc-landmarks"
-      ],
-      "locators": [
-        {
-          "title": "Publisher dataset metadata",
-          "url": "https://data.cityofnewyork.us/api/views/buis-pvji.json"
-        },
-        {
-          "title": "Publisher column metadata",
-          "url": "https://data.cityofnewyork.us/api/views/buis-pvji/columns.json"
-        }
-      ]
-    },
-    {
-      "id": "source:nyc-dob-permits-legacy",
-      "title": "DOB Permit Issuance",
-      "url": "https://data.cityofnewyork.us/resource/ipu4-2q9a.json",
-      "document_kind": "dataset",
-      "authority": "authority:nyc-open-data",
-      "jurisdiction": "jurisdiction:us-ny-nyc",
-      "edition": null,
-      "effective_date": null,
-      "checked_at": null,
-      "rights": "navigation-only; verify access and reuse at original source",
-      "access": "unknown",
-      "adapter": null,
-      "identity": null,
-      "existing_skills": [
-        "nyc-acris",
-        "nyc-bsa",
-        "nyc-dob-permits",
-        "nyc-dob-violations",
-        "nyc-hpd",
-        "nyc-landmarks",
-        "nyc-property-report"
-      ],
-      "topics": [
-        "nyc",
-        "property",
-        "dob-permits-legacy"
-      ],
-      "locators": [
-        {
-          "title": "Publisher dataset metadata",
-          "url": "https://data.cityofnewyork.us/api/views/ipu4-2q9a.json"
-        },
-        {
-          "title": "Publisher column metadata",
-          "url": "https://data.cityofnewyork.us/api/views/ipu4-2q9a/columns.json"
-        }
-      ]
-    },
-    {
-      "id": "source:nyc-dob-filings-legacy",
-      "title": "DOB Job Application Filings",
-      "url": "https://data.cityofnewyork.us/resource/ic3t-wcy2.json",
-      "document_kind": "dataset",
-      "authority": "authority:nyc-open-data",
-      "jurisdiction": "jurisdiction:us-ny-nyc",
-      "edition": null,
-      "effective_date": null,
-      "checked_at": null,
-      "rights": "navigation-only; verify access and reuse at original source",
-      "access": "unknown",
-      "adapter": null,
-      "identity": null,
-      "existing_skills": [
-        "nyc-acris",
-        "nyc-bsa",
-        "nyc-dob-permits",
-        "nyc-dob-violations",
-        "nyc-hpd",
-        "nyc-landmarks",
-        "nyc-property-report"
-      ],
-      "topics": [
-        "nyc",
-        "property",
-        "dob-filings-legacy"
-      ],
-      "locators": [
-        {
-          "title": "Publisher dataset metadata",
-          "url": "https://data.cityofnewyork.us/api/views/ic3t-wcy2.json"
-        },
-        {
-          "title": "Publisher column metadata",
-          "url": "https://data.cityofnewyork.us/api/views/ic3t-wcy2/columns.json"
-        }
-      ]
-    },
-    {
-      "id": "source:nyc-dob-permits-now",
-      "title": "DOB NOW Build Approved Permits",
-      "url": "https://data.cityofnewyork.us/resource/rbx6-tga4.json",
-      "document_kind": "dataset",
-      "authority": "authority:nyc-open-data",
-      "jurisdiction": "jurisdiction:us-ny-nyc",
-      "edition": null,
-      "effective_date": null,
-      "checked_at": null,
-      "rights": "navigation-only; verify access and reuse at original source",
-      "access": "unknown",
-      "adapter": null,
-      "identity": null,
-      "existing_skills": [
-        "nyc-acris",
-        "nyc-bsa",
-        "nyc-dob-permits",
-        "nyc-dob-violations",
-        "nyc-hpd",
-        "nyc-landmarks",
-        "nyc-property-report"
-      ],
-      "topics": [
-        "nyc",
-        "property",
-        "dob-permits-now"
-      ],
-      "locators": [
-        {
-          "title": "Publisher dataset metadata",
-          "url": "https://data.cityofnewyork.us/api/views/rbx6-tga4.json"
-        },
-        {
-          "title": "Publisher column metadata",
-          "url": "https://data.cityofnewyork.us/api/views/rbx6-tga4/columns.json"
-        }
-      ]
-    },
-    {
-      "id": "source:nyc-dob-filings-now",
-      "title": "DOB NOW Build Job Application Filings",
-      "url": "https://data.cityofnewyork.us/resource/w9ak-ipjd.json",
-      "document_kind": "dataset",
-      "authority": "authority:nyc-open-data",
-      "jurisdiction": "jurisdiction:us-ny-nyc",
-      "edition": null,
-      "effective_date": null,
-      "checked_at": null,
-      "rights": "navigation-only; verify access and reuse at original source",
-      "access": "unknown",
-      "adapter": null,
-      "identity": null,
-      "existing_skills": [
-        "nyc-acris",
-        "nyc-bsa",
-        "nyc-dob-permits",
-        "nyc-dob-violations",
-        "nyc-hpd",
-        "nyc-landmarks",
-        "nyc-property-report"
-      ],
-      "topics": [
-        "nyc",
-        "property",
-        "dob-filings-now"
-      ],
-      "locators": [
-        {
-          "title": "Publisher dataset metadata",
-          "url": "https://data.cityofnewyork.us/api/views/w9ak-ipjd.json"
-        },
-        {
-          "title": "Publisher column metadata",
-          "url": "https://data.cityofnewyork.us/api/views/w9ak-ipjd/columns.json"
-        }
-      ]
-    },
-    {
-      "id": "source:nyc-dob-violations",
-      "title": "DOB Violations",
-      "url": "https://data.cityofnewyork.us/resource/3h2n-5cm9.json",
-      "document_kind": "dataset",
-      "authority": "authority:nyc-open-data",
-      "jurisdiction": "jurisdiction:us-ny-nyc",
-      "edition": null,
-      "effective_date": null,
-      "checked_at": null,
-      "rights": "navigation-only; verify access and reuse at original source",
-      "access": "unknown",
-      "adapter": null,
-      "identity": null,
-      "existing_skills": [
-        "nyc-acris",
-        "nyc-bsa",
-        "nyc-dob-permits",
-        "nyc-dob-violations",
-        "nyc-hpd",
-        "nyc-landmarks",
-        "nyc-property-report"
-      ],
-      "topics": [
-        "nyc",
-        "property",
-        "dob-violations"
-      ],
-      "locators": [
-        {
-          "title": "Publisher dataset metadata",
-          "url": "https://data.cityofnewyork.us/api/views/3h2n-5cm9.json"
-        },
-        {
-          "title": "Publisher column metadata",
-          "url": "https://data.cityofnewyork.us/api/views/3h2n-5cm9/columns.json"
-        }
-      ]
-    },
-    {
-      "id": "source:nyc-dob-ecb-violations",
-      "title": "DOB ECB Violations",
-      "url": "https://data.cityofnewyork.us/resource/6bgk-3dad.json",
-      "document_kind": "dataset",
-      "authority": "authority:nyc-open-data",
-      "jurisdiction": "jurisdiction:us-ny-nyc",
-      "edition": null,
-      "effective_date": null,
-      "checked_at": null,
-      "rights": "navigation-only; verify access and reuse at original source",
-      "access": "unknown",
-      "adapter": null,
-      "identity": null,
-      "existing_skills": [
-        "nyc-acris",
-        "nyc-bsa",
-        "nyc-dob-permits",
-        "nyc-dob-violations",
-        "nyc-hpd",
-        "nyc-landmarks",
-        "nyc-property-report"
-      ],
-      "topics": [
-        "nyc",
-        "property",
-        "dob-ecb-violations"
-      ],
-      "locators": [
-        {
-          "title": "Publisher dataset metadata",
-          "url": "https://data.cityofnewyork.us/api/views/6bgk-3dad.json"
-        },
-        {
-          "title": "Publisher column metadata",
-          "url": "https://data.cityofnewyork.us/api/views/6bgk-3dad/columns.json"
-        }
-      ]
-    },
-    {
-      "id": "source:nyc-dob-active-violations",
-      "title": "Active DOB Violations",
-      "url": "https://data.cityofnewyork.us/resource/sjhj-bc8q.json",
-      "document_kind": "dataset",
-      "authority": "authority:nyc-open-data",
-      "jurisdiction": "jurisdiction:us-ny-nyc",
-      "edition": null,
-      "effective_date": null,
-      "checked_at": null,
-      "rights": "navigation-only; verify access and reuse at original source",
-      "access": "unknown",
-      "adapter": null,
-      "identity": null,
-      "existing_skills": [
-        "nyc-acris",
-        "nyc-bsa",
-        "nyc-dob-permits",
-        "nyc-dob-violations",
-        "nyc-hpd",
-        "nyc-landmarks",
-        "nyc-property-report"
-      ],
-      "topics": [
-        "nyc",
-        "property",
-        "dob-active-violations"
-      ],
-      "locators": [
-        {
-          "title": "Publisher dataset metadata",
-          "url": "https://data.cityofnewyork.us/api/views/sjhj-bc8q.json"
-        },
-        {
-          "title": "Publisher column metadata",
-          "url": "https://data.cityofnewyork.us/api/views/sjhj-bc8q/columns.json"
-        }
-      ]
-    },
-    {
-      "id": "source:nyc-acris-master",
-      "title": "ACRIS Real Property Master",
-      "url": "https://data.cityofnewyork.us/resource/bnx9-e6tj.json",
-      "document_kind": "dataset",
-      "authority": "authority:nyc-open-data",
-      "jurisdiction": "jurisdiction:us-ny-nyc",
-      "edition": null,
-      "effective_date": null,
-      "checked_at": null,
-      "rights": "navigation-only; verify access and reuse at original source",
-      "access": "unknown",
-      "adapter": null,
-      "identity": null,
-      "existing_skills": [
-        "nyc-acris",
-        "nyc-bsa",
-        "nyc-dob-permits",
-        "nyc-dob-violations",
-        "nyc-hpd",
-        "nyc-landmarks",
-        "nyc-property-report"
-      ],
-      "topics": [
-        "nyc",
-        "property",
-        "acris-master"
-      ],
-      "locators": [
-        {
-          "title": "Publisher dataset metadata",
-          "url": "https://data.cityofnewyork.us/api/views/bnx9-e6tj.json"
-        },
-        {
-          "title": "Publisher column metadata",
-          "url": "https://data.cityofnewyork.us/api/views/bnx9-e6tj/columns.json"
-        }
-      ]
-    },
-    {
-      "id": "source:nyc-acris-legals",
-      "title": "ACRIS Real Property Legals",
-      "url": "https://data.cityofnewyork.us/resource/8h5j-fqxa.json",
-      "document_kind": "dataset",
-      "authority": "authority:nyc-open-data",
-      "jurisdiction": "jurisdiction:us-ny-nyc",
-      "edition": null,
-      "effective_date": null,
-      "checked_at": null,
-      "rights": "navigation-only; verify access and reuse at original source",
-      "access": "unknown",
-      "adapter": null,
-      "identity": null,
-      "existing_skills": [
-        "nyc-acris",
-        "nyc-bsa",
-        "nyc-dob-permits",
-        "nyc-dob-violations",
-        "nyc-hpd",
-        "nyc-landmarks",
-        "nyc-property-report"
-      ],
-      "topics": [
-        "nyc",
-        "property",
-        "acris-legals"
-      ],
-      "locators": [
-        {
-          "title": "Publisher dataset metadata",
-          "url": "https://data.cityofnewyork.us/api/views/8h5j-fqxa.json"
-        },
-        {
-          "title": "Publisher column metadata",
-          "url": "https://data.cityofnewyork.us/api/views/8h5j-fqxa/columns.json"
-        }
-      ]
-    },
-    {
-      "id": "source:nyc-acris-parties",
-      "title": "ACRIS Real Property Parties",
-      "url": "https://data.cityofnewyork.us/resource/636b-3b5g.json",
-      "document_kind": "dataset",
-      "authority": "authority:nyc-open-data",
-      "jurisdiction": "jurisdiction:us-ny-nyc",
-      "edition": null,
-      "effective_date": null,
-      "checked_at": null,
-      "rights": "navigation-only; verify access and reuse at original source",
-      "access": "unknown",
-      "adapter": null,
-      "identity": null,
-      "existing_skills": [
-        "nyc-acris",
-        "nyc-bsa",
-        "nyc-dob-permits",
-        "nyc-dob-violations",
-        "nyc-hpd",
-        "nyc-landmarks",
-        "nyc-property-report"
-      ],
-      "topics": [
-        "nyc",
-        "property",
-        "acris-parties"
-      ],
-      "locators": [
-        {
-          "title": "Publisher dataset metadata",
-          "url": "https://data.cityofnewyork.us/api/views/636b-3b5g.json"
-        },
-        {
-          "title": "Publisher column metadata",
-          "url": "https://data.cityofnewyork.us/api/views/636b-3b5g/columns.json"
-        }
-      ]
-    },
-    {
-      "id": "source:nyc-acris-doc-types",
-      "title": "ACRIS Document Control Codes",
-      "url": "https://data.cityofnewyork.us/resource/7isb-wh4c.json",
-      "document_kind": "dataset",
-      "authority": "authority:nyc-open-data",
-      "jurisdiction": "jurisdiction:us-ny-nyc",
-      "edition": null,
-      "effective_date": null,
-      "checked_at": null,
-      "rights": "navigation-only; verify access and reuse at original source",
-      "access": "unknown",
-      "adapter": null,
-      "identity": null,
-      "existing_skills": [
-        "nyc-acris",
-        "nyc-bsa",
-        "nyc-dob-permits",
-        "nyc-dob-violations",
-        "nyc-hpd",
-        "nyc-landmarks",
-        "nyc-property-report"
-      ],
-      "topics": [
-        "nyc",
-        "property",
-        "acris-doc-types"
-      ],
-      "locators": [
-        {
-          "title": "Publisher dataset metadata",
-          "url": "https://data.cityofnewyork.us/api/views/7isb-wh4c.json"
-        },
-        {
-          "title": "Publisher column metadata",
-          "url": "https://data.cityofnewyork.us/api/views/7isb-wh4c/columns.json"
-        }
-      ]
-    },
-    {
-      "id": "source:nyc-hpd-violations",
-      "title": "Housing Maintenance Code Violations",
-      "url": "https://data.cityofnewyork.us/resource/wvxf-dwi5.json",
-      "document_kind": "dataset",
-      "authority": "authority:nyc-open-data",
-      "jurisdiction": "jurisdiction:us-ny-nyc",
-      "edition": null,
-      "effective_date": null,
-      "checked_at": null,
-      "rights": "navigation-only; verify access and reuse at original source",
-      "access": "unknown",
-      "adapter": null,
-      "identity": null,
-      "existing_skills": [
-        "nyc-acris",
-        "nyc-bsa",
-        "nyc-dob-permits",
-        "nyc-dob-violations",
-        "nyc-hpd",
-        "nyc-landmarks",
-        "nyc-property-report"
-      ],
-      "topics": [
-        "nyc",
-        "property",
-        "hpd-violations"
-      ],
-      "locators": [
-        {
-          "title": "Publisher dataset metadata",
-          "url": "https://data.cityofnewyork.us/api/views/wvxf-dwi5.json"
-        },
-        {
-          "title": "Publisher column metadata",
-          "url": "https://data.cityofnewyork.us/api/views/wvxf-dwi5/columns.json"
-        }
-      ]
-    },
-    {
-      "id": "source:nyc-hpd-open-violations",
-      "title": "Open HPD Violations",
-      "url": "https://data.cityofnewyork.us/resource/csn4-vhvf.json",
-      "document_kind": "dataset",
-      "authority": "authority:nyc-open-data",
-      "jurisdiction": "jurisdiction:us-ny-nyc",
-      "edition": null,
-      "effective_date": null,
-      "checked_at": null,
-      "rights": "navigation-only; verify access and reuse at original source",
-      "access": "unknown",
-      "adapter": null,
-      "identity": null,
-      "existing_skills": [
-        "nyc-acris",
-        "nyc-bsa",
-        "nyc-dob-permits",
-        "nyc-dob-violations",
-        "nyc-hpd",
-        "nyc-landmarks",
-        "nyc-property-report"
-      ],
-      "topics": [
-        "nyc",
-        "property",
-        "hpd-open-violations"
-      ],
-      "locators": [
-        {
-          "title": "Publisher dataset metadata",
-          "url": "https://data.cityofnewyork.us/api/views/csn4-vhvf.json"
-        },
-        {
-          "title": "Publisher column metadata",
-          "url": "https://data.cityofnewyork.us/api/views/csn4-vhvf/columns.json"
-        }
-      ]
-    },
-    {
-      "id": "source:nyc-hpd-complaints",
-      "title": "Complaints and Problems",
-      "url": "https://data.cityofnewyork.us/resource/ygpa-z7cr.json",
-      "document_kind": "dataset",
-      "authority": "authority:nyc-open-data",
-      "jurisdiction": "jurisdiction:us-ny-nyc",
-      "edition": null,
-      "effective_date": null,
-      "checked_at": null,
-      "rights": "navigation-only; verify access and reuse at original source",
-      "access": "unknown",
-      "adapter": null,
-      "identity": null,
-      "existing_skills": [
-        "nyc-acris",
-        "nyc-bsa",
-        "nyc-dob-permits",
-        "nyc-dob-violations",
-        "nyc-hpd",
-        "nyc-landmarks",
-        "nyc-property-report"
-      ],
-      "topics": [
-        "nyc",
-        "property",
-        "hpd-complaints"
-      ],
-      "locators": [
-        {
-          "title": "Publisher dataset metadata",
-          "url": "https://data.cityofnewyork.us/api/views/ygpa-z7cr.json"
-        },
-        {
-          "title": "Publisher column metadata",
-          "url": "https://data.cityofnewyork.us/api/views/ygpa-z7cr/columns.json"
-        }
-      ]
-    },
-    {
-      "id": "source:nyc-hpd-registrations",
-      "title": "Multiple Dwelling Registrations",
-      "url": "https://data.cityofnewyork.us/resource/tesw-yqqr.json",
-      "document_kind": "dataset",
-      "authority": "authority:nyc-open-data",
-      "jurisdiction": "jurisdiction:us-ny-nyc",
-      "edition": null,
-      "effective_date": null,
-      "checked_at": null,
-      "rights": "navigation-only; verify access and reuse at original source",
-      "access": "unknown",
-      "adapter": null,
-      "identity": null,
-      "existing_skills": [
-        "nyc-acris",
-        "nyc-bsa",
-        "nyc-dob-permits",
-        "nyc-dob-violations",
-        "nyc-hpd",
-        "nyc-landmarks",
-        "nyc-property-report"
-      ],
-      "topics": [
-        "nyc",
-        "property",
-        "hpd-registrations"
-      ],
-      "locators": [
-        {
-          "title": "Publisher dataset metadata",
-          "url": "https://data.cityofnewyork.us/api/views/tesw-yqqr.json"
-        },
-        {
-          "title": "Publisher column metadata",
-          "url": "https://data.cityofnewyork.us/api/views/tesw-yqqr/columns.json"
-        }
-      ]
-    },
-    {
-      "id": "source:nyc-hpd-registration-contacts",
-      "title": "Registration Contacts",
-      "url": "https://data.cityofnewyork.us/resource/feu5-w2e2.json",
-      "document_kind": "dataset",
-      "authority": "authority:nyc-open-data",
-      "jurisdiction": "jurisdiction:us-ny-nyc",
-      "edition": null,
-      "effective_date": null,
-      "checked_at": null,
-      "rights": "navigation-only; verify access and reuse at original source",
-      "access": "unknown",
-      "adapter": null,
-      "identity": null,
-      "existing_skills": [
-        "nyc-acris",
-        "nyc-bsa",
-        "nyc-dob-permits",
-        "nyc-dob-violations",
-        "nyc-hpd",
-        "nyc-landmarks",
-        "nyc-property-report"
-      ],
-      "topics": [
-        "nyc",
-        "property",
-        "hpd-registration-contacts"
-      ],
-      "locators": [
-        {
-          "title": "Publisher dataset metadata",
-          "url": "https://data.cityofnewyork.us/api/views/feu5-w2e2.json"
-        },
-        {
-          "title": "Publisher column metadata",
-          "url": "https://data.cityofnewyork.us/api/views/feu5-w2e2/columns.json"
-        }
-      ]
-    },
-    {
-      "id": "source:nyc-bsa-applications",
-      "title": "BSA Applications Status",
-      "url": "https://data.cityofnewyork.us/resource/yvxd-uipr.json",
-      "document_kind": "dataset",
-      "authority": "authority:nyc-open-data",
-      "jurisdiction": "jurisdiction:us-ny-nyc",
-      "edition": null,
-      "effective_date": null,
-      "checked_at": null,
-      "rights": "navigation-only; verify access and reuse at original source",
-      "access": "unknown",
-      "adapter": null,
-      "identity": null,
-      "existing_skills": [
-        "nyc-acris",
-        "nyc-bsa",
-        "nyc-dob-permits",
-        "nyc-dob-violations",
-        "nyc-hpd",
-        "nyc-landmarks",
-        "nyc-property-report"
-      ],
-      "topics": [
-        "nyc",
-        "property",
-        "bsa-applications"
-      ],
-      "locators": [
-        {
-          "title": "Publisher dataset metadata",
-          "url": "https://data.cityofnewyork.us/api/views/yvxd-uipr.json"
-        },
-        {
-          "title": "Publisher column metadata",
-          "url": "https://data.cityofnewyork.us/api/views/yvxd-uipr/columns.json"
-        }
-      ]
-    },
-    {
-      "id": "source:socrata-developer-documentation",
-      "title": "Socrata developer documentation",
-      "url": "https://dev.socrata.com",
-      "document_kind": "guidance",
-      "authority": "authority:socrata",
-      "jurisdiction": null,
-      "edition": null,
-      "effective_date": null,
-      "checked_at": null,
-      "rights": "navigation-only; verify access and reuse at original source",
-      "access": "unknown",
-      "adapter": null,
-      "identity": null,
-      "existing_skills": [
-        "nyc-property-report"
-      ],
-      "topics": [
-        "dataset",
-        "api"
-      ],
-      "locators": []
-    },
-    {
-      "id": "source:noaa-climate-normals",
-      "title": "NOAA Climate Normals",
-      "url": "https://ncei.noaa.gov/products/land-based-station/us-climate-normals",
-      "document_kind": "guidance",
-      "authority": "authority:noaa",
-      "jurisdiction": "jurisdiction:us",
-      "edition": null,
-      "effective_date": null,
-      "checked_at": null,
-      "rights": "navigation-only; verify access and reuse at original source",
-      "access": "unknown",
-      "adapter": null,
-      "identity": null,
-      "existing_skills": [
-        "environmental-analysis"
-      ],
-      "topics": [
-        "environmental-analysis"
-      ],
-      "locators": []
-    },
-    {
-      "id": "source:nws-local-climate-data",
-      "title": "NWS Local Climate Data",
-      "url": "https://weather.gov/wrh/Climate",
-      "document_kind": "guidance",
-      "authority": "authority:national-weather-service",
-      "jurisdiction": "jurisdiction:us",
-      "edition": null,
-      "effective_date": null,
-      "checked_at": null,
-      "rights": "navigation-only; verify access and reuse at original source",
-      "access": "unknown",
-      "adapter": null,
-      "identity": null,
-      "existing_skills": [
-        "environmental-analysis"
-      ],
-      "topics": [
-        "environmental-analysis"
-      ],
-      "locators": []
-    },
     {
       "id": "source:noaa-solar-calculator",
       "title": "NOAA Solar Calculator",
@@ -1566,226 +155,6 @@
       "document_kind": "guidance",
       "authority": "authority:noaa",
       "jurisdiction": null,
-      "edition": null,
-      "effective_date": null,
-      "checked_at": null,
-      "rights": "navigation-only; verify access and reuse at original source",
-      "access": "unknown",
-      "adapter": null,
-      "identity": null,
-      "existing_skills": [
-        "environmental-analysis"
-      ],
-      "topics": [
-        "environmental-analysis"
-      ],
-      "locators": []
-    },
-    {
-      "id": "source:doe-building-energy-codes",
-      "title": "DOE Building Energy Codes",
-      "url": "https://energycodes.gov/climate-zones",
-      "document_kind": "guidance",
-      "authority": "authority:u-s-department-of-energy",
-      "jurisdiction": "jurisdiction:us",
-      "edition": null,
-      "effective_date": null,
-      "checked_at": null,
-      "rights": "navigation-only; verify access and reuse at original source",
-      "access": "unknown",
-      "adapter": null,
-      "identity": null,
-      "existing_skills": [
-        "environmental-analysis"
-      ],
-      "topics": [
-        "environmental-analysis"
-      ],
-      "locators": []
-    },
-    {
-      "id": "source:nrel-solar-resource",
-      "title": "NREL Solar Resource",
-      "url": "https://nsrdb.nrel.gov",
-      "document_kind": "guidance",
-      "authority": "authority:nrel",
-      "jurisdiction": null,
-      "edition": null,
-      "effective_date": null,
-      "checked_at": null,
-      "rights": "navigation-only; verify access and reuse at original source",
-      "access": "unknown",
-      "adapter": null,
-      "identity": null,
-      "existing_skills": [
-        "environmental-analysis"
-      ],
-      "topics": [
-        "environmental-analysis"
-      ],
-      "locators": []
-    },
-    {
-      "id": "source:fema-flood-map-service",
-      "title": "FEMA Flood Map Service",
-      "url": "https://msc.fema.gov",
-      "document_kind": "guidance",
-      "authority": "authority:fema",
-      "jurisdiction": "jurisdiction:us",
-      "edition": null,
-      "effective_date": null,
-      "checked_at": null,
-      "rights": "navigation-only; verify access and reuse at original source",
-      "access": "unknown",
-      "adapter": null,
-      "identity": null,
-      "existing_skills": [
-        "environmental-analysis"
-      ],
-      "topics": [
-        "environmental-analysis"
-      ],
-      "locators": []
-    },
-    {
-      "id": "source:usgs-earthquake-hazards",
-      "title": "USGS Earthquake Hazards",
-      "url": "https://earthquake.usgs.gov",
-      "document_kind": "guidance",
-      "authority": "authority:usgs",
-      "jurisdiction": null,
-      "edition": null,
-      "effective_date": null,
-      "checked_at": null,
-      "rights": "navigation-only; verify access and reuse at original source",
-      "access": "unknown",
-      "adapter": null,
-      "identity": null,
-      "existing_skills": [
-        "environmental-analysis"
-      ],
-      "topics": [
-        "environmental-analysis"
-      ],
-      "locators": []
-    },
-    {
-      "id": "source:usgs-national-map",
-      "title": "USGS National Map",
-      "url": "https://apps.nationalmap.gov/viewer",
-      "document_kind": "guidance",
-      "authority": "authority:usgs",
-      "jurisdiction": "jurisdiction:us",
-      "edition": null,
-      "effective_date": null,
-      "checked_at": null,
-      "rights": "navigation-only; verify access and reuse at original source",
-      "access": "unknown",
-      "adapter": null,
-      "identity": null,
-      "existing_skills": [
-        "environmental-analysis"
-      ],
-      "topics": [
-        "environmental-analysis"
-      ],
-      "locators": []
-    },
-    {
-      "id": "source:nrcs-web-soil-survey",
-      "title": "NRCS Web Soil Survey",
-      "url": "https://websoilsurvey.nrcs.usda.gov",
-      "document_kind": "guidance",
-      "authority": "authority:usda-nrcs",
-      "jurisdiction": "jurisdiction:us",
-      "edition": null,
-      "effective_date": null,
-      "checked_at": null,
-      "rights": "navigation-only; verify access and reuse at original source",
-      "access": "unknown",
-      "adapter": null,
-      "identity": null,
-      "existing_skills": [
-        "environmental-analysis"
-      ],
-      "topics": [
-        "environmental-analysis"
-      ],
-      "locators": []
-    },
-    {
-      "id": "source:epa-superfund-brownfields",
-      "title": "EPA Superfund/Brownfields",
-      "url": "https://epa.gov/enviro",
-      "document_kind": "guidance",
-      "authority": "authority:u-s-environmental-protection-agency",
-      "jurisdiction": "jurisdiction:us",
-      "edition": null,
-      "effective_date": null,
-      "checked_at": null,
-      "rights": "navigation-only; verify access and reuse at original source",
-      "access": "unknown",
-      "adapter": null,
-      "identity": null,
-      "existing_skills": [
-        "environmental-analysis"
-      ],
-      "topics": [
-        "environmental-analysis"
-      ],
-      "locators": []
-    },
-    {
-      "id": "source:epa-nepassist",
-      "title": "EPA NEPAssist",
-      "url": "https://epa.gov/nepa/nepassist",
-      "document_kind": "guidance",
-      "authority": "authority:u-s-environmental-protection-agency",
-      "jurisdiction": "jurisdiction:us",
-      "edition": null,
-      "effective_date": null,
-      "checked_at": null,
-      "rights": "navigation-only; verify access and reuse at original source",
-      "access": "unknown",
-      "adapter": null,
-      "identity": null,
-      "existing_skills": [
-        "environmental-analysis"
-      ],
-      "topics": [
-        "environmental-analysis"
-      ],
-      "locators": []
-    },
-    {
-      "id": "source:nwi-wetlands-mapper",
-      "title": "NWI Wetlands Mapper",
-      "url": "https://fws.gov/program/national-wetlands-inventory",
-      "document_kind": "guidance",
-      "authority": "authority:u-s-fish-and-wildlife-service",
-      "jurisdiction": "jurisdiction:us",
-      "edition": null,
-      "effective_date": null,
-      "checked_at": null,
-      "rights": "navigation-only; verify access and reuse at original source",
-      "access": "unknown",
-      "adapter": null,
-      "identity": null,
-      "existing_skills": [
-        "environmental-analysis"
-      ],
-      "topics": [
-        "environmental-analysis"
-      ],
-      "locators": []
-    },
-    {
-      "id": "source:usgs-streamstats",
-      "title": "USGS StreamStats",
-      "url": "https://streamstats.usgs.gov",
-      "document_kind": "guidance",
-      "authority": "authority:usgs",
-      "jurisdiction": "jurisdiction:us",
       "edition": null,
       "effective_date": null,
       "checked_at": null,
@@ -1864,504 +233,6 @@
       ],
       "topics": [
         "environmental-analysis"
-      ],
-      "locators": []
-    },
-    {
-      "id": "source:us-census-bureau",
-      "title": "US Census Bureau",
-      "url": "https://data.census.gov",
-      "document_kind": "guidance",
-      "authority": "authority:u-s-census-bureau",
-      "jurisdiction": "jurisdiction:us",
-      "edition": null,
-      "effective_date": null,
-      "checked_at": null,
-      "rights": "navigation-only; verify access and reuse at original source",
-      "access": "unknown",
-      "adapter": null,
-      "identity": null,
-      "existing_skills": [
-        "demographics-analysis"
-      ],
-      "topics": [
-        "demographics-analysis"
-      ],
-      "locators": []
-    },
-    {
-      "id": "source:census-quickfacts",
-      "title": "Census QuickFacts",
-      "url": "https://census.gov/quickfacts",
-      "document_kind": "guidance",
-      "authority": "authority:u-s-census-bureau",
-      "jurisdiction": "jurisdiction:us",
-      "edition": null,
-      "effective_date": null,
-      "checked_at": null,
-      "rights": "navigation-only; verify access and reuse at original source",
-      "access": "unknown",
-      "adapter": null,
-      "identity": null,
-      "existing_skills": [
-        "demographics-analysis"
-      ],
-      "topics": [
-        "demographics-analysis"
-      ],
-      "locators": []
-    },
-    {
-      "id": "source:bls-local-area-unemployment",
-      "title": "BLS Local Area Unemployment",
-      "url": "https://bls.gov/lau",
-      "document_kind": "guidance",
-      "authority": "authority:u-s-bureau-of-labor-statistics",
-      "jurisdiction": "jurisdiction:us",
-      "edition": null,
-      "effective_date": null,
-      "checked_at": null,
-      "rights": "navigation-only; verify access and reuse at original source",
-      "access": "unknown",
-      "adapter": null,
-      "identity": null,
-      "existing_skills": [
-        "demographics-analysis"
-      ],
-      "topics": [
-        "demographics-analysis"
-      ],
-      "locators": []
-    },
-    {
-      "id": "source:bls-occupational-employment",
-      "title": "BLS Occupational Employment",
-      "url": "https://bls.gov/oes",
-      "document_kind": "guidance",
-      "authority": "authority:u-s-bureau-of-labor-statistics",
-      "jurisdiction": "jurisdiction:us",
-      "edition": null,
-      "effective_date": null,
-      "checked_at": null,
-      "rights": "navigation-only; verify access and reuse at original source",
-      "access": "unknown",
-      "adapter": null,
-      "identity": null,
-      "existing_skills": [
-        "demographics-analysis"
-      ],
-      "topics": [
-        "demographics-analysis"
-      ],
-      "locators": []
-    },
-    {
-      "id": "source:hud-user",
-      "title": "HUD User",
-      "url": "https://huduser.gov",
-      "document_kind": "guidance",
-      "authority": "authority:u-s-department-of-housing-and-urban-development",
-      "jurisdiction": "jurisdiction:us",
-      "edition": null,
-      "effective_date": null,
-      "checked_at": null,
-      "rights": "navigation-only; verify access and reuse at original source",
-      "access": "unknown",
-      "adapter": null,
-      "identity": null,
-      "existing_skills": [
-        "demographics-analysis"
-      ],
-      "topics": [
-        "demographics-analysis"
-      ],
-      "locators": []
-    },
-    {
-      "id": "source:nyu-furman-center",
-      "title": "NYU Furman Center",
-      "url": "https://furmancenter.org",
-      "document_kind": "guidance",
-      "authority": "authority:nyu-furman-center",
-      "jurisdiction": "jurisdiction:us-ny-nyc",
-      "edition": null,
-      "effective_date": null,
-      "checked_at": null,
-      "rights": "navigation-only; verify access and reuse at original source",
-      "access": "unknown",
-      "adapter": null,
-      "identity": null,
-      "existing_skills": [
-        "demographics-analysis"
-      ],
-      "topics": [
-        "demographics-analysis"
-      ],
-      "locators": []
-    },
-    {
-      "id": "source:nyc-open-data",
-      "title": "NYC Open Data",
-      "url": "https://data.cityofnewyork.us",
-      "document_kind": "guidance",
-      "authority": "authority:nyc-open-data",
-      "jurisdiction": "jurisdiction:us-ny-nyc",
-      "edition": null,
-      "effective_date": null,
-      "checked_at": null,
-      "rights": "navigation-only; verify access and reuse at original source",
-      "access": "unknown",
-      "adapter": null,
-      "identity": null,
-      "existing_skills": [
-        "demographics-analysis",
-        "mobility-analysis",
-        "site-history"
-      ],
-      "topics": [
-        "demographics-analysis",
-        "mobility-analysis",
-        "site-history"
-      ],
-      "locators": []
-    },
-    {
-      "id": "source:fred-st-louis-fed",
-      "title": "FRED (St. Louis Fed)",
-      "url": "https://fred.stlouisfed.org",
-      "document_kind": "guidance",
-      "authority": "authority:federal-reserve-bank-of-st-louis",
-      "jurisdiction": "jurisdiction:us",
-      "edition": null,
-      "effective_date": null,
-      "checked_at": null,
-      "rights": "navigation-only; verify access and reuse at original source",
-      "access": "unknown",
-      "adapter": null,
-      "identity": null,
-      "existing_skills": [
-        "demographics-analysis"
-      ],
-      "topics": [
-        "demographics-analysis"
-      ],
-      "locators": []
-    },
-    {
-      "id": "source:national-center-for-education-statistics",
-      "title": "National Center for Education Statistics",
-      "url": "https://nces.ed.gov",
-      "document_kind": "guidance",
-      "authority": "authority:national-center-for-education-statistics",
-      "jurisdiction": "jurisdiction:us",
-      "edition": null,
-      "effective_date": null,
-      "checked_at": null,
-      "rights": "navigation-only; verify access and reuse at original source",
-      "access": "unknown",
-      "adapter": null,
-      "identity": null,
-      "existing_skills": [
-        "demographics-analysis"
-      ],
-      "topics": [
-        "demographics-analysis"
-      ],
-      "locators": []
-    },
-    {
-      "id": "source:cdc-places",
-      "title": "CDC PLACES",
-      "url": "https://cdc.gov/places",
-      "document_kind": "guidance",
-      "authority": "authority:centers-for-disease-control-and-prevention",
-      "jurisdiction": "jurisdiction:us",
-      "edition": null,
-      "effective_date": null,
-      "checked_at": null,
-      "rights": "navigation-only; verify access and reuse at original source",
-      "access": "unknown",
-      "adapter": null,
-      "identity": null,
-      "existing_skills": [
-        "demographics-analysis"
-      ],
-      "topics": [
-        "demographics-analysis"
-      ],
-      "locators": []
-    },
-    {
-      "id": "source:mta-nyc",
-      "title": "MTA (NYC)",
-      "url": "https://mta.info",
-      "document_kind": "guidance",
-      "authority": "authority:metropolitan-transportation-authority",
-      "jurisdiction": "jurisdiction:us-ny",
-      "edition": null,
-      "effective_date": null,
-      "checked_at": null,
-      "rights": "navigation-only; verify access and reuse at original source",
-      "access": "unknown",
-      "adapter": null,
-      "identity": null,
-      "existing_skills": [
-        "mobility-analysis"
-      ],
-      "topics": [
-        "mobility-analysis"
-      ],
-      "locators": [
-        {
-          "title": "Original service-area description",
-          "url": "https://capitaldashboard.mta.info/transit-services"
-        }
-      ]
-    },
-    {
-      "id": "source:nyc-dot",
-      "title": "NYC DOT",
-      "url": "https://nyc.gov/dot",
-      "document_kind": "guidance",
-      "authority": "authority:city-of-new-york",
-      "jurisdiction": "jurisdiction:us-ny-nyc",
-      "edition": null,
-      "effective_date": null,
-      "checked_at": null,
-      "rights": "navigation-only; verify access and reuse at original source",
-      "access": "unknown",
-      "adapter": null,
-      "identity": null,
-      "existing_skills": [
-        "mobility-analysis"
-      ],
-      "topics": [
-        "mobility-analysis"
-      ],
-      "locators": []
-    },
-    {
-      "id": "source:nj-transit",
-      "title": "NJ Transit",
-      "url": "https://njtransit.com",
-      "document_kind": "guidance",
-      "authority": "authority:nj-transit",
-      "jurisdiction": "jurisdiction:us-nj",
-      "edition": null,
-      "effective_date": null,
-      "checked_at": null,
-      "rights": "navigation-only; verify access and reuse at original source",
-      "access": "unknown",
-      "adapter": null,
-      "identity": null,
-      "existing_skills": [
-        "mobility-analysis"
-      ],
-      "topics": [
-        "mobility-analysis"
-      ],
-      "locators": [
-        {
-          "title": "Original service-area description",
-          "url": "https://www.njtransit.com/about/about-us"
-        }
-      ]
-    },
-    {
-      "id": "source:walk-score",
-      "title": "Walk Score",
-      "url": "https://walkscore.com",
-      "document_kind": "guidance",
-      "authority": "authority:walk-score",
-      "jurisdiction": null,
-      "edition": null,
-      "effective_date": null,
-      "checked_at": null,
-      "rights": "navigation-only; verify access and reuse at original source",
-      "access": "unknown",
-      "adapter": null,
-      "identity": null,
-      "existing_skills": [
-        "mobility-analysis"
-      ],
-      "topics": [
-        "mobility-analysis"
-      ],
-      "locators": []
-    },
-    {
-      "id": "source:faa-airport-data",
-      "title": "FAA Airport Data",
-      "url": "https://faa.gov",
-      "document_kind": "guidance",
-      "authority": "authority:federal-aviation-administration",
-      "jurisdiction": "jurisdiction:us",
-      "edition": null,
-      "effective_date": null,
-      "checked_at": null,
-      "rights": "navigation-only; verify access and reuse at original source",
-      "access": "unknown",
-      "adapter": null,
-      "identity": null,
-      "existing_skills": [
-        "mobility-analysis"
-      ],
-      "topics": [
-        "mobility-analysis"
-      ],
-      "locators": []
-    },
-    {
-      "id": "source:usdot-bts",
-      "title": "USDOT BTS",
-      "url": "https://transtats.bts.gov",
-      "document_kind": "guidance",
-      "authority": "authority:bureau-of-transportation-statistics",
-      "jurisdiction": "jurisdiction:us",
-      "edition": null,
-      "effective_date": null,
-      "checked_at": null,
-      "rights": "navigation-only; verify access and reuse at original source",
-      "access": "unknown",
-      "adapter": null,
-      "identity": null,
-      "existing_skills": [
-        "mobility-analysis"
-      ],
-      "topics": [
-        "mobility-analysis"
-      ],
-      "locators": []
-    },
-    {
-      "id": "source:nyc-lpc-designation-reports",
-      "title": "NYC LPC Designation Reports",
-      "url": "https://nyc.gov/landmarks",
-      "document_kind": "guidance",
-      "authority": "authority:city-of-new-york",
-      "jurisdiction": "jurisdiction:us-ny-nyc",
-      "edition": null,
-      "effective_date": null,
-      "checked_at": null,
-      "rights": "navigation-only; verify access and reuse at original source",
-      "access": "unknown",
-      "adapter": null,
-      "identity": null,
-      "existing_skills": [
-        "site-history"
-      ],
-      "topics": [
-        "site-history"
-      ],
-      "locators": []
-    },
-    {
-      "id": "source:nyc-lpc-lamp",
-      "title": "NYC LPC LAMP",
-      "url": "https://nyclpc.maps.arcgis.com",
-      "document_kind": "guidance",
-      "authority": "authority:nyc-landmarks-preservation-commission",
-      "jurisdiction": "jurisdiction:us-ny-nyc",
-      "edition": null,
-      "effective_date": null,
-      "checked_at": null,
-      "rights": "navigation-only; verify access and reuse at original source",
-      "access": "unknown",
-      "adapter": null,
-      "identity": null,
-      "existing_skills": [
-        "site-history"
-      ],
-      "topics": [
-        "site-history"
-      ],
-      "locators": []
-    },
-    {
-      "id": "source:national-register-of-historic-places",
-      "title": "National Register of Historic Places",
-      "url": "https://nps.gov/subjects/nationalregister",
-      "document_kind": "guidance",
-      "authority": "authority:national-park-service",
-      "jurisdiction": "jurisdiction:us",
-      "edition": null,
-      "effective_date": null,
-      "checked_at": null,
-      "rights": "navigation-only; verify access and reuse at original source",
-      "access": "unknown",
-      "adapter": null,
-      "identity": null,
-      "existing_skills": [
-        "site-history"
-      ],
-      "topics": [
-        "site-history"
-      ],
-      "locators": []
-    },
-    {
-      "id": "source:nyc-dcp-community-profiles",
-      "title": "NYC DCP Community Profiles",
-      "url": "https://communityprofiles.planning.nyc.gov",
-      "document_kind": "guidance",
-      "authority": "authority:nyc-dcp",
-      "jurisdiction": "jurisdiction:us-ny-nyc",
-      "edition": null,
-      "effective_date": null,
-      "checked_at": null,
-      "rights": "navigation-only; verify access and reuse at original source",
-      "access": "unknown",
-      "adapter": null,
-      "identity": null,
-      "existing_skills": [
-        "site-history"
-      ],
-      "topics": [
-        "site-history"
-      ],
-      "locators": []
-    },
-    {
-      "id": "source:national-park-service",
-      "title": "National Park Service",
-      "url": "https://nps.gov",
-      "document_kind": "guidance",
-      "authority": "authority:national-park-service",
-      "jurisdiction": "jurisdiction:us",
-      "edition": null,
-      "effective_date": null,
-      "checked_at": null,
-      "rights": "navigation-only; verify access and reuse at original source",
-      "access": "unknown",
-      "adapter": null,
-      "identity": null,
-      "existing_skills": [
-        "site-history"
-      ],
-      "topics": [
-        "site-history"
-      ],
-      "locators": []
-    },
-    {
-      "id": "source:library-of-congress-habs",
-      "title": "Library of Congress / HABS",
-      "url": "https://loc.gov/pictures/collection/hh",
-      "document_kind": "guidance",
-      "authority": "authority:library-of-congress",
-      "jurisdiction": "jurisdiction:us",
-      "edition": null,
-      "effective_date": null,
-      "checked_at": null,
-      "rights": "navigation-only; verify access and reuse at original source",
-      "access": "unknown",
-      "adapter": null,
-      "identity": null,
-      "existing_skills": [
-        "site-history"
-      ],
-      "topics": [
-        "site-history"
       ],
       "locators": []
     },
@@ -2520,50 +391,6 @@
       "locators": []
     },
     {
-      "id": "source:astm-international",
-      "title": "ASTM International",
-      "url": "https://astm.org",
-      "document_kind": "guidance",
-      "authority": "authority:astm-international",
-      "jurisdiction": null,
-      "edition": null,
-      "effective_date": null,
-      "checked_at": null,
-      "rights": "navigation-only; verify access and reuse at original source",
-      "access": "unknown",
-      "adapter": null,
-      "identity": null,
-      "existing_skills": [
-        "epd-research"
-      ],
-      "topics": [
-        "epd-research"
-      ],
-      "locators": []
-    },
-    {
-      "id": "source:astm-e84",
-      "title": "ASTM E84",
-      "url": "https://www.astm.org",
-      "document_kind": "standard",
-      "authority": "authority:astm-international",
-      "jurisdiction": null,
-      "edition": null,
-      "effective_date": null,
-      "checked_at": null,
-      "rights": "navigation-only; verify access and reuse at original source",
-      "access": "unknown",
-      "adapter": null,
-      "identity": null,
-      "existing_skills": [],
-      "topics": [
-        "standard",
-        "product",
-        "fire-test"
-      ],
-      "locators": []
-    },
-    {
       "id": "source:w3c-wcag",
       "title": "W3C Web Content Accessibility Guidelines",
       "url": "https://www.w3.org/WAI/standards-guidelines/wcag/",
@@ -2585,25 +412,752 @@
         "color-contrast"
       ],
       "locators": []
+    },
+    {
+      "id": "source:jdih-bpk",
+      "title": "JDIH BPK — Database Peraturan",
+      "url": "https://peraturan.bpk.go.id",
+      "document_kind": "legal-publication",
+      "authority": "authority:bpk-ri",
+      "jurisdiction": "jurisdiction:id",
+      "edition": null,
+      "effective_date": null,
+      "checked_at": null,
+      "rights": "verify-reuse-conditions-at-source",
+      "access": "public",
+      "adapter": "integration:public-source-health",
+      "identity": {
+        "contains_all": [
+          "Peraturan"
+        ],
+        "allowed_content_types": [
+          "text/html"
+        ],
+        "max_bytes": 262144
+      },
+      "existing_skills": [
+        "zoning-analysis-id",
+        "occupancy-calculator",
+        "architecture-knowledge",
+        "environmental-analysis",
+        "spec-writer"
+      ],
+      "topics": [
+        "code",
+        "regulation",
+        "zoning"
+      ],
+      "locators": []
+    },
+    {
+      "id": "source:jdih-kemkes",
+      "title": "JDIH Kementerian Kesehatan",
+      "url": "https://jdih.kemkes.go.id",
+      "document_kind": "legal-publication",
+      "authority": "authority:kemenkes",
+      "jurisdiction": "jurisdiction:id",
+      "edition": null,
+      "effective_date": null,
+      "checked_at": null,
+      "rights": "verify-reuse-conditions-at-source",
+      "access": "public",
+      "adapter": "integration:public-source-health",
+      "identity": {
+        "contains_all": [
+          "JDIH"
+        ],
+        "allowed_content_types": [
+          "text/html"
+        ],
+        "max_bytes": 262144
+      },
+      "existing_skills": [
+        "zoning-analysis-id"
+      ],
+      "topics": [
+        "code",
+        "regulation",
+        "rumah-sakit"
+      ],
+      "locators": []
+    },
+    {
+      "id": "source:permenkes-6-2026-rumah-sakit",
+      "title": "Peraturan Menteri Kesehatan Nomor 6 Tahun 2026 tentang Rumah Sakit",
+      "url": "https://jdih.kemkes.go.id/storage/documents/pdfs/2026permenkes006.pdf",
+      "document_kind": "legal-publication",
+      "authority": "authority:kemenkes",
+      "jurisdiction": "jurisdiction:id",
+      "edition": "2026",
+      "effective_date": null,
+      "checked_at": null,
+      "rights": "verify-reuse-conditions-at-source",
+      "access": "public",
+      "adapter": "integration:public-source-health",
+      "identity": {
+        "contains_all": [
+          "RUMAH SAKIT"
+        ],
+        "allowed_content_types": [
+          "application/pdf"
+        ],
+        "max_bytes": 1048576
+      },
+      "existing_skills": [
+        "zoning-analysis-id"
+      ],
+      "topics": [
+        "code",
+        "regulation",
+        "rumah-sakit"
+      ],
+      "locators": []
+    },
+    {
+      "id": "source:permenkes-40-2022-teknis-rs",
+      "title": "Peraturan Menteri Kesehatan Nomor 40 Tahun 2022 tentang Persyaratan Teknis Bangunan, Prasarana, dan Peralatan Kesehatan Rumah Sakit (reported revoked by Permenkes 6/2026; verify)",
+      "url": "https://www.peraturan.go.id/files/bn1309-2022.pdf",
+      "document_kind": "legal-publication",
+      "authority": "authority:sekretariat-negara",
+      "jurisdiction": "jurisdiction:id",
+      "edition": "2022",
+      "effective_date": null,
+      "checked_at": null,
+      "rights": "verify-reuse-conditions-at-source",
+      "access": "public",
+      "adapter": "integration:public-source-health",
+      "identity": {
+        "contains_all": [
+          "RUMAH SAKIT"
+        ],
+        "allowed_content_types": [
+          "application/pdf"
+        ],
+        "max_bytes": 1048576
+      },
+      "existing_skills": [],
+      "topics": [
+        "code",
+        "regulation",
+        "rumah-sakit"
+      ],
+      "locators": []
+    },
+    {
+      "id": "source:jdih-pu",
+      "title": "JDIH Kementerian Pekerjaan Umum",
+      "url": "https://jdih.pu.go.id",
+      "document_kind": "legal-publication",
+      "authority": "authority:kementerian-pu",
+      "jurisdiction": "jurisdiction:id",
+      "edition": null,
+      "effective_date": null,
+      "checked_at": null,
+      "rights": "verify-reuse-conditions-at-source",
+      "access": "public",
+      "adapter": "integration:public-source-health",
+      "identity": {
+        "contains_all": [
+          "JDIH"
+        ],
+        "allowed_content_types": [
+          "text/html"
+        ],
+        "max_bytes": 262144
+      },
+      "existing_skills": [
+        "occupancy-calculator",
+        "zoning-analysis-id",
+        "spec-writer"
+      ],
+      "topics": [
+        "code",
+        "regulation",
+        "bangunan-gedung",
+        "fire-safety"
+      ],
+      "locators": []
+    },
+    {
+      "id": "source:simbg",
+      "title": "SIMBG — Sistem Informasi Manajemen Bangunan Gedung (PBG/SLF)",
+      "url": "https://simbg.pu.go.id",
+      "document_kind": "guidance",
+      "authority": "authority:kementerian-pu",
+      "jurisdiction": "jurisdiction:id",
+      "edition": null,
+      "effective_date": null,
+      "checked_at": null,
+      "rights": "verify-reuse-conditions-at-source",
+      "access": "public",
+      "adapter": "integration:public-source-health",
+      "identity": {
+        "contains_all": [
+          "SIMBG"
+        ],
+        "allowed_content_types": [
+          "text/html"
+        ],
+        "max_bytes": 262144
+      },
+      "existing_skills": [
+        "zoning-analysis-id"
+      ],
+      "topics": [
+        "code",
+        "bangunan-gedung",
+        "permit"
+      ],
+      "locators": []
+    },
+    {
+      "id": "source:bsn-sni",
+      "title": "Badan Standardisasi Nasional — Standar Nasional Indonesia (SNI)",
+      "url": "https://www.bsn.go.id",
+      "document_kind": "standard",
+      "authority": "authority:bsn",
+      "jurisdiction": "jurisdiction:id",
+      "edition": null,
+      "effective_date": null,
+      "checked_at": null,
+      "rights": "verify-reuse-conditions-at-source",
+      "access": "public",
+      "adapter": "integration:public-source-health",
+      "identity": {
+        "contains_all": [
+          "Standardisasi"
+        ],
+        "allowed_content_types": [
+          "text/html"
+        ],
+        "max_bytes": 262144
+      },
+      "existing_skills": [
+        "occupancy-calculator",
+        "spec-writer",
+        "epd-research",
+        "environmental-analysis"
+      ],
+      "topics": [
+        "standard",
+        "code",
+        "product"
+      ],
+      "locators": []
+    },
+    {
+      "id": "source:gistaru",
+      "title": "GISTARU — Peta Tata Ruang ATR/BPN",
+      "url": "https://gistaru.atrbpn.go.id",
+      "document_kind": "dataset",
+      "authority": "authority:atr-bpn",
+      "jurisdiction": "jurisdiction:id",
+      "edition": null,
+      "effective_date": null,
+      "checked_at": null,
+      "rights": "verify-reuse-conditions-at-source",
+      "access": "public",
+      "adapter": "integration:public-source-health",
+      "identity": {
+        "contains_all": [
+          "GISTARU"
+        ],
+        "allowed_content_types": [
+          "text/html"
+        ],
+        "max_bytes": 262144
+      },
+      "existing_skills": [
+        "zoning-analysis-id",
+        "site-history"
+      ],
+      "topics": [
+        "zoning",
+        "dataset",
+        "spatial-plan"
+      ],
+      "locators": []
+    },
+    {
+      "id": "source:oss-rba",
+      "title": "OSS RBA — Perizinan Berusaha dan KKPR",
+      "url": "https://oss.go.id",
+      "document_kind": "guidance",
+      "authority": "authority:oss",
+      "jurisdiction": "jurisdiction:id",
+      "edition": null,
+      "effective_date": null,
+      "checked_at": null,
+      "rights": "verify-reuse-conditions-at-source",
+      "access": "public",
+      "adapter": "integration:public-source-health",
+      "identity": {
+        "contains_all": [
+          "OSS"
+        ],
+        "allowed_content_types": [
+          "text/html"
+        ],
+        "max_bytes": 262144
+      },
+      "existing_skills": [
+        "zoning-analysis-id"
+      ],
+      "topics": [
+        "zoning",
+        "permit"
+      ],
+      "locators": []
+    },
+    {
+      "id": "source:bmkg",
+      "title": "BMKG — Iklim dan Cuaca",
+      "url": "https://www.bmkg.go.id",
+      "document_kind": "dataset",
+      "authority": "authority:bmkg",
+      "jurisdiction": "jurisdiction:id",
+      "edition": null,
+      "effective_date": null,
+      "checked_at": null,
+      "rights": "verify-reuse-conditions-at-source",
+      "access": "public",
+      "adapter": "integration:public-source-health",
+      "identity": {
+        "contains_all": [
+          "BMKG"
+        ],
+        "allowed_content_types": [
+          "text/html"
+        ],
+        "max_bytes": 262144
+      },
+      "existing_skills": [
+        "environmental-analysis"
+      ],
+      "topics": [
+        "environmental-analysis",
+        "climate"
+      ],
+      "locators": []
+    },
+    {
+      "id": "source:bmkg-data-online",
+      "title": "BMKG Data Online",
+      "url": "https://dataonline.bmkg.go.id",
+      "document_kind": "dataset",
+      "authority": "authority:bmkg",
+      "jurisdiction": "jurisdiction:id",
+      "edition": null,
+      "effective_date": null,
+      "checked_at": null,
+      "rights": "verify-reuse-conditions-at-source",
+      "access": "public",
+      "adapter": "integration:public-source-health",
+      "identity": {
+        "contains_all": [
+          "BMKG"
+        ],
+        "allowed_content_types": [
+          "text/html"
+        ],
+        "max_bytes": 262144
+      },
+      "existing_skills": [
+        "environmental-analysis"
+      ],
+      "topics": [
+        "environmental-analysis",
+        "climate",
+        "dataset"
+      ],
+      "locators": []
+    },
+    {
+      "id": "source:inarisk",
+      "title": "InaRISK — Kajian Risiko Bencana BNPB",
+      "url": "https://inarisk.bnpb.go.id",
+      "document_kind": "dataset",
+      "authority": "authority:bnpb",
+      "jurisdiction": "jurisdiction:id",
+      "edition": null,
+      "effective_date": null,
+      "checked_at": null,
+      "rights": "verify-reuse-conditions-at-source",
+      "access": "public",
+      "adapter": "integration:public-source-health",
+      "identity": {
+        "contains_all": [
+          "InaRISK"
+        ],
+        "allowed_content_types": [
+          "text/html"
+        ],
+        "max_bytes": 262144
+      },
+      "existing_skills": [
+        "environmental-analysis"
+      ],
+      "topics": [
+        "environmental-analysis",
+        "hazard",
+        "dataset"
+      ],
+      "locators": []
+    },
+    {
+      "id": "source:bnpb-dibi",
+      "title": "DIBI — Data dan Informasi Bencana Indonesia",
+      "url": "https://dibi.bnpb.go.id",
+      "document_kind": "dataset",
+      "authority": "authority:bnpb",
+      "jurisdiction": "jurisdiction:id",
+      "edition": null,
+      "effective_date": null,
+      "checked_at": null,
+      "rights": "verify-reuse-conditions-at-source",
+      "access": "public",
+      "adapter": "integration:public-source-health",
+      "identity": {
+        "contains_all": [
+          "DIBI"
+        ],
+        "allowed_content_types": [
+          "text/html"
+        ],
+        "max_bytes": 262144
+      },
+      "existing_skills": [
+        "environmental-analysis"
+      ],
+      "topics": [
+        "environmental-analysis",
+        "hazard",
+        "dataset"
+      ],
+      "locators": []
+    },
+    {
+      "id": "source:rsa-ciptakarya",
+      "title": "Desain Spektra Indonesia (SNI 1726) — Kementerian PU (URL to verify)",
+      "url": "https://rsa.ciptakarya.pu.go.id/2021/",
+      "document_kind": "dataset",
+      "authority": "authority:kementerian-pu",
+      "jurisdiction": "jurisdiction:id",
+      "edition": null,
+      "effective_date": null,
+      "checked_at": null,
+      "rights": "verify-reuse-conditions-at-source",
+      "access": "public",
+      "adapter": "integration:public-source-health",
+      "identity": {
+        "contains_all": [
+          "Spektra"
+        ],
+        "allowed_content_types": [
+          "text/html"
+        ],
+        "max_bytes": 262144
+      },
+      "existing_skills": [
+        "environmental-analysis"
+      ],
+      "topics": [
+        "environmental-analysis",
+        "seismic",
+        "standard"
+      ],
+      "locators": []
+    },
+    {
+      "id": "source:tanah-air-indonesia",
+      "title": "Ina-Geoportal — Tanah Air Indonesia",
+      "url": "https://tanahair.indonesia.go.id",
+      "document_kind": "dataset",
+      "authority": "authority:big",
+      "jurisdiction": "jurisdiction:id",
+      "edition": null,
+      "effective_date": null,
+      "checked_at": null,
+      "rights": "verify-reuse-conditions-at-source",
+      "access": "public",
+      "adapter": "integration:public-source-health",
+      "identity": {
+        "contains_all": [
+          "Geoportal"
+        ],
+        "allowed_content_types": [
+          "text/html"
+        ],
+        "max_bytes": 262144
+      },
+      "existing_skills": [
+        "environmental-analysis",
+        "zoning-analysis-id",
+        "site-history"
+      ],
+      "topics": [
+        "environmental-analysis",
+        "dataset",
+        "topography"
+      ],
+      "locators": []
+    },
+    {
+      "id": "source:amdalnet",
+      "title": "AMDALNET — Persetujuan Lingkungan",
+      "url": "https://amdalnet.menlhk.go.id",
+      "document_kind": "guidance",
+      "authority": "authority:klh",
+      "jurisdiction": "jurisdiction:id",
+      "edition": null,
+      "effective_date": null,
+      "checked_at": null,
+      "rights": "verify-reuse-conditions-at-source",
+      "access": "public",
+      "adapter": "integration:public-source-health",
+      "identity": {
+        "contains_all": [
+          "AMDAL"
+        ],
+        "allowed_content_types": [
+          "text/html"
+        ],
+        "max_bytes": 262144
+      },
+      "existing_skills": [
+        "environmental-analysis"
+      ],
+      "topics": [
+        "environmental-analysis",
+        "permit"
+      ],
+      "locators": []
+    },
+    {
+      "id": "source:bps",
+      "title": "Badan Pusat Statistik",
+      "url": "https://www.bps.go.id",
+      "document_kind": "dataset",
+      "authority": "authority:bps",
+      "jurisdiction": "jurisdiction:id",
+      "edition": null,
+      "effective_date": null,
+      "checked_at": null,
+      "rights": "verify-reuse-conditions-at-source",
+      "access": "public",
+      "adapter": "integration:public-source-health",
+      "identity": {
+        "contains_all": [
+          "Statistik"
+        ],
+        "allowed_content_types": [
+          "text/html"
+        ],
+        "max_bytes": 262144
+      },
+      "existing_skills": [
+        "demographics-analysis"
+      ],
+      "topics": [
+        "demographics-analysis",
+        "dataset",
+        "statistics"
+      ],
+      "locators": []
+    },
+    {
+      "id": "source:satu-data-indonesia",
+      "title": "Satu Data Indonesia",
+      "url": "https://data.go.id",
+      "document_kind": "dataset",
+      "authority": "authority:satu-data-indonesia",
+      "jurisdiction": "jurisdiction:id",
+      "edition": null,
+      "effective_date": null,
+      "checked_at": null,
+      "rights": "verify-reuse-conditions-at-source",
+      "access": "public",
+      "adapter": "integration:public-source-health",
+      "identity": {
+        "contains_all": [
+          "Data"
+        ],
+        "allowed_content_types": [
+          "text/html"
+        ],
+        "max_bytes": 262144
+      },
+      "existing_skills": [
+        "demographics-analysis",
+        "mobility-analysis"
+      ],
+      "topics": [
+        "demographics-analysis",
+        "dataset"
+      ],
+      "locators": []
+    },
+    {
+      "id": "source:kemenhub",
+      "title": "Kementerian Perhubungan",
+      "url": "https://dephub.go.id",
+      "document_kind": "guidance",
+      "authority": "authority:kemenhub",
+      "jurisdiction": "jurisdiction:id",
+      "edition": null,
+      "effective_date": null,
+      "checked_at": null,
+      "rights": "verify-reuse-conditions-at-source",
+      "access": "public",
+      "adapter": "integration:public-source-health",
+      "identity": {
+        "contains_all": [
+          "Perhubungan"
+        ],
+        "allowed_content_types": [
+          "text/html"
+        ],
+        "max_bytes": 262144
+      },
+      "existing_skills": [
+        "mobility-analysis"
+      ],
+      "topics": [
+        "mobility-analysis",
+        "transport"
+      ],
+      "locators": []
+    },
+    {
+      "id": "source:cagar-budaya",
+      "title": "Registrasi Nasional Cagar Budaya",
+      "url": "https://cagarbudaya.kemdikbud.go.id",
+      "document_kind": "dataset",
+      "authority": "authority:kebudayaan",
+      "jurisdiction": "jurisdiction:id",
+      "edition": null,
+      "effective_date": null,
+      "checked_at": null,
+      "rights": "verify-reuse-conditions-at-source",
+      "access": "public",
+      "adapter": "integration:public-source-health",
+      "identity": {
+        "contains_all": [
+          "Cagar Budaya"
+        ],
+        "allowed_content_types": [
+          "text/html"
+        ],
+        "max_bytes": 262144
+      },
+      "existing_skills": [
+        "site-history"
+      ],
+      "topics": [
+        "site-history",
+        "heritage",
+        "dataset"
+      ],
+      "locators": []
+    },
+    {
+      "id": "source:iai",
+      "title": "Ikatan Arsitek Indonesia",
+      "url": "https://www.iai.or.id",
+      "document_kind": "guidance",
+      "authority": "authority:iai",
+      "jurisdiction": "jurisdiction:id",
+      "edition": null,
+      "effective_date": null,
+      "checked_at": null,
+      "rights": "verify-reuse-conditions-at-source",
+      "access": "public",
+      "adapter": "integration:public-source-health",
+      "identity": {
+        "contains_all": [
+          "Arsitek"
+        ],
+        "allowed_content_types": [
+          "text/html"
+        ],
+        "max_bytes": 262144
+      },
+      "existing_skills": [
+        "architecture-knowledge",
+        "agreement"
+      ],
+      "topics": [
+        "professional-practice",
+        "architecture-knowledge"
+      ],
+      "locators": []
+    },
+    {
+      "id": "source:jdih-lkpp",
+      "title": "JDIH LKPP — Pengadaan Barang/Jasa Pemerintah",
+      "url": "https://jdih.lkpp.go.id",
+      "document_kind": "legal-publication",
+      "authority": "authority:lkpp",
+      "jurisdiction": "jurisdiction:id",
+      "edition": null,
+      "effective_date": null,
+      "checked_at": null,
+      "rights": "verify-reuse-conditions-at-source",
+      "access": "public",
+      "adapter": "integration:public-source-health",
+      "identity": {
+        "contains_all": [
+          "LKPP"
+        ],
+        "allowed_content_types": [
+          "text/html"
+        ],
+        "max_bytes": 262144
+      },
+      "existing_skills": [
+        "architecture-knowledge",
+        "agreement"
+      ],
+      "topics": [
+        "professional-practice",
+        "procurement"
+      ],
+      "locators": []
+    },
+    {
+      "id": "source:gbci-greenship",
+      "title": "Green Building Council Indonesia — GREENSHIP",
+      "url": "https://www.gbcindonesia.org",
+      "document_kind": "guidance",
+      "authority": "authority:gbci",
+      "jurisdiction": "jurisdiction:id",
+      "edition": null,
+      "effective_date": null,
+      "checked_at": null,
+      "rights": "verify-reuse-conditions-at-source",
+      "access": "public",
+      "adapter": "integration:public-source-health",
+      "identity": {
+        "contains_all": [
+          "GREENSHIP"
+        ],
+        "allowed_content_types": [
+          "text/html"
+        ],
+        "max_bytes": 262144
+      },
+      "existing_skills": [
+        "epd-research",
+        "epd-to-spec"
+      ],
+      "topics": [
+        "sustainability",
+        "rating-system"
+      ],
+      "locators": []
     }
   ],
   "relationships": [
-    {
-      "from": "source:nyc-zoning-resolution",
-      "type": "published-by",
-      "to": "authority:nyc-dcp",
-      "edition": null,
-      "effective_date": null,
-      "evidence": "https://zr.planning.nyc.gov/"
-    },
-    {
-      "from": "source:nyc-pluto",
-      "type": "published-by",
-      "to": "authority:nyc-dcp",
-      "edition": null,
-      "effective_date": null,
-      "evidence": "https://data.cityofnewyork.us/resource/64uk-42ks.json?$limit=1"
-    },
     {
       "from": "source:w3c-wcag",
       "type": "published-by",
@@ -2611,6 +1165,190 @@
       "edition": null,
       "effective_date": null,
       "evidence": "https://www.w3.org/WAI/standards-guidelines/wcag/"
+    },
+    {
+      "from": "source:jdih-bpk",
+      "type": "published-by",
+      "to": "authority:bpk-ri",
+      "edition": null,
+      "effective_date": null,
+      "evidence": "https://peraturan.bpk.go.id"
+    },
+    {
+      "from": "source:jdih-kemkes",
+      "type": "published-by",
+      "to": "authority:kemenkes",
+      "edition": null,
+      "effective_date": null,
+      "evidence": "https://jdih.kemkes.go.id"
+    },
+    {
+      "from": "source:permenkes-6-2026-rumah-sakit",
+      "type": "published-by",
+      "to": "authority:kemenkes",
+      "edition": null,
+      "effective_date": null,
+      "evidence": "https://jdih.kemkes.go.id/storage/documents/pdfs/2026permenkes006.pdf"
+    },
+    {
+      "from": "source:permenkes-40-2022-teknis-rs",
+      "type": "published-by",
+      "to": "authority:sekretariat-negara",
+      "edition": null,
+      "effective_date": null,
+      "evidence": "https://www.peraturan.go.id/files/bn1309-2022.pdf"
+    },
+    {
+      "from": "source:jdih-pu",
+      "type": "published-by",
+      "to": "authority:kementerian-pu",
+      "edition": null,
+      "effective_date": null,
+      "evidence": "https://jdih.pu.go.id"
+    },
+    {
+      "from": "source:simbg",
+      "type": "published-by",
+      "to": "authority:kementerian-pu",
+      "edition": null,
+      "effective_date": null,
+      "evidence": "https://simbg.pu.go.id"
+    },
+    {
+      "from": "source:bsn-sni",
+      "type": "published-by",
+      "to": "authority:bsn",
+      "edition": null,
+      "effective_date": null,
+      "evidence": "https://www.bsn.go.id"
+    },
+    {
+      "from": "source:gistaru",
+      "type": "published-by",
+      "to": "authority:atr-bpn",
+      "edition": null,
+      "effective_date": null,
+      "evidence": "https://gistaru.atrbpn.go.id"
+    },
+    {
+      "from": "source:oss-rba",
+      "type": "published-by",
+      "to": "authority:oss",
+      "edition": null,
+      "effective_date": null,
+      "evidence": "https://oss.go.id"
+    },
+    {
+      "from": "source:bmkg",
+      "type": "published-by",
+      "to": "authority:bmkg",
+      "edition": null,
+      "effective_date": null,
+      "evidence": "https://www.bmkg.go.id"
+    },
+    {
+      "from": "source:bmkg-data-online",
+      "type": "published-by",
+      "to": "authority:bmkg",
+      "edition": null,
+      "effective_date": null,
+      "evidence": "https://dataonline.bmkg.go.id"
+    },
+    {
+      "from": "source:inarisk",
+      "type": "published-by",
+      "to": "authority:bnpb",
+      "edition": null,
+      "effective_date": null,
+      "evidence": "https://inarisk.bnpb.go.id"
+    },
+    {
+      "from": "source:bnpb-dibi",
+      "type": "published-by",
+      "to": "authority:bnpb",
+      "edition": null,
+      "effective_date": null,
+      "evidence": "https://dibi.bnpb.go.id"
+    },
+    {
+      "from": "source:rsa-ciptakarya",
+      "type": "published-by",
+      "to": "authority:kementerian-pu",
+      "edition": null,
+      "effective_date": null,
+      "evidence": "https://rsa.ciptakarya.pu.go.id/2021/"
+    },
+    {
+      "from": "source:tanah-air-indonesia",
+      "type": "published-by",
+      "to": "authority:big",
+      "edition": null,
+      "effective_date": null,
+      "evidence": "https://tanahair.indonesia.go.id"
+    },
+    {
+      "from": "source:amdalnet",
+      "type": "published-by",
+      "to": "authority:klh",
+      "edition": null,
+      "effective_date": null,
+      "evidence": "https://amdalnet.menlhk.go.id"
+    },
+    {
+      "from": "source:bps",
+      "type": "published-by",
+      "to": "authority:bps",
+      "edition": null,
+      "effective_date": null,
+      "evidence": "https://www.bps.go.id"
+    },
+    {
+      "from": "source:satu-data-indonesia",
+      "type": "published-by",
+      "to": "authority:satu-data-indonesia",
+      "edition": null,
+      "effective_date": null,
+      "evidence": "https://data.go.id"
+    },
+    {
+      "from": "source:kemenhub",
+      "type": "published-by",
+      "to": "authority:kemenhub",
+      "edition": null,
+      "effective_date": null,
+      "evidence": "https://dephub.go.id"
+    },
+    {
+      "from": "source:cagar-budaya",
+      "type": "published-by",
+      "to": "authority:kebudayaan",
+      "edition": null,
+      "effective_date": null,
+      "evidence": "https://cagarbudaya.kemdikbud.go.id"
+    },
+    {
+      "from": "source:iai",
+      "type": "published-by",
+      "to": "authority:iai",
+      "edition": null,
+      "effective_date": null,
+      "evidence": "https://www.iai.or.id"
+    },
+    {
+      "from": "source:jdih-lkpp",
+      "type": "published-by",
+      "to": "authority:lkpp",
+      "edition": null,
+      "effective_date": null,
+      "evidence": "https://jdih.lkpp.go.id"
+    },
+    {
+      "from": "source:gbci-greenship",
+      "type": "published-by",
+      "to": "authority:gbci",
+      "edition": null,
+      "effective_date": null,
+      "evidence": "https://www.gbcindonesia.org"
     }
   ]
 }

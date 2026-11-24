@@ -20,7 +20,7 @@
   "dependencies": [],
   "coverage": {
     "jurisdictions": [],
-    "limitations": "Record procedures use their native semantic owners and the actual host’s authorized workspace capabilities. US professional terminology is reference guidance; it does not confirm facts, scope or decisions. No cluster-wide execution or end-to-end validation claim.",
+    "limitations": "Record procedures use their native semantic owners and the actual host’s authorized workspace capabilities. Indonesian professional terminology is reference guidance; it does not confirm facts, scope or decisions. No cluster-wide execution or end-to-end validation claim.",
     "sources_indexed": false,
     "procedures_available": true,
     "execution_implemented": false,

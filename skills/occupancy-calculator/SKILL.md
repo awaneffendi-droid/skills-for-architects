@@ -1,6 +1,6 @@
 ---
 name: occupancy-calculator
-description: "Calculate code occupant loads by area with gross/net factors and jurisdiction checks. Use for \"how many people can this space hold,\" IBC Table 1004.5, egress inputs, or occupancy-load reports; not for workplace headcount planning."
+description: "Calculate occupant loads (beban hunian) by area with gross/net factors and jurisdiction checks. Use for \"how many people can this space hold,\" Permen PU 26/PRT/M/2008 or SNI 03-1746-2000 occupant-load factors, egress inputs, or occupancy-load reports; not for workplace headcount planning."
 allowed-tools:
   - Read
   - Write
@@ -25,14 +25,14 @@ Use [project context](../project/references/context-resolution.md) only when the
 
 Find relevant original links in [the source catalog](../../corpus/sources/catalog.json), filtered by geography and topic. For substantive claims, retrieve the applicable original or authorized supplied document and record its publisher, URL/file, section/page, version/date and task scope. A linked or reachable source is not proof of applicability. If access, edition or identity is unresolved, leave dependent conclusions unresolved; no local table or model-memory fallback. Keep task evidence in the authorized workspace, outside the plugin.
 
-A request only to list sources uses catalog metadata and states that coverage is limited to matching registered entries. It needs no source-content retrieval, setup or approval. Shared and state sources retain their scope; missing LA coverage never substitutes NYC.
+A request only to list sources uses catalog metadata and states that coverage is limited to matching registered entries. It needs no source-content retrieval, setup or approval. National and provincial sources retain their scope; a missing kabupaten/kota source is a gap and never substitutes another region’s data.
 ## Calculate from verified task inputs
 
-Establish the site jurisdiction, analysis date, adopted code/edition and actual intended use before selecting a rule. Read the [geographic contract](../../docs/geographic-applicability.md) and matching [declaration](../../corpus/geographic-applicability.json). The NYC routes are navigation for NYC; other jurisdictions require their own controlling source. Do not use a building-type label or studio default as a substitute for jurisdiction evidence.
+Establish the site jurisdiction, analysis date, adopted code/edition and actual intended use before selecting a rule. Read the [geographic contract](../../docs/geographic-applicability.md) and matching [declaration](../../corpus/geographic-applicability.json). For an Indonesian site the starting points are Permen PU 26/PRT/M/2008 tentang Persyaratan Teknis Sistem Proteksi Kebakaran pada Bangunan Gedung dan Lingkungan (its egress chapter carries a faktor beban hunian table in m² per orang) and SNI 03-1746-2000 on sarana jalan ke luar. Both must be opened and confirmed as still in force for the analysis date (perlu verifikasi: later PUPR regulations or a newer SNI edition may supersede them), and the kabupaten/kota may impose additional requirements through its bangunan gedung perda. For hospitals, the factor rows for pelayanan kesehatan (rawat inap, ruang tindakan, rawat jalan) apply per space; read the table's footnotes on gross versus net area. Do not use IBC or other foreign tables for an Indonesian site; other countries require their own controlling source. Do not use a building-type label or studio default as a substitute for jurisdiction evidence.
 
 For each space record area, unit, proposed activity, source-defined area basis, factor or other counting method and precise section/table locator. Obtain gross/net exclusions, fixed-seat treatment, mixed-use treatment, rounding and exceptions from the applicable original. Ask about materially ambiguous use or measurements. User-selected illustrative values may support a labelled scenario, never a code result.
 
-Apply the selected method to explicit verified values. For an area-per-person method, compute area divided by factor, with the source-required rounding; retain unrounded input and rounding policy. Convert compatible units explicitly. Keep separately calculated spaces and shared areas identifiable to avoid double counting. Compare actual design headcount to the calculated load without equating the two.
+Apply the selected method to explicit verified values. For an area-per-person method, compute area divided by factor, with the source-required rounding; retain unrounded input and rounding policy. Work in square metres; convert any supplied imperial measurements explicitly and show the conversion. Keep separately calculated spaces and shared areas identifiable to avoid double counting. Compare actual design headcount to the calculated load without equating the two.
 
 Egress, plumbing and other requested checks need their own applicable source requirements and task inputs. An occupant-load number alone does not certify them or legal occupancy. Report unperformed checks separately.
 

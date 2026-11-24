@@ -71,7 +71,7 @@ Extract as many of these as the designer provides. **Don't ask for fields they d
 | **Use context** | Office lobby, conference room, outdoor terrace, home office |
 | **Style / aesthetic** | Scandinavian, mid-century, industrial, minimal, warm, bold |
 | **Materials** | Solid wood, marble, steel, fabric, mesh, recycled |
-| **Dimensions** | "48-54 inch diameter", "under 30 inches tall", "fits a 6x4 space" |
+| **Dimensions** | "diameter 120–140 cm", "tinggi di bawah 75 cm", "muat ruang 1,8 × 1,2 m" |
 | **Budget** | Under $3,000, $500-$1,000 range, high-end, budget-friendly |
 | **Sustainability** | GREENGUARD, FSC, Cradle to Cradle, recycled content, B Corp |
 | **Lead time** | In stock, under 6 weeks, no rush |

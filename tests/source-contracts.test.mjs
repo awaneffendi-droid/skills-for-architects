@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { loadCatalog, validateShape, validateRelationships, checkSources } from '../tools/integrations/source-health.mjs';
-const sourceID = 'source:nyc-zoning-resolution';
+const sourceID = 'source:gistaru';
 const response = (body, status = 200, headers = {}) => new Response(body, { status, headers: { 'content-type': 'text/html', ...headers } });
 const check = async fetchImpl => (await checkSources([sourceID], { fetchImpl }))[0];
 
@@ -21,21 +21,21 @@ test('schema rejects absent editions, embedded secrets, and invalid dates', asyn
   }
 });
 test('relationships reject missing IDs, duplicate IDs and jurisdiction cycles', async () => {
-  for (const mutate of [c => c.sources.sources[0].authority = 'authority:absent', c => c.sources.sources.push(c.sources.sources[0]), c => c.jurisdictions.jurisdictions[0].parent = 'jurisdiction:us-ny-nyc', c => c.sources.relationships[0].to = 'standard:absent']) {
+  for (const mutate of [c => c.sources.sources[0].authority = 'authority:absent', c => c.sources.sources.push(c.sources.sources[0]), c => c.jurisdictions.jurisdictions[0].parent = 'jurisdiction:id-bt', c => c.sources.relationships[0].to = 'standard:absent']) {
     const c = await loadCatalog(); mutate(c); assert.throws(() => validateRelationships(c));
   }
 });
 test('shared standards referenced from two jurisdictions need no duplication', async () => {
   const c = await loadCatalog();
-  c.jurisdictions.jurisdictions.push({ id: 'jurisdiction:fixture', name: 'Test fixture', parent: 'jurisdiction:us', coverage: 'routing-only' });
-  for (const from of ['jurisdiction:fixture', 'jurisdiction:us-ny-nyc']) c.sources.relationships.push({ from, type: 'references', to: 'source:astm-e84', edition: null, effective_date: null, evidence: 'fixture-only' });
-  validateRelationships(c); assert.equal(c.sources.sources.filter(s => s.id === 'source:astm-e84').length, 1);
+  c.jurisdictions.jurisdictions.push({ id: 'jurisdiction:fixture', name: 'Test fixture', parent: 'jurisdiction:id', coverage: 'routing-only' });
+  for (const from of ['jurisdiction:fixture', 'jurisdiction:id-jk']) c.sources.relationships.push({ from, type: 'references', to: 'source:bsn-sni', edition: null, effective_date: null, evidence: 'fixture-only' });
+  validateRelationships(c); assert.equal(c.sources.sources.filter(s => s.id === 'source:bsn-sni').length, 1);
 });
 test('a matched response never claims applicable law or freshness', async () => {
   const result = await check(async (_url, options) => {
     assert.equal(options.redirect, 'manual'); assert.equal(options.credentials, 'omit');
     assert.deepEqual(Object.keys(options.headers), ['Accept']);
-    return response('<title>Zoning Resolution</title>');
+    return response('<title>GISTARU</title>');
   });
   assert.equal(result.identity, 'matched-markers'); assert.equal(result.legal_applicability, 'unknown'); assert.equal(result.freshness, 'unknown'); assert.match(result.content_sha256, /^[a-f0-9]{64}$/);
 });
@@ -46,10 +46,10 @@ test('redirects including private endpoints and secrets are not followed or retu
 });
 test('200 login page, replaced text, wrong media type, large body, denial and outage stay distinct', async () => {
   for (const [make, reason] of [
-    [() => response('<title>Login</title>Zoning Resolution'), 'login-page'],
-    [() => response('<input type="password">Zoning Resolution'), 'login-page'],
+    [() => response('<title>Login</title>GISTARU'), 'login-page'],
+    [() => response('<input type="password">GISTARU'), 'login-page'],
     [() => response('unrelated publication'), 'expected-markers-missing'],
-    [() => response('Zoning Resolution', 200, { 'content-type': 'application/octet-stream' }), 'unexpected-content-type'],
+    [() => response('GISTARU', 200, { 'content-type': 'application/octet-stream' }), 'unexpected-content-type'],
     [() => response('x'.repeat(262145)), 'body-limit'],
     [() => response('', 403), 'access-required'],
     [() => response('', 503), 'http-error'],
@@ -66,7 +66,7 @@ test('concurrent checks are bounded; isolated failure does not discard successfu
   const results = await checkSources([sourceID, sourceID, sourceID, sourceID], { concurrency: 2, fetchImpl: async () => {
     const i = calls++; active++; max = Math.max(max, active);
     await new Promise(resolve => setTimeout(resolve, 5)); active--;
-    if (i === 1) throw new Error('isolated failure'); return response('Zoning Resolution');
+    if (i === 1) throw new Error('isolated failure'); return response('GISTARU');
   }});
   assert.equal(max, 2); assert.equal(results.filter(r => r.identity === 'matched-markers').length, 3);
   assert.equal(results[1].reason, 'transport-error');

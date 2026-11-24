@@ -17,19 +17,19 @@ claude plugin install as@skills-for-architects
 First, run a zoning analysis to generate a report:
 
 ```
-/as:zoning-analysis-nyc 250 Hudson St, New York NY
+/as:zoning-analysis-id Jl. Contoh No. 1, Kelurahan X, Kecamatan Y, Kota Z
 ```
 
 Then generate the 3D viewer:
 
 ```
-/as:zoning-envelope path/to/zoning-analysis-250-hudson-st.md
+/as:zoning-envelope path/to/analisis-tata-ruang-jl-contoh-1.md
 ```
 
 Or search by keyword:
 
 ```
-/as:zoning-envelope 250 hudson
+/as:zoning-envelope jl-contoh
 ```
 
 Or auto-detect the most recent report:
@@ -40,13 +40,13 @@ Or auto-detect the most recent report:
 
 ## What it renders
 
-- **Exact lot polygon** from GIS data (MapPLUTO for NYC) — not a simplified rectangle
+- **Exact lot polygon** from a surveyed plot boundary or CAD file (metres) — not a simplified rectangle
 - **Setback zones** as colored ground overlays with dashed inset boundaries
 - **Buildable volumes** — base, tower, galibo — extruded from the lot polygon at correct heights
 - **Height cap** — amber plane at maximum building height
 - **Edge-length labels** on lot boundary edges
 - **Height labels** with dashed reference lines
-- **Parameters panel** — FAR, max floor area, height limits, setbacks
+- **Parameters panel** — KDB, KLB, KDH, max floor area, height limits, GSB
 - **Interactive controls** — orbit, zoom, pan (Three.js OrbitControls)
 
 ## How it works
@@ -57,13 +57,13 @@ The following invented geometry illustrates the interface only; it is not a zoni
 
 ```json
 {
-  "lot_poly": [[0, 0], [90, 0], [90, 70], [0, 70]],
-  "unit": "ft",
-  "setbacks": { "front": 4, "rear": 6, "lateral1": 2, "lateral2": 2 },
+  "lot_poly": [[0, 0], [30, 0], [30, 22], [0, 22]],
+  "unit": "m",
+  "setbacks": { "front": 4, "rear": 2, "lateral1": 1.5, "lateral2": 1.5 },
   "volumes": [
-    { "type": "base", "inset": 6, "h_bottom": 0, "h_top": 36, "label": "synthetic volume" }
+    { "type": "base", "inset": 2, "h_bottom": 0, "h_top": 12, "label": "synthetic volume" }
   ],
-  "height_cap": 36,
+  "height_cap": 12,
   "info": { "title": "Synthetic geometry fixture", "zone": "unverified" },
   "stats": {}
 }
@@ -80,13 +80,13 @@ The skill then:
 ## Key features
 
 - **Self-correcting polygon inset** — automatically detects and corrects for different polygon winding directions across data sources
-- **Multi-volume envelopes** — base + tower for contextual districts
-- **Multi-scenario support** — toggle buttons for comparing development scenarios (individual, party-wall, unified)
-- **Works with any polygon source** — NYC MapPLUTO (WGS84) or manual coordinates
+- **Multi-volume envelopes** — podium + tower
+- **Multi-scenario support** — toggle buttons for comparing development scenarios (for example per-plot versus amalgamated plots)
+- **Works with any polygon source** — surveyed coordinates (SRGI2013/WGS 84, UTM) or manual coordinates
 
 ## Dependency
 
-This skill requires a zoning analysis report as input. It does not perform zoning calculations — run `/as:zoning-analysis-nyc` first.
+This skill requires a zoning analysis report as input. It does not perform zoning calculations — run `/as:zoning-analysis-id` first.
 
 ## Demo
 

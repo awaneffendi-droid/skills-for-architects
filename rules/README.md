@@ -4,7 +4,7 @@ Rules are cross-cutting conventions that shape every skill output across the who
 
 | Rule | What it governs |
 |------|-----------------|
-| [units-and-measurements](./units-and-measurements.md) | Imperial/metric defaults, area types (GSF/USF/RSF), dimension formatting |
+| [units-and-measurements](./units-and-measurements.md) | Metric (SI) and IDR defaults, area types, dimension and number formatting |
 | [code-citations](./code-citations.md) | Building code references — edition years, section symbols, jurisdiction awareness |
 | [professional-disclaimer](./professional-disclaimer.md) | Disclaimer language, what AI outputs can and cannot claim |
 | [csi-formatting](./csi-formatting.md) | Formatting and citation procedure using applicable original-source inputs |
