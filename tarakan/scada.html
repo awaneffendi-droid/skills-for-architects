@@ -1,0 +1,746 @@
+<!doctype html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SCADA Kontrol Auto Tarakan</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@400;500;600;700&family=Rajdhani:wght@500;600;700&display=swap">
+<style>
+/* Layout: perangkat HMIET6400 (bezel) berisi layar 800x480: header 38, banner 22, konten 370, navigasi 50. Panel simulasi di bawah.
+   Tampilan gelap tunggal (layar HMI industri), aksen cyan, status hijau/kuning/merah. */
+:root{
+  --bg:#0B0F16; --page:#0E141E; --panel:#0D1A2F; --panel2:#132744; --line:#1E3A5F; --line2:#2C5687;
+  --fg:#EAF4FF; --mute:#8FA7C6; --cyan:#2BE0E8; --blue:#3E8DFF; --water:#2F9BFF;
+  --ok:#31E38B; --warn:#FFB21F; --crit:#FF4D5E; --off:#5C6F8D;
+  --f-disp:'Rajdhani','Arial Narrow',Arial,sans-serif; --f-body:'Barlow Semi Condensed','Arial Narrow',Arial,sans-serif;
+  color-scheme:dark;
+}
+body{background:var(--page);color:var(--fg);font-family:var(--f-body);font-size:15px;padding-block:18px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+*{box-sizing:border-box}
+.page{max-width:1300px;margin:0 auto;display:flex;flex-direction:column;gap:16px}
+.top{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:6px 24px}
+.top h1{font:700 24px/1.05 var(--f-disp);letter-spacing:.06em;text-transform:uppercase;margin:0;text-wrap:balance}
+.top p{margin:0;color:var(--mute);max-width:62ch;min-width:0}
+#frame{position:relative;width:100%}
+#dev{position:absolute;left:0;top:0;width:860px;height:560px;transform-origin:0 0;border-radius:26px;
+  background:linear-gradient(160deg,#4a5059 0%,#2a2e34 18%,#1b1e22 60%,#2b2f35 100%);
+  box-shadow:0 22px 50px rgba(0,0,0,.55),inset 0 1px 0 rgba(255,255,255,.18),inset 0 -2px 0 rgba(0,0,0,.6)}
+#dev::before{content:"";position:absolute;inset:10px;border-radius:18px;background:linear-gradient(180deg,#15171a,#0c0d0f);box-shadow:inset 0 0 0 1px rgba(255,255,255,.05)}
+#dev .brand{position:absolute;left:34px;bottom:14px;font:600 11px var(--f-disp);letter-spacing:.22em;color:#8b939e}
+#dev .model{position:absolute;right:58px;bottom:14px;font:600 11px var(--f-disp);letter-spacing:.18em;color:#8b939e}
+#dev .led{position:absolute;right:36px;bottom:16px;width:8px;height:8px;border-radius:50%;background:#3df08f;box-shadow:0 0 8px #3df08f}
+#stage{position:absolute;left:0;top:0;width:1280px;height:720px;overflow:hidden;background:#071020;font-family:var(--f-body);user-select:none;border-radius:10px;border:1px solid #1E3A5F;transform-origin:0 0;box-shadow:0 18px 40px rgba(0,0,0,.45)}
+
+.o{position:absolute}
+.panel{background:linear-gradient(180deg,rgba(19,40,70,.92),rgba(10,22,42,.95));border:1px solid var(--line);border-radius:6px;box-shadow:inset 0 1px 0 rgba(255,255,255,.05)}
+.ptitle{position:absolute;left:10px;top:5px;font:700 11px var(--f-disp);letter-spacing:.16em;color:var(--cyan);text-transform:uppercase}
+.lbl{font:500 12px/1.15 var(--f-body);color:var(--mute);display:flex;align-items:center}
+.lbl.big{font:700 18px var(--f-disp);color:var(--fg);letter-spacing:.05em}
+.lbl.mid{font:600 14px var(--f-disp);color:var(--fg);letter-spacing:.04em}
+.lbl.c{justify-content:center;text-align:center}.lbl.r{justify-content:flex-end;text-align:right}
+.lbl.sm{font-size:10.5px}
+.val{font:700 30px/1 var(--f-disp);color:var(--fg);display:flex;align-items:baseline;font-variant-numeric:tabular-nums}
+.val small{font:500 12px var(--f-body);color:var(--mute);margin-left:4px}
+.val.s{font-size:22px}.val.xs{font-size:17px}.val.c{justify-content:center}.val.r{justify-content:flex-end}
+.chip{display:flex;align-items:center;justify-content:center;font:700 11px var(--f-disp);letter-spacing:.12em;border:1px solid;border-radius:20px;text-transform:uppercase;white-space:nowrap}
+.ok{color:var(--ok);border-color:var(--ok);background:rgba(49,227,139,.12)}
+.warn{color:var(--warn);border-color:var(--warn);background:rgba(255,178,31,.13)}
+.crit{color:var(--crit);border-color:var(--crit);background:rgba(255,77,94,.15)}
+.off{color:var(--mute);border-color:var(--off);background:rgba(92,111,141,.14)}
+.info{color:var(--cyan);border-color:var(--cyan);background:rgba(43,224,232,.11)}
+.blink{animation:bl 1s steps(2,jump-none) infinite}@keyframes bl{50%{opacity:.35}}
+.lamp{border-radius:50%;border:2px solid #31415c;background:radial-gradient(circle at 35% 30%,#3a4a66,#141f33)}
+.lamp.ok{background:radial-gradient(circle at 35% 30%,#c9ffe3,#31E38B 45%,#0f7a45);border-color:#9bf5c6;box-shadow:0 0 10px rgba(49,227,139,.8)}
+.lamp.crit{background:radial-gradient(circle at 35% 30%,#ffd5da,#FF4D5E 45%,#8e1422);border-color:#ffb0b8;box-shadow:0 0 10px rgba(255,77,94,.8)}
+.lamp.warn{background:radial-gradient(circle at 35% 30%,#fff0c9,#FFB21F 45%,#8a5a00);border-color:#ffd98a}
+.btn{display:flex;align-items:center;justify-content:center;gap:6px;font:700 14px var(--f-disp);letter-spacing:.1em;text-transform:uppercase;color:var(--fg);background:linear-gradient(180deg,#1d3d6b,#122a4e);border:1px solid var(--line2);border-radius:6px;cursor:pointer;text-align:center;line-height:1.05;box-shadow:0 2px 0 #06101f,inset 0 1px 0 rgba(255,255,255,.12)}
+.btn:hover{border-color:var(--cyan)}.btn:active{transform:translateY(1px);box-shadow:none}
+.btn.go{background:linear-gradient(180deg,#1cc275,#0d8048);border-color:#5ff5ac;font-size:18px}
+.btn.stop{background:linear-gradient(180deg,#e04556,#972232);border-color:#ff8f9b;font-size:18px}
+.btn.sel{background:linear-gradient(180deg,#2bd3dc,#14929c);border-color:#8ef8ff;color:#021418}
+.btn.dis{opacity:.4;cursor:not-allowed}.btn.sm{font-size:11.5px}
+.btn.nav{flex-direction:column;gap:2px;font-size:10.5px;border-radius:0;border:0;border-right:1px solid #10233f;border-top:2px solid transparent;background:linear-gradient(180deg,#0b1730,#060e1d);color:var(--mute);box-shadow:none}
+.btn.nav.act{background:linear-gradient(180deg,#14406f,#0b2647);color:var(--cyan);border-top-color:var(--cyan)}
+.btn.nav svg{width:19px;height:19px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.badge{position:absolute;right:16px;top:3px;min-width:17px;height:15px;border-radius:8px;background:var(--crit);color:#fff;font:700 10px/15px var(--f-disp);text-align:center;padding:0 4px}
+.numin{display:flex;align-items:center;justify-content:space-between;padding:0 8px;background:#06132a;border:1px solid var(--line2);border-radius:5px;cursor:pointer;font:700 19px var(--f-disp);font-variant-numeric:tabular-nums;color:var(--fg)}
+.numin small{font:500 11px var(--f-body);color:var(--mute)}
+.numin:hover{border-color:var(--cyan)}
+.bar{background:#06132a;border:1px solid var(--line);border-radius:3px;overflow:hidden}
+.bar i{position:absolute;left:0;bottom:0;width:100%;display:block;background:linear-gradient(0deg,#1384c9,#2BE0E8);transition:height .6s}
+.bar.h i{top:0;height:100%;width:0;background:linear-gradient(90deg,#1384c9,#2BE0E8);transition:width .6s}
+.bar.crit i{background:linear-gradient(0deg,#a3202e,#FF4D5E)}.bar.h.crit i{background:linear-gradient(90deg,#a3202e,#FF4D5E)}
+.row{display:flex;align-items:center;border-bottom:1px solid var(--line);font-size:12px;height:27px}
+.row.h{color:var(--cyan);font:700 10.5px var(--f-disp);letter-spacing:.12em;text-transform:uppercase;height:23px;background:#0A1A33}
+.row>div{padding:0 6px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+#modal{position:absolute;inset:0;background:rgba(3,8,16,.78);z-index:50;display:none}
+#modal.on{display:block}
+.toast{position:absolute;z-index:60;left:50%;transform:translateX(-50%);bottom:60px;background:#2a1a05;border:1px solid var(--warn);color:var(--warn);font:600 14px var(--f-disp);letter-spacing:.06em;padding:6px 14px;display:none;white-space:nowrap}
+.toast.on{display:block}
+svg text{font-family:var(--f-body)}
+.flow{stroke-dasharray:10 8;animation:fl .6s linear infinite}@keyframes fl{to{stroke-dashoffset:-18}}
+.spin{transform-box:fill-box;transform-origin:center;animation:sp 1s linear infinite}@keyframes sp{to{transform:rotate(360deg)}}
+.ripple{animation:rp 2.4s ease-in-out infinite}@keyframes rp{50%{transform:translateY(1.5px)}}
+.bub{animation:bb 2.4s linear infinite}@keyframes bb{from{transform:translateY(0);opacity:.9}to{transform:translateY(-60px);opacity:0}}
+.hot{cursor:pointer}.hot:hover>.hl{stroke:var(--cyan);stroke-width:2}
+/* simulasi */
+.sim{border:1px solid var(--line);background:var(--panel);border-radius:8px;padding:14px 16px;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:9px 18px}
+.sim h2{grid-column:1/-1;margin:0;font:700 15px var(--f-disp);letter-spacing:.14em;text-transform:uppercase;color:var(--cyan)}
+.sim p{grid-column:1/-1;margin:0;color:var(--mute);font-size:14px;max-width:80ch}
+.sim label{display:flex;gap:8px;align-items:center;font-size:14.5px;min-width:0;cursor:pointer}
+.sim input[type=checkbox]{width:18px;height:18px;accent-color:var(--cyan);flex:none}
+.screens{display:flex;flex-wrap:wrap;gap:6px}
+.screens a{font:600 12.5px var(--f-disp);letter-spacing:.08em;text-transform:uppercase;color:var(--mute);border:1px solid var(--line);padding:5px 10px;text-decoration:none;cursor:pointer;background:var(--panel);border-radius:4px}
+.screens a:hover,.screens a:focus-visible{color:var(--cyan);border-color:var(--cyan);outline:none}
+.notes{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+.notes div{border-top:2px solid var(--line2);padding-top:8px;min-width:0}
+.notes h3{margin:0 0 4px;font:700 14px var(--f-disp);letter-spacing:.12em;text-transform:uppercase}
+.notes p{margin:0;color:var(--mute);font-size:14px}
+:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){.flow,.bub,.blink,.spin,.ripple{animation:none}}
+</style>
+<div class="page">
+  <div class="top">
+    <h1>SCADA Kontrol Auto · Pompa Air Baku Tarakan</h1>
+    <p>Web SCADA untuk command center / Chrome (lewat V-BOX &amp; cloud V-NET): kendali AUTO pompa P-01 (110 kW) dan P-02 (160 kW) berdasarkan level reservoir dan tekanan header. Nilai simulasi.</p>
+  </div>
+  <div class="screens" id="screens" aria-label="Pilih layar"></div>
+  <div id="frame"><div id="stage"></div></div>
+  <div class="sim" id="sim">
+    <h2>Panel simulasi (bukan bagian HMI)</h2>
+    <p>Centang untuk memicu kondisi lapangan dan lihat reaksi layar. Di sistem asli, data dibaca V-BOX dari PLC TM221 dan ditampilkan di Chrome lewat V-NET.</p>
+  </div>
+  <div class="notes">
+    <div><h3>Auto running</h3><p>AUTO: pompa start saat reservoir turun ke level START dan stop di level STOP (LT-02). Kecepatan diatur PID tekanan header (PT-03). P-02 ikut jalan bila P-01 sudah maksimum.</p></div>
+    <div><h3>Proteksi sensor</h3><p>Pompa diblok oleh: level sumur LoLo (LT-01) &amp; elektroda 61F, thermal motor, tekanan tinggi PSH-03, reservoir penuh LSHH-02, no-flow (FT-01), E-STOP, selector LOKAL.</p></div>
+    <div><h3>Pompa lead &amp; jam puncak</h3><p>Pilih pompa lead (P-01/P-02). Bila lead gangguan, AUTO pindah ke pompa cadangan. Opsi hindari start di jam beban puncak PLN (17:00-22:00) selama reservoir di atas level kritis.</p></div>
+  </div>
+</div>
+<script>
+(function(){
+const W=1280,H=720,OY=86,CH=634;
+const stage=document.getElementById('stage');
+const TAGDEF=[],T={};
+let cur=null,R=null;
+const SCR={};
+const user={level:3};
+const C={ok:'#31E38B',warn:'#FFB21F',crit:'#FF4D5E',cyan:'#2BE0E8',off:'#5C6F8D',blue:'#3E8DFF',water:'#2F9BFF'};
+
+/* ---------- tag ---------- */
+function tag(name,addr,type,rw,scale,unit,desc,init){TAGDEF.push({name,addr,type,rw,scale,unit,desc,init});T[name]=init}
+const EQ=[
+ {k:'P01',code:'P-01',n:'Pompa Submersible 90 kW',pnl:'PNL-INV-110',inv:'FRN110AR1S-4A',kw:90,Pr:98.8,Ir:182,Qr:240,mb:1,pm:11},
+ {k:'P02',code:'P-02',n:'Pompa / Motor 160 kW',pnl:'PNL-INV-160',inv:'FRN160AR1S-4A',kw:160,Pr:170,Ir:304,Qr:396,mb:2,pm:12}];
+/* perintah HMI/SCADA -> PLC */
+tag('SYS_ModeAuto','%M4','BOOL','R/W',1,'','Mode sistem: 1=AUTO (kendali tekanan), 0=MANUAL',1);
+tag('CMD_AlarmAck','%M2','BOOL','W',1,'','Acknowledge semua alarm (pulsa)',0);
+tag('CMD_AlarmReset','%M3','BOOL','W',1,'','Reset alarm & fault inverter (pulsa)',0);
+tag('CMD_BuzzerSilence','%M5','BOOL','W',1,'','Matikan horn panel SCADA (pulsa)',0);
+EQ.forEach((e,i)=>{const b=10+i*4;
+ tag(e.k+'_CmdStart','%M'+b,'BOOL','W',1,'','START '+e.code+' dari HMI/SCADA (pulsa)',0);
+ tag(e.k+'_CmdStop','%M'+(b+1),'BOOL','W',1,'','STOP '+e.code+' dari HMI/SCADA (pulsa)',0);
+ tag(e.k+'_CmdReset','%M'+(b+2),'BOOL','W',1,'','Reset fault inverter '+e.code+' (pulsa)',0);
+ tag(e.k+'_ManRun','%M'+(b+3),'BOOL','R/W',1,'','Latch jalan manual '+e.code,0);});
+/* status hardwired (DI dari panel inverter) */
+EQ.forEach((e,i)=>{const b=i*6;
+ [['Remote','Selector panel pada REMOTE'],['Run','Inverter RUN (Y1)'],['Fault','Inverter TRIP (30A/B/C)'],['DryRun','Omron 61F: level sumur kering'],['Estop','E-STOP panel ditekan'],['Q1Off','MCCB Q1 OFF/trip (aux)']]
+ .forEach((s,j)=>tag(e.k+'_'+s[0],'%I0.'+(b+j)+' / %M'+(30+b+j),'BOOL','R',1,'',s[1]+' '+e.pnl,s[0]=='Remote'?1:0))});
+tag('SYS_PhaseOK','%I0.12','BOOL','R',1,'','Phase relay panel SCADA normal',1);
+tag('SYS_UPSBatt','%I0.13','BOOL','R',1,'','UPS bekerja dari baterai (PLN padam)',0);
+tag('SYS_DoorOpen','%I1.0','BOOL','R',1,'','Pintu panel SCADA terbuka',0);
+tag('SYS_LSHH02','%I1.6','BOOL','R',1,'','Float switch reservoir LSHH-02: penuh/overflow',0);
+tag('SYS_PSH03','%I1.7','BOOL','R',1,'','Pressure switch PSH-03 header sangat tinggi',0);
+tag('P01_MotTemp','%I1.8','BOOL','R',1,'','Thermal switch motor pompa P-01 (TS-01) trip',0);
+tag('P02_MotTemp','%I1.9','BOOL','R',1,'','Thermal switch motor pompa P-02 (TS-02) trip',0);
+tag('SYS_Running','%M20','BOOL','R',1,'','Sistem pompa aktif (minimal 1 pompa jalan)',0);
+tag('SYS_Estop','%M21','BOOL','R',1,'','E-STOP aktif di salah satu panel',0);
+tag('SYS_Peak','%M23','BOOL','R',1,'','Jam beban puncak PLN (WBP 17:00-22:00)',0);
+tag('SYS_LeadFail','%M24','BOOL','R',1,'','Pompa lead tidak tersedia, AUTO pindah ke pompa cadangan',0);
+tag('SYS_LeadNow','%MW26','INT','R',1,'','Pompa lead aktif: 0=P-01, 1=P-02',0);
+tag('SYS_Step','%MW25','INT','R',1,'','Langkah AUTO: 0 manual,1 siaga,2 lead jalan,3 tunggu lag,4 lead+lag,6 tunda WBP',1);
+tag('SP_PeakAvoid','%M6','BOOL','R/W',1,'','Hindari start di jam beban puncak bila reservoir masih di atas level kritis',1);
+tag('SYS_AutoDemand','%M22','BOOL','R',1,'','Permintaan isi reservoir (AUTO: start di level rendah, stop di level tinggi)',1);
+/* Modbus RTU dari inverter Fuji (SL1, 19200 8E1) */
+EQ.forEach((e,i)=>{const b=100+i*20;
+ [['Hz','Frekuensi output',10,'Hz'],['Amp','Arus output',10,'A'],['Vout','Tegangan output',1,'V'],['kW','Daya output',10,'kW'],['Torque','Torsi',1,'%'],['DCV','Tegangan DC bus',1,'V'],
+  ['TempHS','Suhu heatsink',1,'°C'],['RunH','Jam operasi',1,'jam'],['kWh','Energi inverter (32-bit)',1,'kWh'],['AlmCode','Kode alarm terakhir',1,''],['HzSet','Referensi frekuensi ke inverter',100,'Hz']]
+ .forEach((s,j)=>tag(e.k+'_'+s[0],'%MW'+(b+j*(s[0]=='kWh'?1:1)),s[0]=='kWh'?'DINT':'INT',s[0]=='HzSet'?'W':'R',s[2],s[3],s[1]+' '+e.code+' (Modbus addr '+e.mb+')',0));
+ tag(e.k+'_Comm','%M'+(60+i),'BOOL','R',1,'','Komunikasi Modbus inverter '+e.code+' OK',1);
+ tag(e.k+'_Mode','%MW'+(10+i),'INT','R/W',1,'','Mode SCADA '+e.code+': 0=OFF 1=MAN 2=AUTO',2);
+ tag(e.k+'_SpHz','%MW'+(14+i),'INT','R/W',10,'Hz','Setpoint frekuensi manual '+e.code,45);});
+T.P01_RunH=1240;T.P02_RunH=980;T.P01_kWh=81250;T.P02_kWh=120410;
+/* Modbus RTU dari power meter PM2120 */
+EQ.forEach((e,i)=>{const b=200+i*20;
+ [['VLL','Tegangan L-L rata-rata',1,'V',400],['I1','Arus L1',10,'A',0],['I2','Arus L2',10,'A',0],['I3','Arus L3',10,'A',0],['kW','Daya aktif',10,'kW',0],['kVAR','Daya reaktif',10,'kVAR',0],
+  ['PF','Faktor daya',100,'',0.95],['Hz','Frekuensi jala-jala',100,'Hz',50],['kWh','Energi aktif total (32-bit)',1,'kWh',i?131200:88400],['THDV','THD tegangan',10,'%',2.8],['THDI','THD arus',10,'%',34]]
+ .forEach((s,j)=>tag('PM'+(i+1)+'_'+s[0],'%MW'+(b+j),s[0]=='kWh'?'DINT':'INT','R',s[2],s[3],s[1]+' '+e.pnl+' (PM2120 addr '+e.pm+')',s[4]));
+ tag('PM'+(i+1)+'_Comm','%M'+(64+i),'BOOL','R',1,'','Komunikasi power meter '+e.pnl+' OK',1);
+ tag('PM'+(i+1)+'_kWhDay','%MW'+(240+i),'INT','R',1,'kWh','Energi hari ini '+e.pnl,i?1180:720);});
+/* analog 4-20 mA (TM3AI8 = modul ekspansi ke-2 -> %IW2.x) */
+[['PT01_Press','Tekanan discharge P-01',100,'bar',4.4],['PT02_Press','Tekanan discharge P-02',100,'bar',4.4],['PT03_Header','Tekanan header (ke reservoir/IPA)',100,'bar',4.3],
+ ['LT01_Level','Level air sumur/intake di atas pompa',100,'m',18],['FT01_Flow','Debit total header',10,'m3/h',520],['LT02_Level','Level reservoir / ground tank',100,'m',3.2]].forEach((s,i)=>{tag(s[0],'%IW2.'+i+' / %MW'+(300+i),'INT','R',s[2],s[3],s[1],s[4]);tag(s[0].split('_')[0]+'_mA','%MW'+(310+i),'INT','R',100,'mA','Sinyal 4-20 mA '+s[0].split('_')[0],12)});
+/* setpoint & batas (retain) */
+const SP=[
+['SP_Press','%MW400',100,'bar','Setpoint tekanan header (PID AUTO)',4.5],['SP_Hz_Min','%MW401',10,'Hz','Frekuensi minimum',30],['SP_Hz_Max','%MW402',10,'Hz','Frekuensi maksimum',50],
+['SP_PID_Kp','%MW403',100,'','Gain proporsional PID',0.8],['SP_PID_Ti','%MW404',1,'s','Waktu integral PID',20],['SP_Lag_Delay','%MW405',1,'s','Tunda start pompa ke-2',15],
+['SP_Tariff','%MW406',1,'Rp/kWh','Tarif listrik untuk hitung biaya',1445],
+['SP_Res_Start','%MW407',100,'m','AUTO: pompa START bila level reservoir <=',2.0],['SP_Res_Stop','%MW408',100,'m','AUTO: pompa STOP bila level reservoir >=',4.5],['SP_LeadSel','%MW409',1,'','Pompa lead AUTO: 0=P-01, 1=P-02',0],['SP_Res_Crit','%MW419',100,'m','Level kritis: tetap start walau jam beban puncak',1.0],
+['AL_Level_Lo','%MW410',100,'m','Batas level sumur rendah (alarm)',6],['AL_Level_LoLo','%MW411',100,'m','Batas level sumur sangat rendah (stop pompa)',3],
+['AL_Press_Hi','%MW412',100,'bar','Batas tekanan header tinggi',6.5],['AL_Press_Lo','%MW413',100,'bar','Batas tekanan rendah saat pompa jalan (pipa bocor)',2.0],
+['AL_Amp_Hi','%MW414',1,'%','Batas arus tinggi (% arus rating inverter)',95],['AL_Temp_Hi','%MW415',1,'°C','Batas suhu heatsink tinggi',75],['AL_THDI_Hi','%MW416',10,'%','Batas THD arus tinggi',45],['AL_Res_Lo','%MW417',100,'m','Batas level reservoir rendah',1.2],['AL_NoFlow','%MW418',1,'m3/h','Debit minimum saat pompa jalan (no-flow)',30]];
+SP.forEach(s=>tag(s[0],s[1],'INT','R/W',s[2],s[3],s[4],s[5]));
+/* alarm */
+const amp=(k)=>T[k+'_Amp']/EQ.find(e=>e.k==k).Ir*100;
+const ALM=[
+['AL01','Inverter P-01 trip','Inverter 110 kW berhenti karena gangguan. Lihat kode alarm di layar INVERTER.','crit',()=>T.P01_Fault],
+['AL02','Inverter P-02 trip','Inverter 160 kW berhenti karena gangguan. Lihat kode alarm di layar INVERTER.','crit',()=>T.P02_Fault],
+['AL03','P-01 dry-run (sumur kering)','Elektroda 61F mendeteksi air di bawah batas. Pompa P-01 dihentikan.','crit',()=>T.P01_DryRun],
+['AL04','P-02 dry-run (sumur kering)','Elektroda 61F mendeteksi air di bawah batas. Pompa P-02 dihentikan.','crit',()=>T.P02_DryRun],
+['AL05','Level sumur rendah','Level air di sumur/intake rendah. Kurangi debit atau periksa sumber.','warn',()=>T.LT01_Level<=T.AL_Level_Lo],
+['AL06','Level sumur sangat rendah - pompa stop','Level di bawah batas aman. PLC menghentikan semua pompa.','crit',()=>T.LT01_Level<=T.AL_Level_LoLo],
+['AL07','Tekanan header tinggi','Tekanan terlalu tinggi. Periksa katup di jalur distribusi.','crit',()=>T.PT03_Header>=T.AL_Press_Hi],
+['AL08','Tekanan rendah saat pompa jalan','Pompa jalan tetapi tekanan rendah. Kemungkinan pipa bocor atau pompa aus.','warn',()=>T.SYS_Running&&T.PT03_Header<=T.AL_Press_Lo],
+['AL09','Arus P-01 tinggi','Arus motor P-01 mendekati batas rating.','warn',()=>amp('P01')>=T.AL_Amp_Hi],
+['AL10','Arus P-02 tinggi','Arus motor P-02 mendekati batas rating.','warn',()=>amp('P02')>=T.AL_Amp_Hi],
+['AL11','Suhu inverter P-01 tinggi','Heatsink inverter panas. Periksa fan & filter panel.','warn',()=>T.P01_TempHS>=T.AL_Temp_Hi],
+['AL12','Suhu inverter P-02 tinggi','Heatsink inverter panas. Periksa fan & filter panel.','warn',()=>T.P02_TempHS>=T.AL_Temp_Hi],
+['AL13','Komunikasi inverter P-01 putus','PLC tidak menerima data Modbus dari inverter 110 kW.','warn',()=>!T.P01_Comm],
+['AL14','Komunikasi inverter P-02 putus','PLC tidak menerima data Modbus dari inverter 160 kW.','warn',()=>!T.P02_Comm],
+['AL15','Komunikasi power meter putus','Salah satu power meter PM2120 tidak merespon.','warn',()=>!T.PM1_Comm||!T.PM2_Comm],
+['AL16','EMERGENCY STOP aktif','Tombol darurat di panel inverter ditekan. Pompa terkait berhenti.','crit',()=>T.SYS_Estop],
+['AL17','Sumber listrik terganggu','Phase failure / PLN padam. Panel SCADA berjalan dari UPS.','crit',()=>!T.SYS_PhaseOK||T.SYS_UPSBatt],
+['AL18','THD arus tinggi','Harmonisa arus di atas batas. Periksa DC reactor.','warn',()=>Math.max(T.PM1_THDI,T.PM2_THDI)>=T.AL_THDI_Hi],
+['AL19','Reservoir penuh (LSHH-02)','Float switch reservoir aktif. Semua pompa dihentikan agar tidak meluap.','warn',()=>T.SYS_LSHH02],
+['AL20','Motor P-01 overheat','Thermal switch motor submersible P-01 trip. Tunggu dingin, cek arus & tegangan.','crit',()=>T.P01_MotTemp],
+['AL21','Motor P-02 overheat','Thermal switch motor P-02 trip. Tunggu dingin, cek arus & tegangan.','crit',()=>T.P02_MotTemp],
+['AL22','Tekanan header sangat tinggi (PSH-03)','Pressure switch header aktif. Pompa dihentikan. Periksa katup tertutup.','crit',()=>T.SYS_PSH03],
+['AL23','Pompa jalan tanpa debit','Pompa jalan tetapi flowmeter < batas. Cek katup, pipa, atau pompa kering.','warn',()=>T.SYS_Running&&T.FT01_Flow<T.AL_NoFlow&&(tick.n||0)>5&&T._nf>4],
+['AL24','Level reservoir rendah','Air di reservoir hampir habis. Pastikan pompa tersedia & AUTO.','warn',()=>T.LT02_Level<=T.AL_Res_Lo]];
+ALM.forEach((a,i)=>tag(a[0],'%M'+(100+i),'BOOL','R',1,'',a[1],0));
+const SIM={demandHi:0,resFull:0,mot1:0,p1trip:0,p2trip:0,dry1:0,levelLow:0,pressHigh:0,leak:0,comm1:0,commPM:0,hot1:0,local2:0,power:0,estop:0};
+const alarms={active:{},hist:[],unack:0,buzzer:0};
+/* ---------- util ---------- */
+const f=(v,d)=>Number(v).toLocaleString('id-ID',{minimumFractionDigits:d,maximumFractionDigits:d});
+const pad=n=>String(n).padStart(2,'0');
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+const wib=()=>{const d=new Date(Date.now()+ (8*60+new Date().getTimezoneOffset())*60000);return d};
+const hhmmss=d=>pad(d.getHours())+':'+pad(d.getMinutes())+':'+pad(d.getSeconds());
+const ddmm=d=>pad(d.getDate())+'/'+pad(d.getMonth()+1)+'/'+d.getFullYear();
+function toast(t){const e=document.getElementById('toast');e.textContent=t;e.classList.add('on');clearTimeout(toast.t);toast.t=setTimeout(()=>e.classList.remove('on'),2200)}
+function need(l){return true}
+
+/* ---------- builder ---------- */
+function mk(cls,x,y,w,h,html){const d=document.createElement('div');d.className='o '+cls;d.style.cssText=`left:${x}px;top:${y}px;width:${w}px;height:${h}px`;if(html!=null)d.innerHTML=html;R.appendChild(d);return d}
+function bind(fn){cur.binds.push(fn);fn()}
+function panel(x,y,w,h,title){return mk('panel',x,y,w,h,title?`<div class="ptitle">${title}</div>`:'')}
+function label(x,y,w,h,t,cls){return mk('lbl '+(cls||''),x,y,w,h,t)}
+function value(x,y,w,h,tg,dec,unit,cls){const d=mk('val '+(cls||''),x,y,w,h,'<span></span><small>'+(unit||'')+'</small>');const s=d.firstChild;bind(()=>{s.textContent=f(typeof tg=='function'?tg():T[tg],dec)});return d}
+function chip(x,y,w,h,fn){const d=mk('chip',x,y,w,h,'');bind(()=>{const[t,c,b]=fn();d.textContent=t;d.className='o chip '+c+(b?' blink':'')});return d}
+function lamp(x,y,s,fn){const d=mk('lamp',x,y,s,s,'');bind(()=>{d.className='o lamp '+(fn()||'')});return d}
+function btn(x,y,w,h,t,fn,o){o=o||{};const d=mk('btn '+(o.cls||''),x,y,w,h,t);d.tabIndex=0;d.setAttribute('role','button');d.onclick=fn;d.onkeydown=e=>{if(e.key=='Enter'||e.key==' '){e.preventDefault();fn()}};if(o.enable)bind(()=>d.classList.toggle('dis',!o.enable()));if(o.sel)bind(()=>d.classList.toggle('sel',!!o.sel()));return d}
+function seg(x,y,w,h,opts,get,set){const d=mk('',x,y,w,h,'');const bs=opts.map((t,i)=>{const b=document.createElement('div');b.className='btn sm';b.style.cssText=`position:absolute;left:${i*w/opts.length}px;top:0;width:${w/opts.length-3}px;height:${h}px`;b.textContent=t;b.tabIndex=0;b.onclick=()=>set(i);b.onkeydown=e=>{if(e.key=='Enter')set(i)};d.appendChild(b);return b});bind(()=>{const v=get();bs.forEach((b,i)=>b.classList.toggle('sel',i==v))});return d}
+function numin(x,y,w,h,tg,dec,unit,min,max){const d=mk('numin',x,y,w,h,'<span></span><small>'+unit+'</small>');const s=d.firstChild;bind(()=>{s.textContent=f(T[tg],dec)});d.tabIndex=0;const go=()=>keypad(tg,T[tg],dec,min,max,v=>{T[tg]=v;update()});d.onclick=go;d.onkeydown=e=>{if(e.key=='Enter')go()};return d}
+function bar(x,y,w,h,fnv,min,max,badfn,horiz){const d=mk('bar'+(horiz?' h':''),x,y,w,h,'<i></i>');const i=d.firstChild;
+  bind(()=>{const v=typeof fnv=='function'?fnv():T[fnv];const p=clamp((v-min)/(max-min),0,1)*100;if(horiz)i.style.width=p+'%';else i.style.height=p+'%';d.classList.toggle('crit',!!(badfn&&badfn()))});return d}
+function arc(cx,cy,r,a0,a1){const p=a=>[cx+r*Math.cos(a*Math.PI/180),cy+r*Math.sin(a*Math.PI/180)];const[s,e]=[p(a0),p(a1)];return `M${s[0].toFixed(2)} ${s[1].toFixed(2)}A${r} ${r} 0 ${a1-a0>180?1:0} 1 ${e[0].toFixed(2)} ${e[1].toFixed(2)}`}
+function gauge(x,y,w,tg,min,max,dec,unit,badfn,ticks){const d=mk('',x,y,w,w*0.86,'');const r=w/2-10,cx=w/2,cy=w/2;
+  let tk='';(ticks||[]).forEach(v=>{const a=(135+270*(v-min)/(max-min))*Math.PI/180;tk+=`<text x="${(cx+(r-17)*Math.cos(a)).toFixed(1)}" y="${(cy+(r-17)*Math.sin(a)+3).toFixed(1)}" text-anchor="middle" font-size="9" fill="#6f89ad">${v}</text>`});
+  d.innerHTML=`<svg width="${w}" height="${w*0.86}"><defs><linearGradient id="gg${x}${y}" x1="0" x2="1"><stop offset="0" stop-color="#1384c9"/><stop offset="1" stop-color="#2BE0E8"/></linearGradient></defs><path d="${arc(cx,cy,r,135,405)}" stroke="#102443" stroke-width="10" fill="none" stroke-linecap="round"/><path class="gv" d="${arc(cx,cy,r,135,136)}" stroke="url(#gg${x}${y})" stroke-width="10" fill="none" stroke-linecap="round"/>${tk}<text class="gt" x="${cx}" y="${cy+6}" text-anchor="middle" fill="#EAF4FF" font-family="Rajdhani" font-weight="700" font-size="${Math.round(w/4.2)}"></text><text x="${cx}" y="${cy+6+w/7}" text-anchor="middle" fill="#8FA7C6" font-size="11">${unit}</text></svg>`;
+  const gv=d.querySelector('.gv'),gt=d.querySelector('.gt');
+  bind(()=>{const v=typeof tg=='function'?tg():T[tg];const p=clamp((v-min)/(max-min),0.005,1);gv.setAttribute('d',arc(cx,cy,r,135,135+270*p));const bad=badfn&&badfn();gv.setAttribute('stroke',bad?C.crit:`url(#gg${x}${y})`);gt.textContent=f(v,dec)});return d}
+function svgEl(x,y,w,h,inner){const d=mk('',x,y,w,h,`<svg width="${w}" height="${h}" viewBox="0 0 ${w} ${h}">${inner}</svg>`);return d.firstChild}
+/* ---------- keypad ---------- */
+const modal=document.createElement('div');modal.id='modal';stage.appendChild(modal);
+function closeModal(){modal.classList.remove('on');modal.innerHTML=''}
+function keypad(tg,val,dec,min,max,ok){let s=String(f(val,dec)).replace(/\./g,'').replace(',','.');let first=true;
+  modal.innerHTML=`<div class="o panel" style="left:280px;top:40px;width:240px;height:396px;background:#0A1429;border-color:#2BE0E8"><div class="ptitle">MASUKKAN NILAI</div>
+  <div id="kd" class="o numin" style="left:12px;top:26px;width:216px;height:44px;font-size:26px;justify-content:flex-end;cursor:default"></div>
+  <div class="o lbl sm c" style="left:12px;top:72px;width:216px;height:16px" id="kr"></div></div>`;
+  const p=modal.firstChild,kd=modal.querySelector('#kd'),kr=modal.querySelector('#kr');
+  const show=()=>{kd.textContent=s;kr.textContent=`Rentang ${min} sampai ${max}`};show();
+  ['7','8','9','4','5','6','1','2','3','±','0','.'].forEach((k,i)=>{const b=document.createElement('div');b.className='btn';b.style.cssText=`position:absolute;left:${12+(i%3)*74}px;top:${94+Math.floor(i/3)*56}px;width:68px;height:50px;font-size:22px`;b.textContent=k;
+    b.onclick=()=>{if(k=='±'){s=s.startsWith('-')?s.slice(1):'-'+s}else{if(first)s='';s+=k}first=false;show()};p.appendChild(b)});
+  const mkb=(t,l,w,cls,fn)=>{const b=document.createElement('div');b.className='btn '+cls;b.style.cssText=`position:absolute;left:${l}px;top:330px;width:${w}px;height:50px;font-size:15px`;b.textContent=t;b.onclick=fn;p.appendChild(b)};
+  mkb('BATAL',12,68,'stop',closeModal);mkb('HAPUS',86,68,'',()=>{s=s.slice(0,-1);first=false;show()});
+  mkb('OK',160,68,'go',()=>{let v=parseFloat(s);if(isNaN(v)||v<min||v>max){kr.style.color=C.crit;kr.textContent=`Di luar rentang (${min} sampai ${max})`;return}ok(v);closeModal()});
+  modal.classList.add('on')}
+function infoBox(title,html){modal.innerHTML=`<div class="o panel" style="left:150px;top:46px;width:500px;height:380px;background:#0A1429;border-color:#2BE0E8"><div class="ptitle">${title}</div>
+ <div class="o lbl" style="left:18px;top:30px;width:464px;height:280px;flex-direction:column;align-items:flex-start;gap:9px;font-size:15px;color:#EAF4FF;line-height:1.3">${html}</div>
+ <div class="btn go" style="position:absolute;left:170px;top:318px;width:160px;height:44px;font-size:16px" id="hx">TUTUP</div></div>`;modal.querySelector('#hx').onclick=closeModal;modal.classList.add('on')}
+function helpBox(){infoBox('PANDUAN SINGKAT OPERATOR',`<div><b style="color:#2BE0E8">1. Warna status.</b> Hijau = normal, kuning = perhatian, merah = alarm.</div>
+ <div><b style="color:#2BE0E8">2. AUTO.</b> Di KONTROL pilih AUTO. Pompa start sendiri saat reservoir turun dan berhenti saat penuh. Tekanan dijaga PID.</div>
+ <div><b style="color:#2BE0E8">3. MANUAL.</b> Pilih MANUAL pada pompa, atur Hz, tekan START. Proteksi sensor tetap aktif.</div>
+ <div><b style="color:#2BE0E8">4. Alarm.</b> Buka ALARM, tekan ACK, perbaiki penyebab, lalu RESET.</div>
+ <div><b style="color:#2BE0E8">5. Darurat.</b> Tekan E-STOP di panel inverter, bukan lewat layar.</div>`)}
+/* ---------- trend ---------- */
+const TS=[['P-01 Hz','P01_Hz',0,50,C.cyan,1,'Hz'],['P-02 Hz','P02_Hz',0,50,C.ok,1,'Hz'],['Tekanan header','PT03_Header',0,8,'#C58BFF',2,'bar'],['Debit','FT01_Flow',0,800,C.warn,0,'m³/h'],['Level sumur','LT01_Level',0,30,C.blue,1,'m'],['Level reservoir','LT02_Level',0,5,'#5FD0FF',2,'m'],['Daya total','KW_TOT',0,300,'#FF7AB6',0,'kW']];
+const fast=TS.map(()=>[]),slow=TS.map(()=>[]);
+TS.forEach((s,i)=>{for(let k=0;k<480;k++){const m=(s[2]+s[3])/2,a=(s[3]-s[2])*0.12;slow[i].push(m+a*Math.sin(k/37+i)+a*0.4*Math.sin(k/7+i*2))}});
+const trendSel=[1,1,1,0,0,1,0];let trendRange=0;
+function trendSvg(w,h,sel,range,mini){const pl=mini?6:38,pr=6,pt=6,pb=mini?6:20;const iw=w-pl-pr,ih=h-pt-pb;let g='';
+  for(let i=0;i<=4;i++){const y=pt+ih*i/4;g+=`<line x1="${pl}" x2="${w-pr}" y1="${y}" y2="${y}" stroke="#1E3A5F" stroke-width="1"/>`;if(!mini)g+=`<text x="${pl-5}" y="${y+4}" text-anchor="end" font-size="10" fill="#8FA7C6">${100-25*i}%</text>`}
+  if(!mini){const lab=[['-10 mnt','-5 mnt','sekarang'],['-60 mnt','-30 mnt','sekarang'],['-8 jam','-4 jam','sekarang']][range];lab.forEach((t,i)=>{const x=pl+iw*i/2;g+=`<line y1="${pt}" y2="${pt+ih}" x1="${x}" x2="${x}" stroke="#1E3A5F"/><text x="${x}" y="${h-5}" text-anchor="${i==0?'start':i==2?'end':'middle'}" font-size="10" fill="#8FA7C6">${t}</text>`})}
+  TS.forEach((s,i)=>{if(!sel[i])return;const src=range==0?fast[i]:slow[i];const n=range==0?600:range==1?60:480;const a=src.slice(-n);if(a.length<2)return;
+   const xy=a.map((v,k)=>[(pl+iw*(k+n-a.length)/(n-1)),(pt+ih*(1-clamp((v-s[2])/(s[3]-s[2]),0,1)))]);
+   const pts=xy.map(p=>p[0].toFixed(1)+','+p[1].toFixed(1)).join(' ');
+   if(mini)g+=`<polygon points="${xy[0][0].toFixed(1)},${pt+ih} ${pts} ${xy[xy.length-1][0].toFixed(1)},${pt+ih}" fill="${s[4]}" opacity=".12"/>`;
+   g+=`<polyline points="${pts}" fill="none" stroke="${s[4]}" stroke-width="${mini?1.6:2}" stroke-linejoin="round"/>`;const l=xy[xy.length-1];g+=`<circle cx="${l[0].toFixed(1)}" cy="${l[1].toFixed(1)}" r="2.6" fill="${s[4]}"/>`});
+  return `<svg width="${w}" height="${h}">${g}</svg>`}
+/* ---------- screens ---------- */
+function screen(id,title,build){const s={id,title,binds:[],el:null};SCR[id]=s;const el=document.createElement('div');el.className='o';el.style.cssText=`left:0;top:${OY}px;width:${W}px;height:${CH}px;display:none`;stage.insertBefore(el,modal);s.el=el;cur=s;R=el;build();return s}
+function go(id){Object.values(SCR).forEach(s=>s.el.style.display=s.id==id?'block':'none');cur0=id;navBtns.forEach(b=>b.el.classList.toggle('act',b.id==id));closeModal();update();document.querySelectorAll('#screens a').forEach(a=>a.style.color=a.dataset.id==id?'var(--cyan)':'')}
+let cur0='dash',navBtns=[];
+const stateOf=(k)=>T[k+'_Fault']||T[k+'_MotTemp']?['GANGGUAN','crit',1]:T[k+'_Run']?['BERJALAN','ok']:!T[k+'_Remote']?['LOKAL','warn']:['SIAGA','off'];
+const lampOf=(k)=>T[k+'_Fault']||T[k+'_MotTemp']?'crit':T[k+'_Run']?'ok':'';
+function activeCount(){return Object.keys(alarms.active).length}
+function topAlarm(){const ks=Object.keys(alarms.active);let best=null;ks.forEach(k=>{const a=ALM.find(x=>x[0]==k);if(!best||(a[3]=='crit'&&best[3]!='crit'))best=a});return best}
+/* chrome */
+let chromeBinds=[];
+function chrome(){
+  cur={id:'G',binds:[]};chromeBinds=cur.binds;
+  const mkE=(id,x,y,w,h)=>{const d=document.createElement('div');d.id=id;d.className='o';d.style.cssText=`left:${x}px;top:${y}px;width:${w}px;height:${h}px`;stage.insertBefore(d,modal);return d};
+  const hdr=mkE('hdr',0,0,W,38);hdr.style.background='linear-gradient(180deg,#13294d,#091631)';hdr.style.borderBottom='1px solid #2BE0E8';R=hdr;
+  mk('',8,5,28,28,`<svg width="28" height="28" viewBox="0 0 28 28"><circle cx="14" cy="14" r="13" fill="#0b2a4a" stroke="#2BE0E8" stroke-width="1.6"/><path d="M14 5c-4 6-6 9-6 12a6 6 0 0012 0c0-3-2-6-6-12z" fill="#2F9BFF"/><path d="M11 17a3 3 0 003 3" stroke="#cfeaff" stroke-width="1.4" fill="none" stroke-linecap="round"/></svg>`);
+  label(42,3,250,20,'SCADA POMPA AIR BAKU','big');label(42,22,250,13,'Perumda Air Minum Tirta Alam Tarakan','sm');
+  chip(300,8,150,22,()=>{const n=activeCount();return T.SYS_Estop?['E-STOP','crit',1]:n?[n+' ALARM AKTIF','crit',1]:T.SYS_Running?['NORMAL · JALAN','ok']:['SIAGA','warn']});
+  chip(456,8,96,22,()=>T.SYS_ModeAuto?['AUTO','info']:['MANUAL','warn']);
+  btn(558,6,30,26,'?',helpBox,{cls:'sm'});
+  mk('lbl r',600,2,192,34,'<div style="text-align:right;line-height:1.05"><div id="clk" style="font:700 19px var(--f-disp);color:#EAF4FF;font-variant-numeric:tabular-nums">00:00:00</div><div id="dte" style="font-size:10.5px;color:#8FA7C6">-</div></div>');
+  const bnr=mkE('bnr',0,38,W,22);R=bnr;mk('',0,0,W,22,'<div id="btxt" style="padding:0 12px;display:flex;align-items:center;height:22px;font:600 13px var(--f-disp);letter-spacing:.05em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"></div>');
+  const nav=mkE('nav',0,430,W,50);R=nav;
+  const items=[['dash','BERANDA','<svg viewBox="0 0 22 22"><path d="M3 10l8-7 8 7v9H3z"/><path d="M9 19v-5h4v5"/></svg>'],
+   ['denah','DENAH','<svg viewBox="0 0 22 22"><path d="M2 14h18M6 14V5h4v9M14 14v5M17 14v5M5 19h14"/><circle cx="8" cy="8" r="1"/></svg>'],
+   ['ctrl','KONTROL','<svg viewBox="0 0 22 22"><path d="M3 6h16M3 11h16M3 16h16"/><circle cx="8" cy="6" r="2" fill="#08121F"/><circle cx="14" cy="11" r="2" fill="#08121F"/><circle cx="7" cy="16" r="2" fill="#08121F"/></svg>'],
+   ['inv','INVERTER','<svg viewBox="0 0 22 22"><rect x="5" y="2" width="12" height="18" rx="1"/><rect x="8" y="5" width="6" height="4"/><path d="M8 13h6M8 16h6"/></svg>'],
+   ['energi','ENERGI','<svg viewBox="0 0 22 22"><path d="M12 2L5 12h6l-1 8 7-10h-6z"/></svg>'],
+   ['trend','TREN','<svg viewBox="0 0 22 22"><path d="M3 3v16h16"/><path d="M6 14l4-5 3 3 5-7"/></svg>'],
+   ['alarm','ALARM','<svg viewBox="0 0 22 22"><path d="M5 16V10a6 6 0 0112 0v6l2 2H3z"/><path d="M9 20h4"/></svg>'],
+   ['param','SETTING','<svg viewBox="0 0 22 22"><circle cx="11" cy="11" r="7" stroke-dasharray="3 2.2" stroke-width="3"/><circle cx="11" cy="11" r="3"/></svg>']];
+  const bw=W/items.length;
+  items.forEach((it,i)=>{const x=Math.round(i*bw),w=Math.round((i+1)*bw)-x;const b=btn(x,0,w,50,it[2]+'<span>'+it[1]+'</span>',()=>go(it[0]),{cls:'nav'});navBtns.push({id:it[0],el:b});if(it[0]=='alarm'){const bg=document.createElement('div');bg.className='badge';bg.id='abadge';b.appendChild(bg)}});
+  const t=document.createElement('div');t.id='toast';t.className='toast';stage.appendChild(t)}
+function updateChrome(){
+  const n=activeCount();const d=wib();document.getElementById('clk').textContent=hhmmss(d);document.getElementById('dte').textContent=ddmm(d)+' WITA';
+  const bt=document.getElementById('btxt'),bn=document.getElementById('bnr');let t,bg,fg,bl=false;
+  if(T.SYS_Estop){t='DARURAT: tombol E-STOP aktif. Pompa terkait berhenti. Periksa lokasi sebelum reset.';bg='#5a1019';fg='#ffd3d8';bl=true}
+  else if(n){const a=topAlarm();t=(a[3]=='crit'?'ALARM: ':'PERHATIAN: ')+a[2];bg=a[3]=='crit'?'#5a1019':'#4a3205';fg=a[3]=='crit'?'#ffd3d8':'#ffe3a8';bl=a[3]=='crit'}
+  else if(!T.SYS_Running){t=T.SYS_ModeAuto?'AUTO SIAGA: reservoir cukup ('+f(T.LT02_Level,2)+' m). Pompa start otomatis di '+f(T.SP_Res_Start,1)+' m.':'SEMUA POMPA BERHENTI (MANUAL). Jalankan dari layar KONTROL.';bg=T.SYS_ModeAuto?'#0d2f4a':'#3a2d08';fg=T.SYS_ModeAuto?'#bfe6ff':'#ffe3a8'}
+  else{t='SEMUA NORMAL. Mengisi reservoir, tekanan dijaga PID. Tidak ada alarm.';bg='#0a3a26';fg='#b9f7d6'}
+  bn.style.background=bg;bt.style.color=fg;bt.textContent=t;bt.classList.toggle('blink',bl);
+  const ab=document.getElementById('abadge');ab.style.display=n?'block':'none';ab.textContent=n;
+  chromeBinds.forEach(fn=>fn())}
+function update(){updateChrome();const s=SCR[cur0];if(s)s.binds.forEach(fn=>fn())}
+
+/* ---------- ilustrasi SVG (gaya realistis) ---------- */
+const DEFS=`<svg width="0" height="0" style="position:absolute"><defs>
+<linearGradient id="gSteelX" x1="0" x2="1"><stop offset="0" stop-color="#55606b"/><stop offset=".35" stop-color="#e9f0f5"/><stop offset=".55" stop-color="#b4bfc8"/><stop offset="1" stop-color="#4b555f"/></linearGradient>
+<linearGradient id="gSteelY" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#55606b"/><stop offset=".35" stop-color="#e9f0f5"/><stop offset=".55" stop-color="#b4bfc8"/><stop offset="1" stop-color="#4b555f"/></linearGradient>
+<linearGradient id="gPipeX" x1="0" x2="1"><stop offset="0" stop-color="#173e6d"/><stop offset=".4" stop-color="#5c9be0"/><stop offset=".6" stop-color="#3a78c0"/><stop offset="1" stop-color="#143561"/></linearGradient>
+<linearGradient id="gPipeY" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#173e6d"/><stop offset=".4" stop-color="#5c9be0"/><stop offset=".6" stop-color="#3a78c0"/><stop offset="1" stop-color="#143561"/></linearGradient>
+<linearGradient id="gCab" x1="0" x2="1"><stop offset="0" stop-color="#b9bec4"/><stop offset=".12" stop-color="#e8ebed"/><stop offset=".8" stop-color="#d6dadd"/><stop offset="1" stop-color="#a9aeb4"/></linearGradient>
+<linearGradient id="gCabTop" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#f4f6f7"/><stop offset="1" stop-color="#c9ced3"/></linearGradient>
+<linearGradient id="gSoil" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#5b4128"/><stop offset=".35" stop-color="#4a3420"/><stop offset=".7" stop-color="#3a2a1d"/><stop offset="1" stop-color="#2b2017"/></linearGradient>
+<linearGradient id="gAquifer" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#1d4d7a" stop-opacity=".55"/><stop offset="1" stop-color="#0d2c4f" stop-opacity=".8"/></linearGradient>
+<linearGradient id="gWater" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#4fb6ff"/><stop offset="1" stop-color="#0b4f9c"/></linearGradient>
+<linearGradient id="gSky" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#071226"/><stop offset="1" stop-color="#163156"/></linearGradient>
+<linearGradient id="gWall" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#2b3a52"/><stop offset="1" stop-color="#1c283b"/></linearGradient>
+<linearGradient id="gConc" x1="0" x2="1"><stop offset="0" stop-color="#7b848c"/><stop offset=".3" stop-color="#aab2b9"/><stop offset="1" stop-color="#6a737b"/></linearGradient>
+<linearGradient id="gMotor" x1="0" x2="1"><stop offset="0" stop-color="#3f4952"/><stop offset=".35" stop-color="#cfd8df"/><stop offset=".6" stop-color="#9aa6b0"/><stop offset="1" stop-color="#36404a"/></linearGradient>
+<linearGradient id="gFm" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#2c6bb3"/><stop offset=".45" stop-color="#5a9be6"/><stop offset="1" stop-color="#1b4a85"/></linearGradient>
+<linearGradient id="gInv" x1="0" x2="1"><stop offset="0" stop-color="#2a2d31"/><stop offset=".5" stop-color="#4a4f56"/><stop offset="1" stop-color="#25282c"/></linearGradient>
+<radialGradient id="gGlow"><stop offset="0" stop-color="#2BE0E8" stop-opacity=".35"/><stop offset="1" stop-color="#2BE0E8" stop-opacity="0"/></radialGradient>
+<pattern id="pMesh" width="3" height="3" patternUnits="userSpaceOnUse"><rect width="3" height="3" fill="#59646e"/><path d="M0 0L3 3M3 0L0 3" stroke="#c9d3db" stroke-width=".6"/></pattern>
+<pattern id="pGrill" width="4" height="3" patternUnits="userSpaceOnUse"><rect width="4" height="3" fill="#c3c8cd"/><rect y="1.6" width="4" height="1.1" fill="#6c737a"/></pattern>
+<pattern id="pSoil" width="18" height="14" patternUnits="userSpaceOnUse"><circle cx="3" cy="4" r="1" fill="#6e5236"/><circle cx="12" cy="9" r="1.3" fill="#2f2216"/><circle cx="15" cy="2" r=".8" fill="#7a5c3c"/></pattern>
+<pattern id="pBrick" width="16" height="8" patternUnits="userSpaceOnUse"><rect width="16" height="8" fill="url(#gWall)"/><path d="M0 8h16M8 0v4M0 4h16M16 4v4" stroke="#33445f" stroke-width=".7"/></pattern>
+<filter id="fSh" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="1.5" dy="2" stdDeviation="1.6" flood-color="#000" flood-opacity=".5"/></filter>
+</defs></svg>`;
+/* pipa: segmen persegi bergradien + overlay aliran */
+function hPipe(x1,x2,y,d,id){const x=Math.min(x1,x2),w=Math.abs(x2-x1);return `<rect x="${x}" y="${y-d/2}" width="${w}" height="${d}" fill="url(#gPipeY)"/>`+(id?`<line class="flow ${id}" x1="${x1}" x2="${x2}" y1="${y}" y2="${y}" stroke="#9fdcff" stroke-width="${d*0.32}" stroke-linecap="round" opacity=".9"/>`:'')}
+function vPipe(x,y1,y2,d,id){const y=Math.min(y1,y2),h=Math.abs(y2-y1);return `<rect x="${x-d/2}" y="${y}" width="${d}" height="${h}" fill="url(#gPipeX)"/>`+(id?`<line class="flow ${id}" x1="${x}" x2="${x}" y1="${y1}" y2="${y2}" stroke="#9fdcff" stroke-width="${d*0.32}" stroke-linecap="round" opacity=".9"/>`:'')}
+function flangeV(x,y,d){return `<rect x="${x-d*0.9}" y="${y-1.6}" width="${d*1.8}" height="3.2" rx=".8" fill="url(#gSteelX)" stroke="#2a3540" stroke-width=".4"/>`}
+function flangeH(x,y,d){return `<rect x="${x-1.6}" y="${y-d*0.9}" width="3.2" height="${d*1.8}" rx=".8" fill="url(#gSteelY)" stroke="#2a3540" stroke-width=".4"/>`}
+function elbow(x,y,d){return `<path d="M${x-d/2} ${y+d/2}V${y}a${d/2} ${d/2} 0 0 1 ${d/2} ${-d/2}H${x+d}V${y+d/2}z" fill="url(#gPipeX)"/><circle cx="${x+d*0.15}" cy="${y-d*0.15}" r="${d*0.62}" fill="url(#gPipeY)"/>`}
+function gateValve(x,y,d,id){return `<g filter="url(#fSh)">${flangeH(x-7,y,d)}${flangeH(x+7,y,d)}<path d="M${x-6} ${y-d*0.55}L${x-3} ${y-d*0.75}H${x+3}L${x+6} ${y-d*0.55}V${y+d*0.55}L${x+3} ${y+d*0.75}H${x-3}L${x-6} ${y+d*0.55}z" fill="#2f3a46" stroke="#11171d" stroke-width=".6"/>
+ <rect x="${x-2.5}" y="${y-d*0.75-9}" width="5" height="9" fill="#3b4652"/><rect x="${x-0.8}" y="${y-d*0.75-15}" width="1.6" height="7" fill="url(#gSteelX)"/>
+ <ellipse ${id?`id="${id}"`:''} cx="${x}" cy="${y-d*0.75-15}" rx="8" ry="2.4" fill="none" stroke="#c8212e" stroke-width="2.2"/></g>`}
+function checkValve(x,y,d){return `<g filter="url(#fSh)">${flangeH(x-8,y,d)}${flangeH(x+8,y,d)}<rect x="${x-7}" y="${y-d*0.62}" width="14" height="${d*1.24}" rx="3" fill="#2f3a46" stroke="#11171d" stroke-width=".6"/><rect x="${x-5}" y="${y-d*0.62-4}" width="10" height="4" rx="1" fill="#3b4652"/><path d="M${x-3} ${y}h6m-2.5 -2.5l2.5 2.5l-2.5 2.5" stroke="#d8e2ea" stroke-width="1" fill="none"/></g>`}
+function gaugeDial(x,y,id){return `<g filter="url(#fSh)"><rect x="${x-1.2}" y="${y}" width="2.4" height="8" fill="url(#gSteelX)"/><circle cx="${x}" cy="${y-5}" r="7" fill="#222b33"/><circle cx="${x}" cy="${y-5}" r="5.8" fill="#f2f4f5"/><path d="M${x-3.8} ${y-2}A4.6 4.6 0 1 1 ${x+3.8} ${y-2}" fill="none" stroke="#c92b38" stroke-width=".8" stroke-dasharray="1 1"/><line ${id?`id="${id}"`:''} x1="${x}" y1="${y-5}" x2="${x}" y2="${y-9.6}" stroke="#111" stroke-width="1" style="transform-origin:${x}px ${y-5}px"/></g>`}
+function pTx(x,y,tagtxt){return `<g filter="url(#fSh)"><rect x="${x-1.5}" y="${y}" width="3" height="9" fill="url(#gSteelX)"/><rect x="${x-4}" y="${y-4}" width="8" height="5" fill="url(#gSteelX)"/><rect x="${x-5}" y="${y-20}" width="10" height="16" rx="4" fill="url(#gSteelX)" stroke="#39434d" stroke-width=".5"/><rect x="${x-3.4}" y="${y-16}" width="6.8" height="4.5" rx="1" fill="#0d2318"/><rect x="${x+5}" y="${y-13}" width="4" height="3" fill="#20262c"/><text x="${x}" y="${y-22.5}" text-anchor="middle" font-size="7" fill="#cfe2f5" font-weight="600">${tagtxt}</text></g>`}
+function flowmeter(x,y,d,id){return `<g filter="url(#fSh)">${flangeH(x-14,y,d)}${flangeH(x+14,y,d)}<rect x="${x-12}" y="${y-d*0.75}" width="24" height="${d*1.5}" rx="3" fill="url(#gFm)" stroke="#0f2c52" stroke-width=".6"/><rect x="${x-3}" y="${y-d*0.75-7}" width="6" height="7" fill="#1f4f8a"/>
+ <circle cx="${x}" cy="${y-d*0.75-16}" r="11" fill="url(#gFm)" stroke="#0f2c52" stroke-width=".8"/><circle cx="${x}" cy="${y-d*0.75-16}" r="8.4" fill="#0a1b12"/><text id="${id}" x="${x}" y="${y-d*0.75-14}" text-anchor="middle" font-size="6.5" fill="#6dff9c" font-family="Rajdhani" font-weight="700">0</text><text x="${x}" y="${y-d*0.75-8.6}" text-anchor="middle" font-size="3.6" fill="#6dff9c">m³/h</text></g>`}
+/* panel lantai (RAL 7035) */
+function cabinet(x,y,w,h,id,tagtxt){const dw=w-6,ph=7;return `<g id="${id}" class="hot" filter="url(#fSh)">
+ <rect x="${x}" y="${y+h-ph}" width="${w}" height="${ph}" fill="#25282c"/>
+ <rect x="${x}" y="${y}" width="${w}" height="${h-ph}" fill="url(#gCab)" stroke="#7d848b" stroke-width=".8" class="hl"/>
+ <rect x="${x}" y="${y-3}" width="${w}" height="3.5" fill="url(#gCabTop)" stroke="#8a9097" stroke-width=".5"/>
+ <rect x="${x+3}" y="${y+3}" width="${dw}" height="${h-ph-6}" fill="none" stroke="#9aa1a8" stroke-width=".7"/>
+ <rect x="${x+w/2-w*0.2}" y="${y+7}" width="${w*0.4}" height="9" fill="url(#pGrill)" stroke="#8a9097" stroke-width=".5"/>
+ <rect x="${x+w*0.18}" y="${y+21}" width="${w*0.36}" height="13" rx="1" fill="#20262c" stroke="#5a6168" stroke-width=".6"/><text id="${id}_pm" x="${x+w*0.36}" y="${y+30.5}" text-anchor="middle" font-size="7.5" fill="#7ce0ff" font-family="Rajdhani" font-weight="700">0 kW</text>
+ <circle id="${id}_lp" cx="${x+w*0.66}" cy="${y+27.5}" r="3" fill="#f5f5f0" stroke="#555" stroke-width=".5"/>
+ <circle id="${id}_lr" cx="${x+w*0.66+8}" cy="${y+27.5}" r="3" fill="#174d2c" stroke="#555" stroke-width=".5"/>
+ <circle id="${id}_lf" cx="${x+w*0.66+16}" cy="${y+27.5}" r="3" fill="#4d1720" stroke="#555" stroke-width=".5"/>
+ <circle cx="${x+w*0.3}" cy="${y+44}" r="3.6" fill="#1d2329"/><rect id="${id}_sel" x="${x+w*0.3-0.8}" y="${y+40.6}" width="1.6" height="6.8" fill="#e8eaec" style="transform-origin:${x+w*0.3}px ${y+44}px"/>
+ <circle cx="${x+w*0.62}" cy="${y+44}" r="5" fill="#f2c200"/><circle id="${id}_es" cx="${x+w*0.62}" cy="${y+44}" r="3.6" fill="#d5202f"/>
+ <rect x="${x+w-10}" y="${y+h*0.42}" width="3.5" height="16" rx="1" fill="#2a2e33"/>
+ <g transform="translate(${x+w/2} ${y+h-ph-18})"><rect x="-10" y="-10" width="20" height="20" fill="#bfc4c9" stroke="#8a9097" stroke-width=".5"/><circle r="8" fill="#3c4248"/><g id="${id}_fan"><path d="M0 0L2 -7L-2 -7Z M0 0L7 2L7 -2Z M0 0L-2 7L2 7Z M0 0L-7 -2L-7 2Z" fill="#9aa2aa"/></g><circle r="1.6" fill="#ccc"/><path d="M-10 -3h20M-10 3h20M-3 -10v20M3 -10v20" stroke="#8a9097" stroke-width=".35" opacity=".6"/></g>
+ <rect x="${x+w/2-14}" y="${y+56}" width="28" height="7" fill="#f8f8f8" stroke="#8a9097" stroke-width=".4"/><text x="${x+w/2}" y="${y+61.4}" text-anchor="middle" font-size="5" fill="#222" font-weight="700">${tagtxt}</text>
+ </g>`}
+function wallPanel(x,y,w,h,id){return `<g id="${id}" class="hot" filter="url(#fSh)">
+ <rect x="${x+w/2-5}" y="${y-12}" width="10" height="5" rx="1" fill="#30353a"/><rect id="${id}_bc" x="${x+w/2-3.5}" y="${y-20}" width="7" height="8" rx="3" fill="#7a1c25"/>
+ <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="1.5" fill="url(#gCab)" stroke="#7d848b" stroke-width=".8" class="hl"/>
+ <rect x="${x+2.5}" y="${y+2.5}" width="${w-5}" height="${h-5}" fill="none" stroke="#9aa1a8" stroke-width=".6"/>
+ <rect x="${x+w/2-15}" y="${y+7}" width="30" height="19" rx="1.5" fill="#15181b"/><rect x="${x+w/2-13}" y="${y+9}" width="26" height="15" fill="#06233a"/>
+ <rect x="${x+w/2-11}" y="${y+11}" width="22" height="3" fill="#2BE0E8" opacity=".7"/><rect id="${id}_h1" x="${x+w/2-11}" y="${y+16}" width="9" height="6" fill="#31E38B" opacity=".9"/><rect id="${id}_h2" x="${x+w/2+2}" y="${y+16}" width="9" height="6" fill="#31E38B" opacity=".9"/>
+ <circle cx="${x+9}" cy="${y+33}" r="2.3" fill="#f5f5f0"/><circle id="${id}_lr" cx="${x+16}" cy="${y+33}" r="2.3" fill="#31E38B"/><circle id="${id}_la" cx="${x+23}" cy="${y+33}" r="2.3" fill="#4d1720"/><circle id="${id}_lu" cx="${x+30}" cy="${y+33}" r="2.3" fill="#4d3a10"/>
+ <rect x="${x+w/2-10}" y="${y+h-11}" width="20" height="6" fill="#f8f8f8"/><text x="${x+w/2}" y="${y+h-6.6}" text-anchor="middle" font-size="4.6" fill="#222" font-weight="700">PNL-SCD</text>
+ <rect x="${x+w-6}" y="${y+h*0.45}" width="2.5" height="9" rx="1" fill="#2a2e33"/></g>`}
+/* sumur bor + pompa submersible */
+function well(x,top,bot,id,lbl){const cw=22;return `<g id="${id}" class="hot">
+ <rect x="${x-cw/2-6}" y="${top}" width="${cw+12}" height="${bot-top}" fill="#21170f" opacity=".65"/>
+ <rect id="${id}_w" x="${x-cw/2}" y="${bot-60}" width="${cw}" height="60" fill="url(#gWater)" opacity=".85"/>
+ <rect x="${x-cw/2-3}" y="${top}" width="3" height="${bot-top}" fill="url(#gSteelX)"/><rect x="${x+cw/2}" y="${top}" width="3" height="${bot-top}" fill="url(#gSteelX)"/>
+ <g transform="translate(0 ${bot-118})">
+  <rect x="${x-2.6}" y="-${bot-118-top-6}" width="5.2" height="${bot-118-top-6+8}" fill="url(#gSteelX)"/>
+  <path d="M${x+4} -${bot-118-top-6}V60" stroke="#111" stroke-width="1.6"/>${[0,1,2,3,4,5].map(i=>`<rect x="${x+2.6}" y="${-(bot-118-top-6)+i*((bot-118-top)/6)}" width="3" height="1.6" fill="#999"/>`).join('')}
+  <rect x="${x-6}" y="8" width="12" height="6" rx="1" fill="url(#gSteelX)"/>
+  <rect x="${x-7.5}" y="14" width="15" height="36" fill="url(#gMotor)" stroke="#2d3740" stroke-width=".5"/>${[0,1,2,3,4,5].map(i=>`<rect x="${x-7.5}" y="${17+i*5.6}" width="15" height="1.2" fill="#4c5964"/>`).join('')}
+  <rect x="${x-7.5}" y="50" width="15" height="9" fill="url(#pMesh)" stroke="#2d3740" stroke-width=".5"/>
+  <rect x="${x-8}" y="59" width="16" height="44" rx="2" fill="url(#gMotor)" stroke="#2d3740" stroke-width=".5"/>${[0,1,2,3,4,5,6].map(i=>`<line x1="${x-8}" x2="${x+8}" y1="${63+i*5.8}" y2="${63+i*5.8}" stroke="#7d8a95" stroke-width=".5"/>`).join('')}
+  <path d="M${x-8} 103q8 7 16 0" fill="#3e4851"/>
+  <g id="${id}_bub" style="display:none">${[0,1,2,3].map(i=>`<circle class="bub" style="animation-delay:${i*0.6}s" cx="${x-9+i*6}" cy="54" r="1.1" fill="#d6f0ff"/>`).join('')}</g>
+  <text x="${x+12}" y="34" font-size="7.5" fill="#cfe2f5" font-weight="700">${lbl}</text><text x="${x+12}" y="43" font-size="6" fill="#8FA7C6">pompa</text><text x="${x+12}" y="82" font-size="7.5" fill="#cfe2f5" font-weight="700">M</text><text x="${x+12}" y="90" font-size="6" fill="#8FA7C6">motor</text>
+ </g>
+ <rect x="${x-cw/2-9}" y="${top-6}" width="${cw+18}" height="6" fill="url(#gConc)"/></g>`}
+function reservoir(x,y,w,h,id){return `<g id="${id}" filter="url(#fSh)">
+ <rect x="${x}" y="${y}" width="${w}" height="${h}" fill="url(#gConc)" stroke="#4c555d"/>
+ <rect x="${x+5}" y="${y+5}" width="${w-10}" height="${h-10}" fill="#0c1b2c"/>
+ <rect id="${id}_w" x="${x+5}" y="${y+h-50}" width="${w-10}" height="45" fill="url(#gWater)" opacity=".9"/>
+ <path id="${id}_s" class="ripple" d="" fill="none" stroke="#bfe6ff" stroke-width="1" opacity=".8"/>
+ ${[0,1,2,3,4,5].map(i=>`<line x1="${x+w-5}" x2="${x+w-10}" y1="${y+5+(h-10)*i/5}" y2="${y+5+(h-10)*i/5}" stroke="#cfd6dc" stroke-width=".6"/><text x="${x+w-12}" y="${y+7+(h-10)*i/5}" text-anchor="end" font-size="5.5" fill="#cfd6dc">${5-i}</text>`).join('')}
+ <rect x="${x-3}" y="${y-4}" width="${w+6}" height="5" fill="url(#gConc)"/>
+ <g><rect x="${x+22}" y="${y-14}" width="12" height="10" rx="2" fill="url(#gSteelX)"/><path d="M${x+24} ${y-4}l-6 22h22l-6-22z" fill="#5FD0FF" opacity=".15"/><text x="${x+28}" y="${y-17}" text-anchor="middle" font-size="7" fill="#cfe2f5" font-weight="600">LT-02</text></g>
+ <g><line x1="${x+w-26}" x2="${x+w-26}" y1="${y-2}" y2="${y+14}" stroke="#111" stroke-width="1"/><ellipse id="${id}_fl" cx="${x+w-26}" cy="${y+18}" rx="4" ry="5" fill="#f2c200" stroke="#7a6100" stroke-width=".5"/><text x="${x+w-26}" y="${y-5}" text-anchor="middle" font-size="6" fill="#cfe2f5">LSHH</text></g>
+ </g>`}
+function callout(x,y,w,ttl,id,unit){return `<g><rect x="${x}" y="${y}" width="${w}" height="24" rx="4" fill="rgba(6,16,34,.88)" stroke="#2C5687"/><text x="${x+5}" y="${y+8.5}" font-size="7" fill="#8FA7C6" font-weight="600" letter-spacing=".5">${ttl}</text><text id="${id}" x="${x+5}" y="${y+20}" font-size="11.5" fill="#EAF4FF" font-family="Rajdhani" font-weight="700">-</text><text x="${x+w-4}" y="${y+20}" text-anchor="end" font-size="7" fill="#8FA7C6">${unit}</text></g>`}
+/* inverter (tampilan depan) */
+function inverterArt(x,y,w,h,id,model){return `<g filter="url(#fSh)">
+ <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="4" fill="url(#gInv)" stroke="#111"/>
+ <rect x="${x+6}" y="${y+6}" width="${w-12}" height="${h*0.12}" fill="url(#pGrill)" opacity=".55"/>
+ <rect x="${x+w*0.22}" y="${y+h*0.22}" width="${w*0.56}" height="${h*0.4}" rx="3" fill="#1a1c1f" stroke="#555b62"/>
+ <rect x="${x+w*0.27}" y="${y+h*0.26}" width="${w*0.46}" height="${h*0.12}" rx="2" fill="#2c0606"/>
+ <text id="${id}_d" x="${x+w*0.7}" y="${y+h*0.355}" text-anchor="end" font-size="${h*0.095}" fill="#ff3b2f" font-family="Rajdhani" font-weight="700" letter-spacing="1">0.0</text>
+ ${[0,1,2].map(r=>[0,1,2].map(c=>`<rect x="${x+w*0.3+c*w*0.14}" y="${y+h*0.43+r*h*0.055}" width="${w*0.1}" height="${h*0.04}" rx="1.5" fill="#3a3f45" stroke="#6b737b" stroke-width=".4"/>`).join('')).join('')}
+ <circle id="${id}_run" cx="${x+w*0.3}" cy="${y+h*0.6}" r="2.2" fill="#173a20"/><circle id="${id}_alm" cx="${x+w*0.7}" cy="${y+h*0.6}" r="2.2" fill="#3a1717"/>
+ <text x="${x+w/2}" y="${y+h*0.74}" text-anchor="middle" font-size="7.5" fill="#c9d1d9" font-weight="700" letter-spacing=".5">${model}</text>
+ <rect x="${x+6}" y="${y+h*0.82}" width="${w-12}" height="${h*0.13}" fill="url(#pGrill)" opacity=".55"/></g>`}
+
+/* ================= MIMIC (denah) ================= */
+function mimic(ox,oy,w,h){
+  const g=[];
+  g.push(`<rect width="800" height="182" fill="url(#gSky)"/>`);
+  for(let i=0;i<40;i++)g.push(`<circle cx="${(i*97)%800}" cy="${(i*53)%120+4}" r="${i%3?0.6:1}" fill="#cfe2ff" opacity=".5"/>`);
+  g.push(`<rect y="180" width="800" height="190" fill="url(#gSoil)"/><rect y="180" width="800" height="190" fill="url(#pSoil)" opacity=".7"/>`);
+  g.push(`<rect id="dn_aq" x="0" y="260" width="800" height="110" fill="url(#gAquifer)"/><path id="dn_aqs" d="" stroke="#5fb4ff" stroke-width="1" fill="none" stroke-dasharray="4 4" opacity=".7"/>`);
+  g.push(`<rect y="177" width="800" height="5" fill="#3f5e2c"/><rect y="176" width="800" height="1.5" fill="#6e9b45"/>`);
+  /* rumah panel */
+  g.push(`<rect x="12" y="32" width="306" height="146" fill="url(#pBrick)"/><rect x="20" y="40" width="290" height="137" fill="#162337"/><polygon points="6,34 165,8 324,34" fill="#3d4b60" stroke="#55657c"/><rect x="6" y="32" width="318" height="4" fill="#55657c"/>`);
+  g.push(`<rect x="22" y="174" width="286" height="4" fill="#5d6670"/><text x="28" y="52" font-size="8" fill="#8FA7C6" font-weight="700" letter-spacing="1.2">RUANG PANEL</text>`);
+  g.push(`<rect x="0" y="0" width="0" height="0"/><circle cx="165" cy="46" r="20" fill="url(#gGlow)"/><rect x="155" y="40" width="20" height="3" rx="1" fill="#f3f7ff"/>`);
+  g.push(cabinet(32,86,62,92,'cb1','PNL-INV-110'),cabinet(108,86,92,92,'cb2','PNL-INV-160'),wallPanel(226,74,46,62,'cbS'));
+  g.push(`<text x="63" y="80" text-anchor="middle" font-size="7.5" fill="#cfe2f5" font-weight="700">110 kW</text><text x="154" y="80" text-anchor="middle" font-size="7.5" fill="#cfe2f5" font-weight="700">160 kW</text><text x="249" y="148" text-anchor="middle" font-size="7" fill="#cfe2f5" font-weight="700">SCADA TM221</text><text x="249" y="157" text-anchor="middle" font-size="6" fill="#8FA7C6">+ HMIET6400 + V-BOX</text>`);
+  /* antena V-BOX */
+  g.push(`<line x1="292" y1="34" x2="292" y2="14" stroke="#9aa6b0" stroke-width="1.6"/><circle cx="292" cy="13" r="2" fill="#dfe6ec"/><g id="dn_sig"><path d="M298 9a8 8 0 010 10M302 6a13 13 0 010 16M286 9a8 8 0 000 10M282 6a13 13 0 000 16" stroke="#2BE0E8" fill="none" stroke-width="1.2"/></g><text x="306" y="16" font-size="7" fill="#2BE0E8" font-weight="700">4G</text><text x="306" y="25" font-size="6" fill="#8FA7C6">V-NET</text>`);
+  g.push(`<path d="M240 136V152M262 136V152" stroke="#ff9d3b" stroke-width="1" stroke-dasharray="2 2"/>`);
+  /* kabel ke sumur */
+  g.push(`<path d="M63 178V184H372M154 178V188H462" stroke="#ff9d3b" stroke-width="1.6" fill="none" stroke-dasharray="5 3" opacity=".85"/><text x="200" y="196" font-size="6.5" fill="#ffbe80">kabel daya + kontrol + RS-485 (tray bawah tanah)</text>`);
+  /* sumur */
+  g.push(well(380,180,366,'w1','P-01'),well(470,180,366,'w2','P-02'));
+  g.push(`<path id="lt1c" d="M366 182V300" stroke="#ffd34d" stroke-width=".8"/><rect id="lt1p" x="363.5" y="300" width="5" height="12" rx="2" fill="url(#gSteelX)"/><path d="M362 186l-6 0" stroke="#ffd34d" stroke-width=".6"/>`);
+  /* wellhead + pipa */
+  const d=10;
+  g.push(vPipe(380,176,122,d,'fl1'),vPipe(470,176,122,d,'fl2'),flangeV(380,170,d),flangeV(470,170,d),flangeV(380,140,d),flangeV(470,140,d));
+  g.push(hPipe(380,470,120,d,'fl1'),hPipe(470,660,120,d,'flH'));
+  g.push(elbow(380,120,d),`<rect x="463" y="113" width="14" height="14" rx="2" fill="url(#gPipeY)"/>`);
+  g.push(gaugeDial(392,114,'pg1'),pTx(404,114,'PT-01'),checkValve(424,120,d),gateValve(448,120,d,'gv1'));
+  g.push(gaugeDial(484,114,'pg2'),pTx(496,114,'PT-02'),checkValve(516,120,d),gateValve(540,120,d,'gv2'));
+  g.push(flowmeter(576,120,d,'dn_fm'),pTx(608,114,'PT-03'),`<g><rect x="619" y="108" width="2.4" height="7" fill="url(#gSteelX)"/><rect x="616" y="98" width="8" height="10" rx="1.5" fill="#2f3a46" stroke="#111" stroke-width=".4"/><text x="628" y="106" font-size="6" fill="#cfe2f5">PSH</text></g>`);
+  g.push(reservoir(652,62,138,116,'res'));
+  g.push(`<rect x="648" y="113" width="10" height="14" fill="url(#gPipeY)"/>`,hPipe(790,800,166,d,'flO'),`<text x="796" y="186" text-anchor="end" font-size="6.5" fill="#8FA7C6">ke IPA / distribusi →</text>`);
+  g.push(`<text x="721" y="54" text-anchor="middle" font-size="7.5" fill="#cfe2f5" font-weight="700" letter-spacing="1">RESERVOIR</text>`);
+  /* callout */
+  g.push(callout(382,66,52,'PT-01','dn_pt1','bar'),callout(472,66,52,'PT-02','dn_pt2','bar'),callout(546,52,56,'FT-01','dn_ft','m³/h'),callout(606,66,42,'PT-03','dn_pt3','bar'));
+  g.push(callout(726,20,64,'LT-02','dn_lt2','m'),callout(300,214,50,'LT-01','dn_lt1','m'));
+  g.push(callout(300,316,58,'P-01','dn_hz1','Hz'),callout(500,316,58,'P-02','dn_hz2','Hz'));
+  g.push(`<g id="dn_mode"><rect x="560" y="200" width="226" height="56" rx="6" fill="rgba(6,16,34,.85)" stroke="#2C5687"/><text x="570" y="214" font-size="8" fill="#2BE0E8" font-weight="700" letter-spacing="1.2">LOGIKA AUTO</text><text id="dn_m1" x="570" y="229" font-size="9.5" fill="#EAF4FF">-</text><text id="dn_m2" x="570" y="243" font-size="8.5" fill="#8FA7C6">-</text></g>`);
+  const sv=mk('',ox,oy,w,h,`<svg width="${w}" height="${h}" viewBox="0 0 800 370">${g.join('')}</svg>`).firstChild;
+  sv.querySelector('#cb1').onclick=()=>{selInv=0;go('inv')};sv.querySelector('#cb2').onclick=()=>{selInv=1;go('inv')};sv.querySelector('#cbS').onclick=()=>go('param');
+  sv.querySelector('#w1').onclick=()=>go('ctrl');sv.querySelector('#w2').onclick=()=>go('ctrl');
+  const $=id=>sv.querySelector('#'+id);
+  bind(()=>{
+    const top=180,bot=366,yl=lv=>(bot-63)-clamp(lv/30,0,1)*((bot-63)-(top+5));const yw=yl(T.LT01_Level);
+    ['w1_w','w2_w'].forEach(id=>{const r=$(id);r.setAttribute('y',yw);r.setAttribute('height',bot-yw)});
+    $('dn_aq').setAttribute('y',yw);$('dn_aq').setAttribute('height',370-yw);$('dn_aqs').setAttribute('d',`M0 ${yw}H800`);
+    EQ.forEach((e,i)=>{const k=e.k,run=T[k+'_Run'],flt=T[k+'_Fault']||T[k+'_MotTemp'];const cb=$('cb'+(i+1));
+      $('cb'+(i+1)+'_lr').setAttribute('fill',run?'#31E38B':'#174d2c');$('cb'+(i+1)+'_lf').setAttribute('fill',flt?'#FF4D5E':'#4d1720');
+      $('cb'+(i+1)+'_pm').textContent=f(T['PM'+(i+1)+'_kW'],0)+' kW';$('cb'+(i+1)+'_fan').setAttribute('class',T[k+'_Hz']>1?'spin':'');
+      $('cb'+(i+1)+'_sel').style.transform=T[k+'_Remote']?'rotate(40deg)':'rotate(-40deg)';$('cb'+(i+1)+'_es').setAttribute('fill',T[k+'_Estop']?'#ff0a1e':'#a8101d');
+      $('w'+(i+1)+'_bub').style.display=run?'block':'none';
+      document.querySelectorAll('#stage .fl'+(i+1)).forEach(l=>l.style.display=T[k+'_Hz']>5?'':'none');
+      $('pg'+(i+1)).style.transform=`rotate(${-120+240*clamp(T['PT0'+(i+1)+'_Press']/10,0,1)}deg)`;
+      $('dn_pt'+(i+1)).textContent=f(T['PT0'+(i+1)+'_Press'],2);const hz=$('dn_hz'+(i+1));hz.textContent=f(T[k+'_Hz'],1);hz.setAttribute('fill',flt?C.crit:run?C.ok:'#EAF4FF')});
+    const fl=T.FT01_Flow>5;['flH','flO'].forEach(c=>document.querySelectorAll('#stage .'+c).forEach(l=>l.style.display=fl?'':'none'));
+    $('dn_fm').textContent=f(T.FT01_Flow,0);$('dn_ft').textContent=f(T.FT01_Flow,0);$('dn_pt3').textContent=f(T.PT03_Header,2);$('dn_lt1').textContent=f(T.LT01_Level,1);$('dn_lt2').textContent=f(T.LT02_Level,2);
+    const rt=62,rh=116,h=clamp(T.LT02_Level/5,0,1)*(rh-10);const rw=$('res_w');rw.setAttribute('y',rt+rh-5-h);rw.setAttribute('height',h);
+    const sy=rt+rh-5-h;$('res_s').setAttribute('d',`M657 ${sy}q8 -2 16 0t16 0t16 0t16 0t16 0t16 0t16 0t16 0`);$('res_fl').setAttribute('cy',T.SYS_LSHH02?12+62-4:80);
+    $('cbS_lr').setAttribute('fill',T.SYS_Running?'#31E38B':'#174d2c');$('cbS_la').setAttribute('fill',activeCount()?'#FF4D5E':'#4d1720');$('cbS_lu').setAttribute('fill',T.SYS_UPSBatt?'#FFB21F':'#4d3a10');$('cbS_bc').setAttribute('fill',activeCount()&&tick.n%2?'#ff2b3d':'#7a1c25');
+    $('cbS_h1').setAttribute('fill',T.P01_Run?'#31E38B':'#3a4a66');$('cbS_h2').setAttribute('fill',T.P02_Run?'#31E38B':'#3a4a66');
+    $('dn_m1').textContent=T.SYS_ModeAuto?(T.SYS_AutoDemand?'Mengisi reservoir → stop di '+f(T.SP_Res_Stop,1)+' m':'Siaga → start di '+f(T.SP_Res_Start,1)+' m'):'MANUAL: operator start/stop dari KONTROL';
+    $('dn_m2').textContent='PID tekanan '+f(T.SP_Press,2)+' bar · Debit '+f(T.FT01_Flow,0)+' m³/h · '+f(T.KW_TOT,0)+' kW';
+  });
+}
+screen('denah','Denah sistem',()=>mimic(0,0,800,370));
+
+/* ================= WEB SCADA 1280x720 (override chrome) ================= */
+const NAV=[['ov','OVERVIEW'],['auto','KONTROL AUTO'],['pump','POMPA'],['energi','ENERGI'],['trend','TREN'],['alarm','ALARM'],['report','LAPORAN']];
+let selInv=0;
+function chrome(){
+  cur={id:'G',binds:[]};chromeBinds=cur.binds;
+  const mkE=(id,x,y,w,h)=>{const d=document.createElement('div');d.id=id;d.className='o';d.style.cssText=`left:${x}px;top:${y}px;width:${w}px;height:${h}px`;stage.insertBefore(d,modal);return d};
+  const hdr=mkE('hdr',0,0,W,56);hdr.style.background='linear-gradient(180deg,#13294d,#091631)';hdr.style.borderBottom='1px solid #2BE0E8';R=hdr;
+  mk('',12,9,38,38,`<svg width="38" height="38" viewBox="0 0 28 28"><circle cx="14" cy="14" r="13" fill="#0b2a4a" stroke="#2BE0E8" stroke-width="1.4"/><path d="M14 5c-4 6-6 9-6 12a6 6 0 0012 0c0-3-2-6-6-12z" fill="#2F9BFF"/><path d="M11 17a3 3 0 003 3" stroke="#cfeaff" stroke-width="1.4" fill="none" stroke-linecap="round"/></svg>`);
+  label(58,7,300,24,'SCADA POMPA AIR BAKU','big').style.fontSize='22px';label(58,31,300,16,'Perumda Air Minum Tirta Alam Tarakan · command center','sm');
+  const bw=96;NAV.forEach((n,i)=>{const b=btn(360+i*(bw+4),10,bw,36,n[1],()=>go(n[0]),{cls:'sm'});navBtns.push({id:n[0],el:b});if(n[0]=='alarm'){const bg=document.createElement('div');bg.className='badge';bg.id='abadge';bg.style.right='4px';bg.style.top='-6px';b.appendChild(bg)}});
+  chip(1056,8,108,20,()=>{const n=activeCount();return T.SYS_Estop?['E-STOP','crit',1]:n?[n+' ALARM','crit',1]:T.SYS_Running?['JALAN','ok']:['SIAGA','warn']});
+  chip(1056,30,108,18,()=>T.SYS_ModeAuto?['AUTO','info']:['MANUAL','warn']);
+  mk('lbl r',1168,4,104,48,'<div style="text-align:right;line-height:1.1"><div id="clk" style="font:700 21px var(--f-disp);color:#EAF4FF;font-variant-numeric:tabular-nums">00:00:00</div><div id="dte" style="font-size:11px;color:#8FA7C6">-</div></div>');
+  const bnr=mkE('bnr',0,56,W,30);R=bnr;mk('',0,0,W,30,'<div id="btxt" style="padding:0 16px;display:flex;align-items:center;height:30px;font:600 15px var(--f-disp);letter-spacing:.05em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"></div>');
+  const t=document.createElement('div');t.id='toast';t.className='toast';stage.appendChild(t)}
+const STEPS=[[0,'MANUAL','Operator menjalankan pompa dari layar POMPA. Proteksi sensor tetap aktif.'],[1,'SIAGA','Reservoir cukup. Menunggu level turun ke batas START.'],[2,'LEAD JALAN','Pompa lead jalan. Kecepatan diatur PID tekanan header PT-03.'],[3,'TUNGGU LAG','Lead sudah maksimum dan tekanan kurang. Tunda sebelum pompa ke-2 start.'],[4,'LEAD + LAG','Dua pompa jalan bersama. Lag stop bila tekanan berlebih di Hz minimum.'],[6,'TUNDA WBP','Jam beban puncak PLN. Start ditunda selama reservoir di atas level kritis.']];
+const stepName=()=>{const s=STEPS.find(x=>x[0]==T.SYS_Step);return s?s[1]:'-'};
+/* ---------- OVERVIEW ---------- */
+screen('ov','Overview',()=>{
+  panel(4,4,868,406,'');mimic(8,8,860,398);
+  panel(878,4,398,262,'Kontrol auto');
+  seg(890,26,374,42,['MANUAL','AUTO'],()=>T.SYS_ModeAuto,i=>{T.SYS_ModeAuto=i;EQ.forEach(e=>T[e.k+'_Mode']=i?2:1);if(!i)EQ.forEach(e=>T[e.k+'_ManRun']=0);update()});
+  label(890,76,120,18,'Langkah AUTO','sm');chip(1010,76,254,22,()=>[stepName(),T.SYS_Step==6?'warn':T.SYS_Step>=2?'ok':'info']);
+  label(890,104,120,18,'Pompa lead','sm');chip(1010,104,254,22,()=>[(T.SYS_LeadNow?'P-02':'P-01')+(T.SYS_LeadFail?' (cadangan, lead gangguan)':''),T.SYS_LeadFail?'warn':'info']);
+  label(890,132,120,18,'Permintaan isi','sm');chip(1010,132,254,22,()=>T.SYS_AutoDemand?['MENGISI RESERVOIR','ok']:['RESERVOIR CUKUP','info']);
+  label(890,164,200,14,'Level reservoir LT-02','sm');value(1150,158,114,26,'LT02_Level',2,'m','s r');
+  const rb=mk('',890,186,374,22,'');bind(()=>{const p=v=>clamp(v/5,0,1)*100;rb.innerHTML=`<div style="position:absolute;inset:0;background:#06132a;border:1px solid #1E3A5F;border-radius:4px;overflow:hidden"><div style="position:absolute;left:0;top:0;bottom:0;width:${p(T.LT02_Level)}%;background:linear-gradient(90deg,#0b4f9c,#4fb6ff)"></div></div>
+    <div style="position:absolute;left:${p(T.SP_Res_Start)}%;top:-3px;bottom:-3px;width:2px;background:#FFB21F"></div><div style="position:absolute;left:${p(T.SP_Res_Stop)}%;top:-3px;bottom:-3px;width:2px;background:#31E38B"></div>`});
+  label(890,212,374,16,'<span style="color:#FFB21F">▌start</span>&nbsp;<span id="ovs"></span>&nbsp;&nbsp;<span style="color:#31E38B">▌stop</span>&nbsp;<span id="ovt"></span>&nbsp;&nbsp;skala 0-5 m','sm');
+  bind(()=>{document.getElementById('ovs').textContent=f(T.SP_Res_Start,1)+' m';document.getElementById('ovt').textContent=f(T.SP_Res_Stop,1)+' m'});
+  btn(890,234,374,26,'BUKA PENGATURAN AUTO →',()=>go('auto'),{cls:'sm'});
+  [['Tekanan header','PT03_Header',2,'bar'],['Debit','FT01_Flow',0,'m³/h'],['Daya total','KW_TOT',0,'kW'],['Energi spesifik','SPEC_E',3,'kWh/m³']].forEach((m,j)=>{const x=878+(j%2)*201,y=272+Math.floor(j/2)*70;panel(x,y,197,64,'');label(x+12,y+6,170,14,m[0],'sm');value(x+12,y+24,176,34,m[1],m[2],m[3])});
+  EQ.forEach((e,i)=>{const k=e.k,x=4+i*306;panel(x,416,300,214,e.code+' · '+(i?'160 kW':'90 kW submersible'));
+    chip(x+190,420,100,18,()=>stateOf(k));
+    gauge(x+8,442,124,k+'_Hz',0,50,1,'Hz',null,[0,25,50]);
+    [['Daya',k+'_kW',1,'kW'],['Arus',k+'_Amp',0,'A'],['Tekanan','PT0'+(i+1)+'_Press',2,'bar'],['Jam',k+'_RunH',0,'h']].forEach((m,j)=>{label(x+142,446+j*40,60,14,m[0],'sm');value(x+142,458+j*40,150,26,m[1],m[2],m[3],'xs')});
+    chip(x+12,604,120,20,()=>[['OFF','off'],['MANUAL','warn'],['AUTO','info']][T[k+'_Mode']]);
+    label(x+142,604,150,20,'','sm').id='ovl'+i;bind(()=>{document.getElementById('ovl'+i).textContent=(T.SYS_LeadNow==i?'LEAD':'LAG / cadangan')});});
+  panel(616,416,330,214,'Alarm aktif');const al=mk('',624,440,314,184,'');
+  bind(()=>{const ks=Object.keys(alarms.active);al.innerHTML=ks.length?ks.slice(0,6).map(k=>{const a=ALM.find(x=>x[0]==k);const c=a[3]=='crit'?C.crit:C.warn;return `<div class="row" style="border-left:3px solid ${c};height:30px"><div style="width:44px;color:${c};font-weight:700">${k}</div><div style="flex:1;color:#EAF4FF">${a[1]}</div><div style="width:58px;color:#8FA7C6">${alarms.active[k]}</div></div>`}).join(''):'<div class="row" style="color:#31E38B;height:40px">Tidak ada alarm aktif.</div>'});
+  panel(952,416,324,214,'Tren 10 menit');const tt=mk('',960,440,308,160,'');bind(()=>{tt.innerHTML=trendSvg(308,160,[1,1,1,0,0,1,0],0,true)});
+  label(960,604,308,18,'<span style="color:#2BE0E8">P-01 Hz</span>&nbsp;·&nbsp;<span style="color:#31E38B">P-02 Hz</span>&nbsp;·&nbsp;<span style="color:#C58BFF">Tekanan</span>&nbsp;·&nbsp;<span style="color:#5FD0FF">Reservoir</span>','sm');
+});
+/* ---------- KONTROL AUTO ---------- */
+screen('auto','Kontrol auto',()=>{
+  panel(4,4,420,410,'Urutan logika AUTO');
+  STEPS.forEach((s,j)=>{const y=30+j*63;const card=mk('',14,y,400,56,'');
+    bind(()=>{const on=T.SYS_Step==s[0];card.style.cssText+=`;border:1px solid ${on?'#2BE0E8':'#1E3A5F'};border-radius:6px;background:${on?'rgba(43,224,232,.12)':'rgba(6,19,42,.6)'}`;
+      card.innerHTML=`<div style="position:absolute;left:10px;top:9px;width:26px;height:26px;border-radius:50%;border:2px solid ${on?'#2BE0E8':'#2C5687'};color:${on?'#2BE0E8':'#8FA7C6'};font:700 14px var(--f-disp);display:flex;align-items:center;justify-content:center">${j}</div>
+      <div style="position:absolute;left:46px;top:6px;font:700 15px var(--f-disp);letter-spacing:.08em;color:${on?'#EAF4FF':'#8FA7C6'}">${s[1]}${on?' ◀ SEKARANG':''}</div><div style="position:absolute;left:46px;top:26px;right:8px;font-size:12px;line-height:1.2;color:#8FA7C6">${s[2]}</div>`})});
+  panel(430,4,400,410,'Reservoir & kondisi start/stop');
+  const tk=svgEl(446,30,180,370,'');
+  bind(()=>{const Y=v=>350-clamp(v/5,0,1)*320;let g=`<rect x="20" y="22" width="120" height="332" rx="4" fill="url(#gConc)"/><rect x="28" y="28" width="104" height="322" fill="#0c1b2c"/><rect x="28" y="${Y(T.LT02_Level)}" width="104" height="${350-Y(T.LT02_Level)}" fill="url(#gWater)"/>`;
+    [[4.9,'LSHH','#FF4D5E'],[T.SP_Res_Stop,'STOP','#31E38B'],[T.SP_Res_Start,'START','#FFB21F'],[T.SP_Res_Crit,'KRITIS','#ff7a3d'],[T.AL_Res_Lo,'LOW','#c58bff']].forEach(r=>{const y=Y(r[0]);g+=`<line x1="22" x2="150" y1="${y}" y2="${y}" stroke="${r[2]}" stroke-dasharray="5 3" stroke-width="1.5"/><text x="152" y="${y+4}" font-size="10" fill="${r[2]}" font-weight="700">${r[1]}</text>`});
+    for(let i=0;i<=5;i++)g+=`<text x="16" y="${Y(i)+4}" text-anchor="end" font-size="10" fill="#8FA7C6">${i}</text>`;
+    g+=`<text x="80" y="${Y(T.LT02_Level)-6}" text-anchor="middle" font-size="16" fill="#EAF4FF" font-family="Rajdhani" font-weight="700">${f(T.LT02_Level,2)} m</text>`;tk.innerHTML=g});
+  const cond=[['Reservoir ≤ START → mulai isi',()=>T.LT02_Level<=T.SP_Res_Start],['Reservoir ≥ STOP → berhenti',()=>T.LT02_Level>=T.SP_Res_Stop],['Permintaan isi aktif',()=>T.SYS_AutoDemand],['Jam beban puncak (WBP)',()=>T.SYS_Peak],['Tunda WBP aktif',()=>T.SYS_Step==6],['Tekanan < setpoint',()=>T.PT03_Header<T.SP_Press-0.1],['Lead di Hz maksimum',()=>T[(T.SYS_LeadNow?'P02':'P01')+'_Hz']>=T.SP_Hz_Max-0.5],['Debit terdeteksi (FT-01)',()=>T.FT01_Flow>T.AL_NoFlow]];
+  cond.forEach((c,j)=>{const y=34+j*44;lamp(636,y+4,14,()=>c[1]()?'ok':'');label(656,y,168,40,c[0],'sm')});
+  panel(836,4,440,410,'Pengaturan AUTO');
+  label(848,28,140,30,'Mode sistem','sm');seg(990,28,276,32,['MANUAL','AUTO'],()=>T.SYS_ModeAuto,i=>{T.SYS_ModeAuto=i;EQ.forEach(e=>T[e.k+'_Mode']=i?2:1);if(!i)EQ.forEach(e=>T[e.k+'_ManRun']=0);update()});
+  label(848,66,140,30,'Pompa lead','sm');seg(990,66,276,32,['P-01','P-02'],()=>T.SP_LeadSel,i=>{T.SP_LeadSel=i;update()});
+  label(848,104,140,30,'Hindari jam puncak','sm');seg(990,104,276,32,['TIDAK','YA (17-22)'],()=>T.SP_PeakAvoid,i=>{T.SP_PeakAvoid=i;update()});
+  [['SP_Res_Start',1,'m',0.5,4.5,'Start bila reservoir ≤'],['SP_Res_Stop',1,'m',1,4.9,'Stop bila reservoir ≥'],['SP_Res_Crit',1,'m',0.3,3,'Level kritis (abaikan WBP)'],['SP_Press',2,'bar',1,8,'Setpoint tekanan PID'],['SP_Hz_Min',1,'Hz',20,40,'Frekuensi minimum'],['SP_Hz_Max',1,'Hz',40,50,'Frekuensi maksimum'],['SP_Lag_Delay',0,'s',3,120,'Tunda start pompa ke-2'],['SP_PID_Kp',2,'',0.1,5,'Gain PID (Kp)']].forEach((p,j)=>{const x=848+(j%2)*214,y=146+Math.floor(j/2)*66;label(x,y,204,16,p[5],'sm');numin(x,y+18,204,38,p[0],p[1],p[2],p[3],p[4])});
+  panel(4,420,620,210,'Mode tiap pompa');
+  EQ.forEach((e,i)=>{const k=e.k,y=446+i*90;label(16,y,180,20,e.code+' · '+e.pnl,'mid');chip(16,y+24,110,20,()=>stateOf(k));chip(132,y+24,90,20,()=>[T.SYS_LeadNow==i?'LEAD':'LAG','info']);
+    seg(232,y,380,40,['OFF','MANUAL','AUTO'],()=>T[k+'_Mode'],v=>{T[k+'_Mode']=v;if(v!=1)T[k+'_ManRun']=0;update()});
+    label(232,y+46,380,20,'','sm').id='am'+i;bind(()=>{document.getElementById('am'+i).textContent='Frekuensi '+f(T[k+'_Hz'],1)+' Hz · referensi '+f(T[k+'_HzSet'],1)+' Hz · '+f(T[k+'_kW'],1)+' kW'})});
+  panel(630,420,646,210,'Interlock / izin jalan');
+  const IL=[['Selector REMOTE',k=>T[k+'_Remote']],['Inverter normal',k=>!T[k+'_Fault']],['Motor tidak panas (TS)',k=>!T[k+'_MotTemp']],['Sumur ada air (61F/LT-01)',k=>!T[k+'_DryRun']&&T.LT01_Level>T.AL_Level_LoLo],['E-STOP lepas',k=>!T[k+'_Estop']],['MCCB Q1 ON',k=>!T[k+'_Q1Off']],['Reservoir tidak penuh (LSHH)',k=>!T.SYS_LSHH02],['Tekanan aman (PSH-03)',k=>!T.SYS_PSH03],['Listrik normal',k=>T.SYS_PhaseOK&&!T.SYS_UPSBatt]];
+  [0,1].forEach(c=>{label(830+c*322,422,50,18,'P-01','sm c');label(880+c*322,422,50,18,'P-02','sm c')});
+  IL.forEach((r,j)=>{const c=j<5?0:1,jj=j<5?j:j-5,x=642+c*322,y=444+jj*36;label(x,y,190,30,r[0],'sm');EQ.forEach((e,i)=>lamp(x+198+i*50,y+8,14,()=>r[1](e.k)?'ok':'crit'))});
+});
+/* ---------- POMPA ---------- */
+screen('pump','Pompa & inverter',()=>{
+  EQ.forEach((e,i)=>{const k=e.k,x=4+i*638;panel(x,4,632,626,e.code+' · '+e.pnl+' · '+e.inv);
+    chip(x+420,6,100,20,()=>stateOf(k));chip(x+526,6,98,20,()=>T[k+'_Comm']?['MODBUS OK','ok']:['MODBUS PUTUS','crit',1]);
+    const ia=svgEl(x+10,32,170,330,inverterArt(10,6,150,316,'iv'+i,e.inv));
+    bind(()=>{ia.querySelector('#iv'+i+'_d').textContent=f(T[k+'_Hz'],1).replace(',','.');ia.querySelector('#iv'+i+'_run').setAttribute('fill',T[k+'_Run']?'#31E38B':'#173a20');ia.querySelector('#iv'+i+'_alm').setAttribute('fill',T[k+'_Fault']?'#FF4D5E':'#3a1717')});
+    const V=[['Frekuensi','Hz',1,'Hz'],['Arus','Amp',0,'A'],['Tegangan','Vout',0,'V'],['Daya','kW',1,'kW'],['Torsi','Torque',0,'%'],['DC bus','DCV',0,'V'],['Suhu heatsink','TempHS',0,'°C'],['Referensi','HzSet',1,'Hz'],['Jam operasi','RunH',0,'jam'],['Energi','kWh',0,'kWh']];
+    V.forEach((v,j)=>{const xx=x+192+(j%3)*146,yy=34+Math.floor(j/3)*76;panel(xx,yy,140,70,'');label(xx+10,yy+6,124,14,v[0],'sm');value(xx+10,yy+26,128,34,k+'_'+v[1],v[2],v[3],'s')});
+    panel(x+10,372,612,108,'Kendali '+e.code);
+    seg(x+20,396,280,36,['OFF','MANUAL','AUTO'],()=>T[k+'_Mode'],v=>{T[k+'_Mode']=v;if(v!=1)T[k+'_ManRun']=0;update()});
+    label(x+312,396,130,16,'Setpoint MANUAL','sm');numin(x+312,414,130,36,k+'_SpHz',1,'Hz',25,50);
+    btn(x+452,396,80,76,'START',()=>{if(!T[k+'_Remote']){toast('Selector panel masih LOKAL');return}if(T[k+'_Mode']!=1){toast('Pilih MANUAL dulu');return}if(T[k+'_Fault']||T[k+'_MotTemp']){toast('Reset gangguan dulu');return}T[k+'_ManRun']=1;update()},{cls:'go'});
+    btn(x+536,396,80,76,'STOP',()=>{T[k+'_ManRun']=0;if(T[k+'_Mode']==2){T[k+'_Mode']=0;toast(e.code+' dipindah ke OFF')}update()},{cls:'stop'});
+    btn(x+20,440,280,32,'RESET GANGGUAN',()=>{if(SIM[i?'p2trip':'p1trip']){toast('Penyebab trip masih ada');return}T[k+'_Fault']=0;T[k+'_AlmCode']=0;update()},{cls:'sm'});
+    panel(x+10,486,612,136,'Beban & status');
+    [['Arus % rating',k+'_AmpPct',120,()=>T[k+'_AmpPct']>=T.AL_Amp_Hi,'%'],['Suhu heatsink',k+'_TempHS',95,()=>T[k+'_TempHS']>=T.AL_Temp_Hi,'°C'],['Torsi',k+'_Torque',120,null,'%']].forEach((b,j)=>{const yy=510+j*36;label(x+20,yy,110,24,b[0],'sm');bar(x+130,yy+6,220,12,b[1],0,b[2],b[3],true);value(x+356,yy,70,24,b[1],0,b[4],'xs r')});
+    [['REMOTE',()=>T[k+'_Remote']],['RUN',()=>T[k+'_Run']],['Tidak trip',()=>!T[k+'_Fault']],['Thermal OK',()=>!T[k+'_MotTemp']],['Q1 ON',()=>!T[k+'_Q1Off']]].forEach((s,j)=>{const yy=508+j*22;lamp(x+446,yy+3,13,()=>s[1]()?'ok':(j==1?'':'crit'));label(x+466,yy,150,20,s[0],'sm')});});
+});
+/* ---------- ENERGI ---------- */
+screen('energi','Energi',()=>{
+  EQ.forEach((e,i)=>{const p='PM'+(i+1),x=4+i*424;panel(x,4,418,360,e.pnl+' · power meter PM2120');
+    chip(x+316,6,94,20,()=>T[p+'_Comm']?['ONLINE','ok']:['PUTUS','crit',1]);
+    label(x+16,32,120,14,'Daya aktif','sm');value(x+16,48,200,44,p+'_kW',1,'kW').style.fontSize='40px';
+    label(x+230,32,120,14,'Faktor daya','sm');value(x+230,48,170,44,p+'_PF',2,'');
+    [['Tegangan L-L',p+'_VLL',0,'V'],['Frekuensi',p+'_Hz',2,'Hz'],['Daya reaktif',p+'_kVAR',1,'kVAR'],['THD tegangan',p+'_THDV',1,'%'],['THD arus',p+'_THDI',1,'%'],['Energi total',p+'_kWh',0,'kWh']].forEach((m,j)=>{const xx=x+16+(j%3)*134,yy=104+Math.floor(j/3)*58;label(xx,yy,128,14,m[0],'sm');value(xx,yy+16,130,30,m[1],m[2],m[3],'s')});
+    ['I1','I2','I3'].forEach((c,j)=>{const yy=232+j*40;label(x+16,yy,40,24,'Arus L'+(j+1),'sm');bar(x+80,yy+6,240,14,p+'_'+c,0,i?420:260,null,true);value(x+330,yy,78,24,p+'_'+c,0,'A','xs r')});});
+  panel(852,4,424,360,'Ringkasan hari ini');
+  [['Daya total','KW_TOT',0,'kW'],['Energi hari ini','KWH_DAY',0,'kWh'],['Biaya (tarif '+f(T.SP_Tariff,0)+'/kWh)','COST_DAY',0,'Rp'],['Energi spesifik','SPEC_E',3,'kWh/m³']].forEach((m,j)=>{label(868,32+j*80,380,16,m[0],'sm');value(868,50+j*80,390,46,m[1],m[2],m[3]).style.fontSize='38px'});
+  panel(4,370,1272,260,'Tren daya & debit 10 menit');const t=mk('',12,394,1256,226,'');bind(()=>{t.innerHTML=trendSvg(1256,226,[0,0,0,1,0,0,1],0,false)});
+});
+/* ---------- TREN ---------- */
+screen('trend','Tren',()=>{
+  panel(4,4,990,626,'');const t=mk('',12,12,974,566,'');bind(()=>{t.innerHTML=trendSvg(974,566,trendSel,trendRange,false)});
+  seg(12,590,420,32,['10 MENIT','1 JAM','8 JAM'],()=>trendRange,v=>{trendRange=v;update()});
+  panel(1000,4,276,626,'Pilih data');
+  TS.forEach((s,i)=>{const y=30+i*72;const b=btn(1010,y,256,64,'',()=>{trendSel[i]=trendSel[i]?0:1;update()},{cls:'sm'});b.style.justifyContent='flex-start';b.style.padding='0 12px';
+    b.innerHTML=`<span style="width:14px;height:14px;border-radius:3px;background:${s[4]};flex:none"></span><span style="flex:1;text-align:left">${s[0]}</span><span class="tv" style="font-size:18px"></span>`;
+    bind(()=>{b.style.opacity=trendSel[i]?1:.45;b.querySelector('.tv').textContent=f(T[s[1]],s[5])+' '+s[6]})});
+});
+/* ---------- ALARM ---------- */
+screen('alarm','Alarm',()=>{
+  panel(4,4,1272,330,'Alarm aktif');
+  btn(840,8,130,30,'ACK SEMUA',()=>{alarms.ack=alarms.ack||{};Object.keys(alarms.active).forEach(k=>alarms.ack[k]=1);update()},{cls:'sm'});
+  btn(978,8,130,30,'RESET',()=>{EQ.forEach((e,i)=>{if(!SIM[i?'p2trip':'p1trip']){T[e.k+'_Fault']=0;T[e.k+'_AlmCode']=0}});update()},{cls:'sm'});
+  btn(1116,8,150,30,'MATIKAN HORN',()=>{alarms.buzzer=0;update()},{cls:'sm'});
+  const al=mk('',12,44,1256,284,'');
+  bind(()=>{const ks=Object.keys(alarms.active);let h='<div class="row h" style="height:28px"><div style="width:70px">Kode</div><div style="width:80px">Waktu</div><div style="width:320px">Alarm</div><div style="flex:1">Tindakan</div><div style="width:80px">Status</div></div>';
+    if(!ks.length)h+='<div class="row" style="color:#31E38B;height:44px;font-size:15px">Tidak ada alarm aktif. Semua normal.</div>';
+    ks.slice(0,8).forEach(k=>{const a=ALM.find(x=>x[0]==k);const ack=alarms.ack&&alarms.ack[k];const c=a[3]=='crit'?C.crit:C.warn;
+      h+=`<div class="row" style="border-left:3px solid ${c};height:31px;font-size:13.5px"><div style="width:67px;color:${c};font-weight:700">${k}</div><div style="width:80px">${alarms.active[k]}</div><div style="width:320px;color:#EAF4FF">${a[1]}</div><div style="flex:1;color:#8FA7C6">${a[2]}</div><div style="width:80px;color:${ack?'#8FA7C6':c}" class="${ack?'':'blink'}">${ack?'ACK':'BARU'}</div></div>`});al.innerHTML=h});
+  panel(4,340,1272,290,'Riwayat alarm');const hs=mk('',12,364,1256,260,'');
+  bind(()=>{let h='';alarms.hist.slice(0,9).forEach(r=>{const a=ALM.find(x=>x[0]==r.k);h+=`<div class="row" style="height:28px;font-size:13.5px"><div style="width:80px">${r.t}</div><div style="width:80px;color:${r.on?C.crit:C.ok};font-weight:700">${r.on?'MUNCUL':'HILANG'}</div><div style="width:60px">${r.k}</div><div style="flex:1">${a[1]}</div></div>`});hs.innerHTML=h||'<div class="row" style="color:#8FA7C6">Belum ada riwayat.</div>'});
+});
+/* ---------- LAPORAN ---------- */
+const HR=[...Array(24)].map((_,h)=>{const peak=h>=17&&h<22;const run=peak?0.25:(h%5==0?0.6:1);return {h,m3:Math.round(run*(480+((h*37)%90))),kwh:0}});HR.forEach(r=>r.kwh=Math.round(r.m3*0.38));
+screen('report','Laporan',()=>{
+  panel(4,4,860,626,'Laporan 24 jam (contoh data harian)');
+  const ch=svgEl(16,30,836,380,'');
+  bind(()=>{const mx=Math.max(...HR.map(r=>r.m3));let g='';for(let i=0;i<=4;i++){const y=20+300*i/4;g+=`<line x1="50" x2="826" y1="${y}" y2="${y}" stroke="#1E3A5F"/><text x="44" y="${y+4}" text-anchor="end" font-size="11" fill="#8FA7C6">${Math.round(mx*(1-i/4))}</text>`}
+    HR.forEach((r,i)=>{const x=56+i*32,h=r.m3/mx*300,pk=r.h>=17&&r.h<22;g+=`<rect x="${x}" y="${320-h}" width="20" height="${h}" rx="2" fill="${pk?'#FFB21F':'#2F9BFF'}" opacity=".9"/><rect x="${x+6}" y="${320-r.kwh/mx*300}" width="8" height="${r.kwh/mx*300}" fill="#FF7AB6"/><text x="${x+10}" y="338" text-anchor="middle" font-size="10" fill="#8FA7C6">${String(r.h).padStart(2,'0')}</text>`});
+    g+=`<text x="56" y="366" font-size="12" fill="#2F9BFF">■ volume m³/jam</text><text x="200" y="366" font-size="12" fill="#FF7AB6">■ energi kWh/jam</text><text x="350" y="366" font-size="12" fill="#FFB21F">■ jam beban puncak (pompa ditunda)</text>`;ch.innerHTML=g});
+  const sum=HR.reduce((a,r)=>({m3:a.m3+r.m3,kwh:a.kwh+r.kwh}),{m3:0,kwh:0});
+  [['Volume terpompa',f(sum.m3,0),'m³'],['Energi',f(sum.kwh,0),'kWh'],['Energi spesifik',f(sum.kwh/sum.m3,3),'kWh/m³'],['Biaya',f(sum.kwh*T.SP_Tariff,0),'Rp']].forEach((m,j)=>{const x=16+j*212;panel(x,424,204,90,'');label(x+12,430,180,16,m[0],'sm');mk('val s',x+12,454,186,40,`<span>${m[1]}</span><small>${m[2]}</small>`)});
+  label(16,524,836,96,'Data laporan di atas adalah contoh. Di sistem asli, V-BOX menyimpan histori debit, energi, jam jalan, dan alarm ke cloud V-NET, lalu bisa diekspor ke Excel dari Chrome.','sm');
+  panel(870,4,406,626,'Jam operasi & start');
+  EQ.forEach((e,i)=>{const k=e.k,y=34+i*150;label(884,y,380,20,e.code+' · '+e.pnl,'mid');
+    label(884,y+28,180,14,'Jam operasi total','sm');value(884,y+44,180,34,k+'_RunH',0,'jam','s');
+    label(1074,y+28,180,14,'Energi inverter','sm');value(1074,y+44,190,34,k+'_kWh',0,'kWh','s');
+    label(884,y+88,380,40,'Pembagian beban: pilih pompa lead bergantian (layar KONTROL AUTO) agar jam operasi P-01 dan P-02 seimbang.','sm')});
+  panel(880,340,386,280,'Ringkasan sensor auto');
+  [['LT-02 reservoir','LT02_Level',2,'m'],['LT-01 sumur','LT01_Level',1,'m'],['PT-03 header','PT03_Header',2,'bar'],['FT-01 debit','FT01_Flow',0,'m³/h']].forEach((m,j)=>{const y=366+j*62;label(894,y,180,16,m[0],'sm');value(894,y+18,360,34,m[1],m[2],m[3])});
+});
+function updateChrome(){
+  const n=activeCount();const d=wib();document.getElementById('clk').textContent=hhmmss(d);document.getElementById('dte').textContent=ddmm(d)+' WITA';
+  const bt=document.getElementById('btxt'),bn=document.getElementById('bnr');let t,bg,fg,bl=false;
+  if(T.SYS_Estop){t='DARURAT: tombol E-STOP aktif. Pompa terkait berhenti.';bg='#5a1019';fg='#ffd3d8';bl=true}
+  else if(n){const a=topAlarm();t=(a[3]=='crit'?'ALARM: ':'PERHATIAN: ')+a[1]+'. '+a[2];bg=a[3]=='crit'?'#5a1019':'#4a3205';fg=a[3]=='crit'?'#ffd3d8':'#ffe3a8';bl=a[3]=='crit'}
+  else if(T.SYS_ModeAuto){const s=STEPS.find(x=>x[0]==T.SYS_Step);t='AUTO · '+(s?s[1]+': '+s[2]:'');bg=T.SYS_Step>=2&&T.SYS_Step<6?'#0a3a26':'#0d2f4a';fg=T.SYS_Step>=2&&T.SYS_Step<6?'#b9f7d6':'#bfe6ff'}
+  else{t=T.SYS_Running?'MANUAL: pompa dijalankan operator.':'MANUAL: semua pompa berhenti.';bg='#3a2d08';fg='#ffe3a8'}
+  bn.style.background=bg;bt.style.color=fg;bt.textContent=t;bt.classList.toggle('blink',bl);
+  const ab=document.getElementById('abadge');ab.style.display=n?'block':'none';ab.textContent=n;
+  chromeBinds.forEach(fn=>fn())}
+
+/* ---------- simulation ---------- */
+const sims=[['demandHi','Pemakaian air tinggi (reservoir cepat turun)'],['resFull','Float LSHH-02 reservoir aktif'],['mot1','Thermal motor P-01 trip'],['p1trip','Inverter P-01 trip (OL1)'],['p2trip','Inverter P-02 trip (OC1)'],['dry1','P-01 dry-run'],['levelLow','Level sumur turun'],['pressHigh','Katup distribusi tertutup'],['leak','Pipa bocor'],
+ ['comm1','Kabel Modbus inverter P-01 putus'],['commPM','Power meter PNL-160 putus'],['hot1','Fan panel 110 kW mati (panas)'],['local2','Selector P-02 ke LOKAL'],['power','PLN padam (UPS)'],['estop','Tekan E-STOP PNL-110']];
+const simBox=document.getElementById('sim');
+sims.forEach(s=>{const l=document.createElement('label');l.innerHTML=`<input type="checkbox" id="sim_${s[0]}"><span>${s[1]}</span>`;simBox.appendChild(l);l.querySelector('input').onchange=e=>{SIM[s[0]]=e.target.checked?1:0;tick()}});
+const rnd=()=>Math.random()-.5;
+let lagT=0;
+function tick(){
+  /* input hardwired & komunikasi */
+  T.P01_MotTemp=SIM.mot1;T.SYS_LSHH02=SIM.resFull||T.LT02_Level>=4.9?1:0;T.SYS_PSH03=T.PT03_Header>=7.5?1:0;T.P01_Estop=SIM.estop;T.SYS_Estop=T.P01_Estop||T.P02_Estop;T.P01_DryRun=SIM.dry1;T.P02_Remote=SIM.local2?0:1;
+  T.SYS_PhaseOK=SIM.power?0:1;T.SYS_UPSBatt=SIM.power;T.P01_Comm=SIM.comm1?0:1;T.PM2_Comm=SIM.commPM?0:1;
+  if(SIM.p1trip&&!T.P01_Fault){T.P01_Fault=1;T.P01_AlmCode=5}
+  if(SIM.p2trip&&!T.P02_Fault){T.P02_Fault=1;T.P02_AlmCode=1}
+  if(T.P01_DryRun&&T.P01_Run){T.P01_Fault=0}
+  const lvlOK=T.LT01_Level>T.AL_Level_LoLo, pwr=!SIM.power;
+  /* logika PLC: AUTO lead-lag PID tekanan */
+  if(T.LT02_Level<=T.SP_Res_Start)T.SYS_AutoDemand=1;if(T.LT02_Level>=T.SP_Res_Stop||T.SYS_LSHH02)T.SYS_AutoDemand=0;
+  const hr=wib().getHours();T.SYS_Peak=hr>=17&&hr<22?1:0;
+  const blockPeak=T.SP_PeakAvoid&&T.SYS_Peak&&T.LT02_Level>T.SP_Res_Crit&&!T.P01_Run&&!T.P02_Run;
+  const demand=T.SYS_AutoDemand&&!blockPeak;
+  const err=T.SP_Press-T.PT03_Header;
+  const PERM={};EQ.forEach(e=>{const k=e.k;PERM[k]=T[k+'_Remote']&&!T[k+'_Fault']&&!T[k+'_MotTemp']&&!T[k+'_DryRun']&&!T[k+'_Estop']&&!T[k+'_Q1Off']&&lvlOK&&pwr&&!T.SYS_LSHH02&&!T.SYS_PSH03});
+  let lead=T.SP_LeadSel?'P02':'P01',lag=lead=='P01'?'P02':'P01';
+  if(!PERM[lead]&&PERM[lag]&&T[lag+'_Mode']==2){const x=lead;lead=lag;lag=x;T.SYS_LeadFail=1}else T.SYS_LeadFail=0;
+  T.SYS_LeadNow=lead=='P01'?0:1;
+  const leadMax=T[lead+'_Hz']>=T.SP_Hz_Max-0.5||!T[lead+'_Run'];
+  T.SYS_Step=!T.SYS_ModeAuto?0:!demand?(blockPeak?6:1):T[lag+'_Run']?4:T[lead+'_Run']?(leadMax&&err>0.3?3:2):2;
+  EQ.forEach((e,i)=>{const k=e.k;const perm=PERM[k];
+    let want=0,hz=T[k+'_SpHz'];const m=T[k+'_Mode'];
+    if(m==1)want=T[k+'_ManRun'];
+    if(m==2&&!demand){want=0}else if(m==2){if(k==lead)want=1;else{
+        if(!T[k+'_Run']){if(leadMax&&err>0.3&&T[lead+'_Run']){lagT++;if(lagT>=Math.min(T.SP_Lag_Delay,8)){want=1;lagT=0}}else lagT=0}
+        else want=!(err<-0.4&&T[k+'_Hz']<=T.SP_Hz_Min+1)}
+      const cur=T[k+'_HzSet']||T.SP_Hz_Min;hz=clamp(cur+err*T.SP_PID_Kp*1.6,T.SP_Hz_Min,T.SP_Hz_Max)}
+    if(!perm)want=0;T[k+'_Run']=want?1:0;
+    T[k+'_HzSet']=want?hz:0;
+    T[k+'_Hz']=want?clamp(T[k+'_Hz']+(hz-T[k+'_Hz'])*0.35+rnd()*0.1,0,50):Math.max(0,T[k+'_Hz']-6);
+    const r=T[k+'_Hz']/50;T[k+'_kW']=e.Pr*0.96*r*r*r+(T[k+'_Hz']>1?rnd()*0.6:0);
+    T[k+'_Amp']=T[k+'_Hz']>1?T[k+'_kW']*1000/(1.732*400*Math.max(0.35,r)*0.86)*0.97:0;
+    T[k+'_Vout']=Math.round(400*r);T[k+'_Torque']=Math.round(100*r*r*(T[k+'_Hz']>1?1:0));T[k+'_DCV']=pwr?560+Math.round(rnd()*6):0;
+    T[k+'_TempHS']=clamp(T[k+'_TempHS']+((32+30*T[k+'_Amp']/e.Ir+(k=='P01'&&SIM.hot1?32:0))-T[k+'_TempHS'])*0.15,20,95);
+    T[k+'_AmpPct']=T[k+'_Amp']/e.Ir*100;
+    if(T[k+'_Run']){T[k+'_RunH']+=1/3600*30;T[k+'_kWh']+=T[k+'_kW']/3600*30}
+    const p='PM'+(i+1);const kw=T[k+'_kW']/0.975+0.4;
+    if(T[p+'_Comm']||true){T[p+'_kW']=pwr?kw:0;T[p+'_PF']=T[k+'_Hz']>1?0.95+rnd()*0.01:0.9;T[p+'_kVAR']=T[p+'_kW']*Math.tan(Math.acos(T[p+'_PF']));
+      const ia=pwr?T[p+'_kW']*1000/(1.732*400*T[p+'_PF']):0;T[p+'_I1']=ia*(1+rnd()*0.03);T[p+'_I2']=ia*(1+rnd()*0.03);T[p+'_I3']=ia*(1+rnd()*0.03);
+      T[p+'_VLL']=pwr?398+rnd()*4:0;T[p+'_Hz']=pwr?50+rnd()*0.04:0;T[p+'_THDI']=T[k+'_Hz']>1?33+rnd()*2+(SIM.hot1&&i==0?0:0):0;T[p+'_THDV']=pwr?2.6+rnd()*0.3:0;
+      T[p+'_kWh']+=T[p+'_kW']/3600*30;T[p+'_kWhDay']+=T[p+'_kW']/3600*30}
+  });
+  /* hidrolik sederhana (afinitas) */
+  const sys=3.2;let qt=0;
+  EQ.forEach(e=>{const r=T[e.k+'_Hz']/50;const h=7.1*r*r;const q=e.Qr*Math.sqrt(clamp((h-sys)/(7.1-sys),0,1.3));T[e.k+'_Q']=q;qt+=q});
+  let pT=T.SYS_PhaseOK||true?sys*(qt>5?1:0.15)+2.0*Math.pow(qt/640,2):0;if(SIM.pressHigh&&qt>5)pT+=2.8;if(SIM.leak)pT-=1.6;
+  if(SIM.pressHigh)qt*=0.45;if(SIM.leak)qt*=1.15;
+  T.PT03_Header=clamp(T.PT03_Header+(pT-T.PT03_Header)*0.35+rnd()*0.02,0,16);
+  T.PT01_Press=T.P01_Run?T.PT03_Header+0.15+rnd()*0.02:Math.max(0,T.PT01_Press*0.5);T.PT02_Press=T.P02_Run?T.PT03_Header+0.12+rnd()*0.02:Math.max(0,T.PT02_Press*0.5);
+  T.FT01_Flow=Math.max(0,T.FT01_Flow+(qt-T.FT01_Flow)*0.4+(qt>5?rnd()*3:0));
+  const dem=SIM.demandHi?720:380;T.LT02_Level=clamp(T.LT02_Level+(T.FT01_Flow-dem)*0.00008,0,5);
+  T._nf=T.SYS_Running&&T.FT01_Flow<T.AL_NoFlow?(T._nf||0)+1:0;
+  const lvT=SIM.levelLow?1.5:clamp(22-T.FT01_Flow*0.012,8,25);T.LT01_Level=clamp(T.LT01_Level+(lvT-T.LT01_Level)*(SIM.levelLow?0.03:0.08)+rnd()*0.02,0,30);
+  [['PT01',T.PT01_Press,0,16],['PT02',T.PT02_Press,0,16],['PT03',T.PT03_Header,0,16],['LT01',T.LT01_Level,0,50],['FT01',T.FT01_Flow,0,1000],['LT02',T.LT02_Level,0,5]].forEach(a=>T[a[0]+'_mA']=4+16*(a[1]-a[2])/(a[3]-a[2]));
+  T.SYS_Running=T.P01_Run||T.P02_Run?1:0;
+  T.KW_TOT=T.PM1_kW+T.PM2_kW;T.KWH_DAY=T.PM1_kWhDay+T.PM2_kWhDay;T.COST_DAY=T.KWH_DAY*T.SP_Tariff;T.SPEC_E=T.FT01_Flow>5?T.KW_TOT/T.FT01_Flow:0;
+  TS.forEach((s,i)=>{fast[i].push(T[s[1]]);if(fast[i].length>600)fast[i].shift()});
+  tick.n=(tick.n||0)+1;if(tick.n%60==0)TS.forEach((s,i)=>{slow[i].push(T[s[1]]);slow[i].shift()});
+  /* alarm */
+  const d=wib();ALM.forEach(a=>{const on=!!a[4]();const was=alarms.active[a[0]];T[a[0]]=on?1:0;
+    if(on&&!was){alarms.active[a[0]]=hhmmss(d);alarms.hist.unshift({k:a[0],t:hhmmss(d),on:1});alarms.buzzer=1;if(alarms.ack)delete alarms.ack[a[0]]}
+    if(!on&&was){delete alarms.active[a[0]];alarms.hist.unshift({k:a[0],t:hhmmss(d),on:0})}});
+  if(alarms.hist.length>40)alarms.hist.length=40;
+  T.ALM_COUNT=Object.keys(alarms.active).length;
+  if(!tick.warm)update()}
+
+/* ---------- init ---------- */
+stage.insertAdjacentHTML('afterbegin',DEFS);
+chrome();
+const tabs=NAV.map(n=>[n[0],n[1]]);
+const sc=document.getElementById('screens');tabs.forEach(t=>{const a=document.createElement('a');a.textContent=t[1];a.dataset.id=t[0];a.tabIndex=0;a.onclick=()=>{go(t[0]);history.replaceState(null,'','#'+t[0])};a.onkeydown=e=>{if(e.key=='Enter')a.onclick()};sc.appendChild(a)});
+function fit(){const fr=document.getElementById('frame');const s=Math.min(fr.clientWidth/1280,1.2);stage.style.transform=`scale(${s})`;fr.style.height=(720*s)+'px'}
+window.addEventListener('resize',fit);fit();
+const initial=(location.hash||'').slice(1);
+T.P01_Hz=44;T.P02_Hz=0;T.P01_HzSet=44;T.P01_TempHS=48;T.P02_TempHS=40;T.LT02_Level=2.6;T.SYS_AutoDemand=1;
+tick.warm=1;for(let i=0;i<600;i++)tick();tick.warm=0;alarms.hist.length=0;
+go(SCR[initial]?initial:'ov');
+window.addEventListener('hashchange',()=>{const h=location.hash.slice(1);if(SCR[h])go(h)});
+setInterval(tick,1000);
+window.HMI={go,TAGDEF,T,SIM,ALM,EQ,tick,alarms,SCR};
+})();
+</script>
+
